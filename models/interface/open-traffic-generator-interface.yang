@@ -1,0 +1,252 @@
+module open-traffic-generator-interface {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/otg-intf";
+  prefix "otg-intf";
+
+  import openconfig-extensions { prefix  "oc-ext"; }
+  import openconfig-types { prefix "oc-types"; }
+  import openconfig-yang-types { prefix "oc-yang"; }
+  import openconfig-inet-types { prefix "oc-inet"; }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to interfaces that are
+    defined by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2022-01-21 {
+    description
+      "Initial revision";
+    reference "0.1.0";
+  }
+
+  grouping interface-top {
+    description
+      "Top-level structural grouping for OTG interface entries.";
+
+    container interfaces {
+      description
+        "Interfaces defined by an OTG.";
+
+      list interface {
+        key "name";
+
+        config false;
+
+        description
+          "An individual interface defined by an OTG.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to an interface's name, acting as a key of
+            the interfaces list.";
+        }
+
+        container state {
+          description
+            "Operational state of an individual interface.";
+          uses interface-state;
+        }
+
+        container ipv4-neighbors {
+          description
+            "Discovered neighbors of an interface";
+          uses ipv4-neighbors;
+        }
+
+        container ipv6-neighbors {
+          description
+            "Discovered neighbors of an interface";
+          uses ipv6-neighbors;
+        }
+      }
+    }
+  }
+
+  grouping interface-state {
+    description
+      "Operational state of an OTG interface.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitary name of an OTG interface determined by the OTG
+        configuration.";
+    }
+
+    leaf link {
+      type enumeration {
+        enum UP {
+          description
+            "Ready to pass packets.";
+        }
+        enum DOWN {
+          description
+            "Not ready to pass packets.";
+        }
+      }
+
+      description
+        "The current state of an OTG interface.";
+    }
+
+    leaf out-rate {
+      type oc-types:ieeefloat32;
+      units "bps";
+      description
+        "The current transmit rate of an OTG interface, measured in
+        bits per second.";
+    }
+
+    leaf in-rate {
+      type oc-types:ieeefloat32;
+      units "bps";
+      description
+        "The current receive rate of an OTG interface, measured in
+        bits per second.";
+    }
+
+    container counters {
+      description
+        "Counters of an OTG interface.";
+      uses interface-counters;
+    }
+  }
+
+  grouping interface-counters {
+    description
+      "Counters of an OTG interface.";
+
+      leaf out-octets {
+        type oc-yang:counter64;
+        description
+          "The total number of octets transmitted on the interface.";
+      }
+
+      leaf in-octets {
+        type oc-yang:counter64;
+        description
+          "The total number of octets received on the interface.";
+      }
+
+      leaf out-frames {
+        type oc-yang:counter64;
+        description
+          "The total number of packets transmitted on the interface.";
+      }
+
+      leaf in-frames {
+        type oc-yang:counter64;
+        description
+          "The total number of packets received on the interface.";
+      }
+  }
+
+  grouping ipv4-neighbors {
+    description
+      "Structural grouping of an interface's discovered IPv4
+      neighbors.";
+
+    list ipv4-neighbor {
+      key "ipv4-address";
+
+      description
+        "The interface neighbor state or ARP cache entry.";
+
+      leaf ipv4-address {
+        type leafref {
+          path "../state/ipv4-address";
+        }
+
+        description
+          "The IPv4 address of the neighbor.";
+      }
+
+      uses neighbor-ipv4-state;
+    }
+  }
+
+  grouping ipv6-neighbors {
+    description
+      "Structural grouping of an interface's discovered IPv6
+      neighbors.";
+
+    list ipv6-neighbor {
+      key "ipv6-address";
+
+      description
+        "The interface neighbor state or NDISC cache entry.";
+
+      leaf ipv6-address {
+        type leafref {
+          path "../state/ipv6-address";
+        }
+
+        description
+          "The IPv6 address of the neighbor.";
+      }
+
+      uses neighbor-ipv6-state;
+    }
+  }
+
+  grouping neighbor-ipv4-state {
+    description
+      "Structural grouping of IPv4 neighbor information.";
+
+    container state {
+      description
+        "State of IPv4 neighbor information";
+
+      leaf ipv4-address {
+        type oc-inet:ipv4-address;
+
+        description
+          "The IPv4 address of the neighbor.";
+      }
+
+      leaf link-layer-address {
+        type oc-yang:mac-address;
+
+        description
+          "The link layer address or MAC address of the neighbor.";
+      }
+    }
+  }
+
+  grouping neighbor-ipv6-state {
+    description
+      "Structural grouping of IPv6 neighbor information.";
+
+    container state {
+      description
+        "State of IPv6 neighbor information";
+
+      leaf ipv6-address {
+        type oc-inet:ipv6-address;
+
+        description
+          "The IPv6 address of the neighbor.";
+      }
+
+      leaf link-layer-address {
+        type oc-yang:mac-address;
+
+        description
+          "The link layer address or MAC address of the neighbor.";
+      }
+    }
+  }
+
+  uses interface-top;
+}

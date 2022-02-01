@@ -1,0 +1,11 @@
+{
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "[yang]": {
+        "editor.tabSize": 2,
+        "editor.rulers": [
+            70
+        ],
+    },
+    "extensions.ignoreRecommendations": false
+}
