@@ -4,10 +4,9 @@ module open-traffic-generator-interface {
   namespace "http://github.com/open-traffic-generator/models/yang/models/otg-intf";
   prefix "otg-intf";
 
-  import openconfig-extensions { prefix  "oc-ext"; }
-  import openconfig-types { prefix "oc-types"; }
-  import openconfig-yang-types { prefix "oc-yang"; }
-  import openconfig-inet-types { prefix "oc-inet"; }
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
 
   organization
     "OpenTrafficGenerator working group";
@@ -101,7 +100,7 @@ module open-traffic-generator-interface {
     }
 
     leaf out-rate {
-      type oc-types:ieeefloat32;
+      type otg-types:ieeefloat32;
       units "bps";
       description
         "The current transmit rate of an OTG interface, measured in
@@ -109,7 +108,7 @@ module open-traffic-generator-interface {
     }
 
     leaf in-rate {
-      type oc-types:ieeefloat32;
+      type otg-types:ieeefloat32;
       units "bps";
       description
         "The current receive rate of an OTG interface, measured in
@@ -128,25 +127,25 @@ module open-traffic-generator-interface {
       "Counters of an OTG interface.";
 
       leaf out-octets {
-        type oc-yang:counter64;
+        type otg-types:counter64;
         description
           "The total number of octets transmitted on the interface.";
       }
 
       leaf in-octets {
-        type oc-yang:counter64;
+        type otg-types:counter64;
         description
           "The total number of octets received on the interface.";
       }
 
       leaf out-frames {
-        type oc-yang:counter64;
+        type otg-types:counter64;
         description
           "The total number of packets transmitted on the interface.";
       }
 
       leaf in-frames {
-        type oc-yang:counter64;
+        type otg-types:counter64;
         description
           "The total number of packets received on the interface.";
       }
@@ -209,14 +208,14 @@ module open-traffic-generator-interface {
         "State of IPv4 neighbor information";
 
       leaf ipv4-address {
-        type oc-inet:ipv4-address;
+        type otg-types:ipv4-address;
 
         description
           "The IPv4 address of the neighbor.";
       }
 
       leaf link-layer-address {
-        type oc-yang:mac-address;
+        type otg-types:mac-address;
 
         description
           "The link layer address or MAC address of the neighbor.";
@@ -233,14 +232,14 @@ module open-traffic-generator-interface {
         "State of IPv6 neighbor information";
 
       leaf ipv6-address {
-        type oc-inet:ipv6-address;
+        type otg-types:ipv6-address;
 
         description
           "The IPv6 address of the neighbor.";
       }
 
       leaf link-layer-address {
-        type oc-yang:mac-address;
+        type otg-types:mac-address;
 
         description
           "The link layer address or MAC address of the neighbor.";

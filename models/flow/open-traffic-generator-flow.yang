@@ -1,14 +1,12 @@
-module open-traffic-genenerator-flow {
+module open-traffic-generator-flow {
   yang-version "1";
 
   namespace "http://github.com/open-traffic-generator/models/yang/models/flow";
   prefix "otg-flow";
 
-  import openconfig-extensions { prefix "oc-ext"; }
-  import openconfig-yang-types { prefix "oc-yang"; }
-  import openconfig-types { prefix "oc-types"; }
-  import openconfig-inet-types { prefix "oc-inet"; }
-  import openconfig-mpls-types { prefix "oc-mplst"; }
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
 
   organization
     "OpenTrafficGenerator working group";
@@ -18,7 +16,7 @@ module open-traffic-genenerator-flow {
      opentrafficgenerator@googlegroups.com";
 
   description
-    "This module defines telemetry that relates to dataplane flows that
+    "This module defines telemetry that refers to dataplane flows that
     are controlled by an open traffic generator (OTG) whose definition
     is outside of the context of this module.";
 
@@ -33,11 +31,13 @@ module open-traffic-genenerator-flow {
 
     container flows {
       description
-        "Flow statistics collected by the network device. A flow is defined to
-        be an arbitrary stream of packets whose definition is outside of the
-        context of the module.";
+        "Flow statistics collected by the network device.
+        A flow is defined to be an arbitrary stream of packets whose
+        definition is outside of the context of the module.";
 
       list flow {
+        key "name";
+
         config false;
 
         description
@@ -46,7 +46,6 @@ module open-traffic-genenerator-flow {
           is able to track and report statistics on. Each flow is identified by
           an arbitrary string identifier.";
 
-        key "name";
 
         leaf name {
           type leafref {
@@ -118,31 +117,31 @@ module open-traffic-genenerator-flow {
     }
 
     leaf mpls-label {
-      type oc-mplst:mpls-label;
+      type otg-types:mpls-label;
       description
         "Value of the MPLS label for ingress tracking.";
     }
 
     leaf src-ipv4 {
-      type oc-inet:ipv4-address;
+      type otg-types:ipv4-address;
       description
         "The source IPv4 value of the traffic header.";
     }
 
     leaf dst-ipv4 {
-      type oc-inet:ipv4-address;
+      type otg-types:ipv4-address;
       description
         "The destination IPv4 value of the traffic header.";
     }
 
     leaf src-ipv6 {
-      type oc-inet:ipv6-address;
+      type otg-types:ipv6-address;
       description
         "The source IPv6 value of the traffic header.";
     }
 
     leaf dst-ipv6 {
-      type oc-inet:ipv6-address;
+      type otg-types:ipv6-address;
       description
         "The destination IPv6 value of the traffic header.";
     }
@@ -159,35 +158,35 @@ module open-traffic-genenerator-flow {
       "Operational state of the individual flow.";
 
     leaf loss-pct {
-      type oc-types:ieeefloat32;
+      type otg-types:ieeefloat32;
       description
         "The percentage of transmitted packets that were not received by the
         destinations of the flow.";
     }
 
     leaf out-frame-rate {
-      type oc-types:ieeefloat32;
+      type otg-types:ieeefloat32;
       description
         "The rate, measured in frames per second, at which frames are being
         transmitted for the flow.";
     }
 
     leaf in-frame-rate {
-      type oc-types:ieeefloat32;
+      type otg-types:ieeefloat32;
       description
         "The rate, measured in frames per second, at which frames are being
         received for the flow.";
     }
 
     leaf out-rate {
-      type oc-types:ieeefloat32;
+      type otg-types:ieeefloat32;
       description
         "The rate, measured in bits per second, at which the flow is being
         transmitted.";
     }
 
     leaf in-rate {
-      type oc-types:ieeefloat32;
+      type otg-types:ieeefloat32;
       description
         "The rate, measured in bits per second, at which the flow is being
         received.";
@@ -199,26 +198,26 @@ module open-traffic-genenerator-flow {
       "Counters that correspond to an individual flow.";
 
     leaf in-octets {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of bytes received by the target for the flow.";
     }
 
     leaf in-pkts {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of packets received by the target for the flow.";
     }
 
     leaf out-octets {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of bytes sent by the target for the flow. These
         packets may be generated or forwarded by the target.";
     }
 
     leaf out-pkts {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of packets sent by the target for the flow. These
         packets may be generated or forwarded by the target.";
@@ -230,6 +229,8 @@ module open-traffic-genenerator-flow {
       "Flow statistics grouped by ingress tracking filter.";
 
     list ingress-tracking {
+      key "src-port dst-port mpls-label src-ipv4 dst-ipv4 src-ipv6 dst-ipv6";
+
       config false;
 
       description
@@ -237,8 +238,6 @@ module open-traffic-genenerator-flow {
         fields, this list will map combinations of values of those header
         fields to the flow statistics specific to frames that match that
         combination.";
-
-      key "src-port dst-port mpls-label src-ipv4 dst-ipv4 src-ipv6 dst-ipv6";
 
       leaf src-port {
         type leafref {
@@ -329,14 +328,14 @@ module open-traffic-genenerator-flow {
       "Flow statistics grouped by egress tracking filter.";
 
     list egress-tracking {
+      key "filter";
+
       config false;
 
       description
         "If the ATE is configured to track outgoing frames by a header field,
         this list will map values of that header field to the flow statistics
         specific to frames that match that value.";
-
-      key "filter";
 
       leaf filter {
         type leafref {
@@ -347,9 +346,10 @@ module open-traffic-genenerator-flow {
       }
 
       container state {
+        config false;
+
         description
           "Operational state of the flow by egress tracking filter.";
-        config false;
 
         leaf filter {
           type string;

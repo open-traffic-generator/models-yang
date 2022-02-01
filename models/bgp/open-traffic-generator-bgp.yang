@@ -4,8 +4,9 @@ module open-traffic-generator-bgp {
   namespace "http://github.com/open-traffic-generator/models/yang/models/bgp";
   prefix "otg-bgp";
 
-  import openconfig-extensions { prefix "oc-ext"; }
-  import openconfig-yang-types { prefix "oc-yang"; }
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
 
   organization
     "OpenTrafficGenerator working group";
@@ -125,80 +126,80 @@ module open-traffic-generator-bgp {
       "Counters of an indivdual BGP session.";
 
     leaf flaps {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of times the BGP session went from an
         ESTABLISHED state to an IDLE state.";
     }
 
     leaf in-routes {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of routes received.";
     }
 
     leaf out-routes {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of routes advertised.";
     }
 
     leaf in-route-withdraw {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of route withdraws received.";
     }
 
     leaf out-route-withdraw {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of route withdraws sent.";
     }
 
     leaf in-updates {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of UPDATE messages received.";
     }
 
     leaf out-updates {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of UPDATE messages sent.";
     }
 
     leaf in-opens {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of OPEN messages received.";
     }
 
     leaf out-opens {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of OPEN messages sent.";
     }
 
     leaf in-keepalives {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of KEEPALIVE messages received.";
     }
 
     leaf out-keepalives {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of KEEPALIVE messages sent.";
     }
 
     leaf in-notifications {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of NOTIFICATION messages received.";
     }
 
     leaf out-notifications {
-      type oc-yang:counter64;
+      type otg-types:counter64;
       description
         "The total number of NOTIFICATION messages sent.";
     }
