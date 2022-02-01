@@ -1,4 +1,4 @@
-name: Models CI/CD
+name: Build
 
 on:
   push:
