@@ -1,0 +1,21 @@
+module: open-traffic-generator-bgp
+  +--rw bgp-peers
+     +--ro bgp-peer* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?            string
+           +--ro session-state?   enumeration
+           +--ro counters
+              +--ro flaps?                otg-types:counter64
+              +--ro in-routes?            otg-types:counter64
+              +--ro out-routes?           otg-types:counter64
+              +--ro in-route-withdraw?    otg-types:counter64
+              +--ro out-route-withdraw?   otg-types:counter64
+              +--ro in-updates?           otg-types:counter64
+              +--ro out-updates?          otg-types:counter64
+              +--ro in-opens?             otg-types:counter64
+              +--ro out-opens?            otg-types:counter64
+              +--ro in-keepalives?        otg-types:counter64
+              +--ro out-keepalives?       otg-types:counter64
+              +--ro in-notifications?     otg-types:counter64
+              +--ro out-notifications?    otg-types:counter64
