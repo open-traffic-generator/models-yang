@@ -37,7 +37,11 @@ jobs:
         run: |
           git config user.name "Github Actions Bot"
           git config user.email "actions@github.com"
-          git add --force artifacts/*.txt
+          for MODEL in `find artifacts -type f`; do
+            if [ `wc -c < $MODEL` != 0 ]; then
+              git add --force $MODEL
+            fi
+          done
           if git status --porcelain | grep .
             then
               git commit -m "Update auto generated content"
