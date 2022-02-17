@@ -1,0 +1,83 @@
+module: open-traffic-generator-flow
+  +--rw flows
+     +--ro flow* [name]
+        +--ro name                -> ../state/name
+        +--ro state
+        |  +--ro name?             string
+        |  +--ro src-port?         string
+        |  +--ro dst-port?         string
+        |  +--ro mpls-label?       otg-types:mpls-label
+        |  +--ro src-ipv4?         otg-types:ipv4-address
+        |  +--ro dst-ipv4?         otg-types:ipv4-address
+        |  +--ro src-ipv6?         otg-types:ipv6-address
+        |  +--ro dst-ipv6?         otg-types:ipv6-address
+        |  +--ro filter?           string
+        |  +--ro loss-pct?         otg-types:ieeefloat32
+        |  +--ro out-frame-rate?   otg-types:ieeefloat32
+        |  +--ro in-frame-rate?    otg-types:ieeefloat32
+        |  +--ro out-rate?         otg-types:ieeefloat32
+        |  +--ro in-rate?          otg-types:ieeefloat32
+        |  +--ro counters
+        |     +--ro in-octets?    otg-types:counter64
+        |     +--ro in-pkts?      otg-types:counter64
+        |     +--ro out-octets?   otg-types:counter64
+        |     +--ro out-pkts?     otg-types:counter64
+        +--ro ingress-tracking
+        |  +--ro ingress-tracking* [src-port dst-port mpls-label src-ipv4 dst-ipv4 src-ipv6 dst-ipv6]
+        |     +--ro src-port           -> ../state/src-port
+        |     +--ro dst-port           -> ../state/dst-port
+        |     +--ro mpls-label         -> ../state/mpls-label
+        |     +--ro src-ipv4           -> ../state/src-ipv4
+        |     +--ro dst-ipv4           -> ../state/dst-ipv4
+        |     +--ro src-ipv6           -> ../state/src-ipv6
+        |     +--ro dst-ipv6           -> ../state/dst-ipv6
+        |     +--ro state
+        |     |  +--ro name?             string
+        |     |  +--ro src-port?         string
+        |     |  +--ro dst-port?         string
+        |     |  +--ro mpls-label?       otg-types:mpls-label
+        |     |  +--ro src-ipv4?         otg-types:ipv4-address
+        |     |  +--ro dst-ipv4?         otg-types:ipv4-address
+        |     |  +--ro src-ipv6?         otg-types:ipv6-address
+        |     |  +--ro dst-ipv6?         otg-types:ipv6-address
+        |     |  +--ro filter?           string
+        |     |  +--ro loss-pct?         otg-types:ieeefloat32
+        |     |  +--ro out-frame-rate?   otg-types:ieeefloat32
+        |     |  +--ro in-frame-rate?    otg-types:ieeefloat32
+        |     |  +--ro out-rate?         otg-types:ieeefloat32
+        |     |  +--ro in-rate?          otg-types:ieeefloat32
+        |     |  +--ro counters
+        |     |     +--ro in-octets?    otg-types:counter64
+        |     |     +--ro in-pkts?      otg-types:counter64
+        |     |     +--ro out-octets?   otg-types:counter64
+        |     |     +--ro out-pkts?     otg-types:counter64
+        |     +--ro egress-tracking
+        |        +--ro egress-tracking* [filter]
+        |           +--ro filter    -> ../state/filter
+        |           +--ro state
+        |              +--ro filter?           string
+        |              +--ro loss-pct?         otg-types:ieeefloat32
+        |              +--ro out-frame-rate?   otg-types:ieeefloat32
+        |              +--ro in-frame-rate?    otg-types:ieeefloat32
+        |              +--ro out-rate?         otg-types:ieeefloat32
+        |              +--ro in-rate?          otg-types:ieeefloat32
+        |              +--ro counters
+        |                 +--ro in-octets?    otg-types:counter64
+        |                 +--ro in-pkts?      otg-types:counter64
+        |                 +--ro out-octets?   otg-types:counter64
+        |                 +--ro out-pkts?     otg-types:counter64
+        +--ro egress-tracking
+           +--ro egress-tracking* [filter]
+              +--ro filter    -> ../state/filter
+              +--ro state
+                 +--ro filter?           string
+                 +--ro loss-pct?         otg-types:ieeefloat32
+                 +--ro out-frame-rate?   otg-types:ieeefloat32
+                 +--ro in-frame-rate?    otg-types:ieeefloat32
+                 +--ro out-rate?         otg-types:ieeefloat32
+                 +--ro in-rate?          otg-types:ieeefloat32
+                 +--ro counters
+                    +--ro in-octets?    otg-types:counter64
+                    +--ro in-pkts?      otg-types:counter64
+                    +--ro out-octets?   otg-types:counter64
+                    +--ro out-pkts?     otg-types:counter64
