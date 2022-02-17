@@ -61,41 +61,31 @@ module open-traffic-generator-flow {
           description
             "Operational state of the individual flow.";
 
-          uses flow-params;
           uses flow-state;
 
           container counters {
             description
               "Counters that correspond to the individual flow.";
 
-            uses flow-counters-state;
+            uses flow-counters;
           }
         }
 
-        container ingress-tracking {
+        container enumerations {
           config false;
 
           description
-            "Flow statistics grouped by ingress tracking filter.";
+            "Operational state of an enumerated flow.";
 
-          uses flow-ingress-tracking;
-        }
-
-        container egress-tracking {
-          config false;
-
-          description
-            "Flow statistics grouped by egress tracking filter.";
-
-          uses flow-egress-tracking;
+          uses flow-enumeration;
         }
       }
     }
   }
 
-  grouping flow-params {
+  grouping flow-state {
     description
-      "Parameters of an individual flow.";
+      "Operational state of the individual flow.";
 
     leaf name {
       type string;
@@ -103,59 +93,6 @@ module open-traffic-generator-flow {
         "An arbitary name used for the flow tracked by the system. This
         name must be unique for the flows tracked and exported by the target.";
     }
-
-    leaf src-port {
-      type string;
-      description
-        "Value of the source port for ingress tracking.";
-    }
-
-    leaf dst-port {
-      type string;
-      description
-        "Value of the destination port for ingress tracking.";
-    }
-
-    leaf mpls-label {
-      type otg-types:mpls-label;
-      description
-        "Value of the MPLS label for ingress tracking.";
-    }
-
-    leaf src-ipv4 {
-      type otg-types:ipv4-address;
-      description
-        "The source IPv4 value of the traffic header.";
-    }
-
-    leaf dst-ipv4 {
-      type otg-types:ipv4-address;
-      description
-        "The destination IPv4 value of the traffic header.";
-    }
-
-    leaf src-ipv6 {
-      type otg-types:ipv6-address;
-      description
-        "The source IPv6 value of the traffic header.";
-    }
-
-    leaf dst-ipv6 {
-      type otg-types:ipv6-address;
-      description
-        "The destination IPv6 value of the traffic header.";
-    }
-
-    leaf filter {
-      type string;
-      description
-        "Name of the filter on which the egress stats are tracked";
-    }
-  }
-
-  grouping flow-state {
-    description
-      "Operational state of the individual flow.";
 
     leaf loss-pct {
       type otg-types:ieeefloat32;
@@ -193,7 +130,7 @@ module open-traffic-generator-flow {
     }
   }
 
-  grouping flow-counters-state {
+  grouping flow-counters {
     description
       "Counters that correspond to an individual flow.";
 
@@ -224,146 +161,43 @@ module open-traffic-generator-flow {
     }
   }
 
-  grouping flow-ingress-tracking {
+  grouping flow-enumeration {
     description
-      "Flow statistics grouped by ingress tracking filter.";
+      "tbd";
 
-    list ingress-tracking {
-      key "src-port dst-port mpls-label src-ipv4 dst-ipv4 src-ipv6 dst-ipv6";
+    list enumeration {
+      key "name";
 
       config false;
 
       description
-        "If the ATE is configured to track incoming frames by their header
-        fields, this list will map combinations of values of those header
-        fields to the flow statistics specific to frames that match that
-        combination.";
+        "A flow of packets between one or more internal and external sources
+        and one or more internal and external destinations that the target
+        is able to track and report statistics on. Each flow is identified by
+        an arbitrary string identifier.";
 
-      leaf src-port {
+
+      leaf name {
         type leafref {
-          path "../state/src-port";
+          path "../state/name";
         }
         description
-          "Value of the source port for ingress tracking.";
-      }
-
-      leaf dst-port {
-        type leafref {
-          path "../state/dst-port";
-        }
-        description
-          "Value of the destination port for ingress tracking.";
-      }
-
-      leaf mpls-label {
-        type leafref {
-          path "../state/mpls-label";
-        }
-        description
-          "The MPLS label value of the traffic header.";
-      }
-
-      leaf src-ipv4 {
-        type leafref {
-          path "../state/src-ipv4";
-        }
-        description
-          "The src IPv4 value of the traffic header.";
-      }
-
-      leaf dst-ipv4 {
-        type leafref {
-          path "../state/dst-ipv4";
-        }
-        description
-          "The dst IPv4 value of the traffic header.";
-      }
-
-      leaf src-ipv6 {
-        type leafref {
-          path "../state/src-ipv6";
-        }
-        description
-          "The src IPv6 value of the traffic header.";
-      }
-
-      leaf dst-ipv6 {
-        type leafref {
-          path "../state/dst-ipv6";
-        }
-        description
-          "The dst IPv6 value of the traffic header.";
+          "Reference to the flow's name, acting as a key of the flow list.";
       }
 
       container state {
         config false;
 
         description
-          "Operational state of the flow by ingress tracking filter.";
-
-        uses flow-params;
-        uses flow-state;
-
-        container counters {
-          description
-            "Counters that correspond to the flow by ingress tracking filter.";
-
-          uses flow-counters-state;
-        }
-      }
-
-      container egress-tracking {
-        config false;
-
-        description
-          "Flow statistics grouped by egress tracking filter.";
-
-        uses flow-egress-tracking;
-      }
-    }
-  }
-
-  grouping flow-egress-tracking {
-    description
-      "Flow statistics grouped by egress tracking filter.";
-
-    list egress-tracking {
-      key "filter";
-
-      config false;
-
-      description
-        "If the ATE is configured to track outgoing frames by a header field,
-        this list will map values of that header field to the flow statistics
-        specific to frames that match that value.";
-
-      leaf filter {
-        type leafref {
-          path "../state/filter";
-        }
-        description
-          "The filter value of the egress tracking configuration.";
-      }
-
-      container state {
-        config false;
-
-        description
-          "Operational state of the flow by egress tracking filter.";
-
-        leaf filter {
-          type string;
-          description
-            "Value of the filter on which the egress stats are tracked";
-        }
+          "Operational state of the individual flow.";
 
         uses flow-state;
 
         container counters {
           description
-            "Counters that correspond to the flow by egress tracking filter.";
+            "Counters that correspond to the individual flow.";
 
-          uses flow-counters-state;
+          uses flow-counters;
         }
       }
     }
