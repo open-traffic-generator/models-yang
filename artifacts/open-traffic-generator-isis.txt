@@ -1,0 +1,36 @@
+module: open-traffic-generator-isis
+  +--rw isis-routers
+     +--ro isis-router* [name]
+        +--ro name     -> ../stOTG/name
+        +--ro stOTG
+           +--ro name?     string
+           +--ro level1
+           |  +--ro counters
+           |     +--ro sessions-up?        otg-types:counter64
+           |     +--ro sessions-flap?      otg-types:counter64
+           |     +--ro database-size?      otg-types:counter64
+           |     +--ro out-bcast-hellos?   otg-types:counter64
+           |     +--ro in-bcast-hellos?    otg-types:counter64
+           |     +--ro out-p2p-hellos?     otg-types:counter64
+           |     +--ro in-p2p-hellos?      otg-types:counter64
+           |     +--ro out-psnp?           otg-types:counter64
+           |     +--ro in-psnp?            otg-types:counter64
+           |     +--ro out-csnp?           otg-types:counter64
+           |     +--ro in-csnp?            otg-types:counter64
+           |     +--ro out-lsp?            otg-types:counter64
+           |     +--ro in-lsp?             otg-types:counter64
+           +--ro level2
+              +--ro counters
+                 +--ro sessions-up?        otg-types:counter64
+                 +--ro sessions-flap?      otg-types:counter64
+                 +--ro database-size?      otg-types:counter64
+                 +--ro out-bcast-hellos?   otg-types:counter64
+                 +--ro in-bcast-hellos?    otg-types:counter64
+                 +--ro out-p2p-hellos?     otg-types:counter64
+                 +--ro in-p2p-hellos?      otg-types:counter64
+                 +--ro out-psnp?           otg-types:counter64
+                 +--ro in-psnp?            otg-types:counter64
+                 +--ro out-csnp?           otg-types:counter64
+                 +--ro in-csnp?            otg-types:counter64
+                 +--ro out-lsp?            otg-types:counter64
+                 +--ro in-lsp?             otg-types:counter64
