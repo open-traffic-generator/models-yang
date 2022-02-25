@@ -1,8 +1,8 @@
-module open-traffic-generator-interface {
+module open-traffic-generator-discovery {
   yang-version "1";
 
-  namespace "http://github.com/open-traffic-generator/models/yang/models/otg-intf";
-  prefix "otg-intf";
+  namespace "http://github.com/open-traffic-generator/models/yang/models/otg-disc";
+  prefix "otg-disc";
 
   import open-traffic-generator-types {
     prefix "otg-types";
@@ -82,73 +82,6 @@ module open-traffic-generator-interface {
         "An arbitary name of an OTG interface determined by the OTG
         configuration.";
     }
-
-    leaf link {
-      type enumeration {
-        enum UP {
-          description
-            "Ready to pass packets.";
-        }
-        enum DOWN {
-          description
-            "Not ready to pass packets.";
-        }
-      }
-
-      description
-        "The current state of an OTG interface.";
-    }
-
-    leaf out-rate {
-      type otg-types:ieeefloat32;
-      units "bps";
-      description
-        "The current transmit rate of an OTG interface, measured in
-        bits per second.";
-    }
-
-    leaf in-rate {
-      type otg-types:ieeefloat32;
-      units "bps";
-      description
-        "The current receive rate of an OTG interface, measured in
-        bits per second.";
-    }
-
-    container counters {
-      description
-        "Counters of an OTG interface.";
-      uses interface-counters;
-    }
-  }
-
-  grouping interface-counters {
-    description
-      "Counters of an OTG interface.";
-
-      leaf out-octets {
-        type otg-types:counter64;
-        description
-          "The total number of octets transmitted on the interface.";
-      }
-
-      leaf in-octets {
-        type otg-types:counter64;
-        description
-          "The total number of octets received on the interface.";
-      }
-
-      leaf out-frames {
-        type otg-types:counter64;
-        description
-          "The total number of packets transmitted on the interface.";
-      }
-
-      leaf in-frames {
-        type otg-types:counter64;
-        description
-          "The total number of packets received on the interface.";
-      }
   }
 
   grouping ipv4-neighbors {
