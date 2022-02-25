@@ -37,10 +37,11 @@ jobs:
         run: |
           git config user.name "Github Actions Bot"
           git config user.email "actions@github.com"
-          git add -f artifacts/open-traffic-generator-interface.txt
+          git add -f artifacts/open-traffic-generator-port.txt
           git add -f artifacts/open-traffic-generator-bgp.txt
           git add -f artifacts/open-traffic-generator-isis.txt
           git add -f artifacts/open-traffic-generator-flow.txt
+          git add -f artifacts/open-traffic-generator-discovery.txt
           if git status --porcelain | grep .
             then
               git commit -m "Update auto generated content"
