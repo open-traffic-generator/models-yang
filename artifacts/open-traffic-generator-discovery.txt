@@ -1,0 +1,18 @@
+module: open-traffic-generator-discovery
+  +--rw interfaces
+     +--ro interface* [name]
+        +--ro name              -> ../state/name
+        +--ro state
+        |  +--ro name?   string
+        +--ro ipv4-neighbors
+        |  +--ro ipv4-neighbor* [ipv4-address]
+        |     +--ro ipv4-address    -> ../state/ipv4-address
+        |     +--ro state
+        |        +--ro ipv4-address?         otg-types:ipv4-address
+        |        +--ro link-layer-address?   otg-types:mac-address
+        +--ro ipv6-neighbors
+           +--ro ipv6-neighbor* [ipv6-address]
+              +--ro ipv6-address    -> ../state/ipv6-address
+              +--ro state
+                 +--ro ipv6-address?         otg-types:ipv6-address
+                 +--ro link-layer-address?   otg-types:mac-address

@@ -1,0 +1,14 @@
+module: open-traffic-generator-port
+  +--rw ports
+     +--ro port* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?       string
+           +--ro link?       enumeration
+           +--ro out-rate?   otg-types:ieeefloat32
+           +--ro in-rate?    otg-types:ieeefloat32
+           +--ro counters
+              +--ro out-octets?   otg-types:counter64
+              +--ro in-octets?    otg-types:counter64
+              +--ro out-frames?   otg-types:counter64
+              +--ro in-frames?    otg-types:counter64
