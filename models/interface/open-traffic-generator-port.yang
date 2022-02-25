@@ -1,0 +1,143 @@
+module open-traffic-generator-port {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/otg-port";
+  prefix "otg-port";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to ports that are
+    defined by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2022-01-21 {
+    description
+      "Initial revision";
+    reference "0.1.0";
+  }
+
+  grouping port-top {
+    description
+      "Top-level structural grouping for OTG port entries.";
+
+    container ports {
+      description
+        "Ports that are defined by an OTG.";
+
+      list port {
+        key "name";
+
+        config false;
+
+        description
+          "An individual port defined by an OTG.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to an port's name, acting as a key of
+            the ports list.";
+        }
+
+        container state {
+          description
+            "Operational state of an individual port.";
+          uses port-state;
+        }
+      }
+    }
+  }
+
+  grouping port-state {
+    description
+      "Operational state of an OTG port.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitary name of an OTG port determined by the OTG
+        configuration.";
+    }
+
+    leaf link {
+      type enumeration {
+        enum UP {
+          description
+            "Ready to pass packets.";
+        }
+        enum DOWN {
+          description
+            "Not ready to pass packets.";
+        }
+      }
+
+      description
+        "The current state of an OTG port.";
+    }
+
+    leaf out-rate {
+      type otg-types:ieeefloat32;
+      units "bps";
+      description
+        "The current transmit rate of an OTG port, measured in
+        bits per second.";
+    }
+
+    leaf in-rate {
+      type otg-types:ieeefloat32;
+      units "bps";
+      description
+        "The current receive rate of an OTG port, measured in
+        bits per second.";
+    }
+
+    container counters {
+      description
+        "Counters of an OTG port.";
+      uses port-counters;
+    }
+  }
+
+  grouping port-counters {
+    description
+      "Counters of an OTG port.";
+
+      leaf out-octets {
+        type otg-types:counter64;
+        description
+          "The total number of octets transmitted on the port.";
+      }
+
+      leaf in-octets {
+        type otg-types:counter64;
+        description
+          "The total number of octets received on the port.";
+      }
+
+      leaf out-frames {
+        type otg-types:counter64;
+        description
+          "The total number of packets transmitted on the port.";
+      }
+
+      leaf in-frames {
+        type otg-types:counter64;
+        description
+          "The total number of packets received on the port.";
+      }
+  }
+
+  uses port-top;
+}
