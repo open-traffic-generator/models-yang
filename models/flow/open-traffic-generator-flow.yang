@@ -36,7 +36,7 @@ module open-traffic-generator-flow {
         definition is outside of the context of the module.";
 
       list flow {
-        key "name";
+        key "name metric-group";
 
         config false;
 
@@ -52,7 +52,28 @@ module open-traffic-generator-flow {
             path "../state/name";
           }
           description
-            "Reference to the flow's name, acting as a key of the flow list.";
+            "Reference to the flow's name, acting as a key of the
+            flow list.";
+        }
+
+        leaf metric-group {
+          type leafref {
+            path "../state/metric-group";
+          }
+          description
+            "Reference to the flow's metric groups if any, acting as
+            a key of the flow list.
+            Example:
+            An OTG flow configuration can contain multiple
+            ingress and/or egress metric-group names.
+            The metric-group names are used by an OTG implementation
+            to enumerate flow metrics.
+            flow.packet.header.ipv4.src.metric-group.name = ipv4-src
+            flow.packet.header.ipv4.dst.metric-group.name = ipv4-dst
+            flow.metric-groups.egress.packet.ipv4.protocol.name = ipv4-prot
+
+            /flows/flow[name=f1,metric-group=ipv4-src,ipv4-dst,ipv4-prot]
+            ";
         }
 
         container state {
@@ -92,6 +113,12 @@ module open-traffic-generator-flow {
       description
         "An arbitary name used for the flow tracked by the system. This
         name must be unique for the flows tracked and exported by the target.";
+    }
+
+    leaf metric-group {
+      type string;
+      description
+        "Any metric groups and filters";
     }
 
     leaf loss-pct {

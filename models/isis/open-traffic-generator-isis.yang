@@ -45,25 +45,25 @@ module open-traffic-generator-isis {
 
         leaf name {
           type leafref {
-            path "../stOTG/name";
+            path "../state/name";
           }
           description
             "Reference to the ISIS router's name, acting as a key of
             the ISIS router list.";
         }
 
-        container stOTG {
+        container state {
           description
-            "Operational stOTG of an individual ISIS router.";
-          uses stOTG;
+            "Operational state of an individual ISIS router.";
+          uses isis-state;
         }
       }
     }
   }
 
-  grouping stOTG {
+  grouping isis-state {
     description
-      "Operational stOTG of an individual ISIS router.";
+      "Operational state of an individual ISIS router.";
 
     leaf name {
       type string;
@@ -72,34 +72,34 @@ module open-traffic-generator-isis {
         configuration.";
     }
 
+    container counters {
+      description
+        "Level counters of the ISIS router.";
+
+      uses isis-level-counters;
+    }
+  }
+
+  grouping isis-level-counters {
+    description
+      "Operational level counters of the ISIS router.";
+
     container level1 {
       description
-        "Level1 stOTG of the ISIS router.";
-      uses isis-stOTG;
+        "Level1 counters of the ISIS router.";
+      uses isis-counters;
     }
 
     container level2 {
       description
-        "Level2 stOTG of the ISIS router.";
-      uses isis-stOTG;
-    }
-  }
-
-  grouping isis-stOTG {
-    description
-      "Operational stOTG of the ISIS router.";
-
-    container counters {
-      description
-        "Counters of the ISIS router.";
-
+        "Level2 counters of the ISIS router.";
       uses isis-counters;
     }
   }
 
   grouping isis-counters {
     description
-      "Counters of the ISIS router.";
+      "Level counters of the ISIS router.";
 
     leaf sessions-up {
       type otg-types:counter64;
