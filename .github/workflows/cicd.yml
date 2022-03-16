@@ -24,9 +24,14 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Lint Models
+      - name: Setup GO
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+
+      - name: Make all targets
         run: |
-          make lint
+          make generate
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
