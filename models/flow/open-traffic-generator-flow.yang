@@ -36,7 +36,7 @@ module open-traffic-generator-flow {
         definition is outside of the context of the module.";
 
       list flow {
-        key "name metric-group";
+        key "name metric-groups filters";
 
         config false;
 
@@ -45,7 +45,6 @@ module open-traffic-generator-flow {
           and one or more internal and external destinations that the target
           is able to track and report statistics on. Each flow is identified by
           an arbitrary string identifier.";
-
 
         leaf name {
           type leafref {
@@ -56,24 +55,22 @@ module open-traffic-generator-flow {
             flow list.";
         }
 
-        leaf metric-group {
+        leaf metric-groups {
           type leafref {
-            path "../state/metric-group";
+            path "../state/metric-groups";
           }
           description
-            "Reference to the flow's metric groups if any, acting as
-            a key of the flow list.
-            Example:
-            An OTG flow configuration can contain multiple
-            ingress and/or egress metric-group names.
-            The metric-group names are used by an OTG implementation
-            to enumerate flow metrics.
-            flow.packet.header.ipv4.src.metric-group.name = ipv4-src
-            flow.packet.header.ipv4.dst.metric-group.name = ipv4-dst
-            flow.metric-groups.egress.packet.ipv4.protocol.name = ipv4-prot
+            "Reference to the flow's name, acting as a key of the
+            flow list.";
+        }
 
-            /flows/flow[name=f1,metric-group=ipv4-src,ipv4-dst,ipv4-prot]
-            ";
+        leaf filters {
+          type leafref {
+            path "../state/filters";
+          }
+          description
+            "Reference to the flow's name, acting as a key of the
+            flow list.";
         }
 
         container state {
@@ -91,15 +88,6 @@ module open-traffic-generator-flow {
             uses flow-counters;
           }
         }
-
-        container enumerations {
-          config false;
-
-          description
-            "Operational state of an enumerated flow.";
-
-          uses flow-enumeration;
-        }
       }
     }
   }
@@ -115,10 +103,24 @@ module open-traffic-generator-flow {
         name must be unique for the flows tracked and exported by the target.";
     }
 
-    leaf metric-group {
+    leaf metric-groups {
       type string;
       description
-        "Any metric groups and filters";
+        "A list of comma separated values used to enumerate
+        the state and counter values.";
+    }
+
+    leaf filters {
+      type string;
+      description
+        "A list of comma separated values used to filter metric-group
+        enumerations.";
+    }
+
+    leaf transmit {
+      type boolean;
+      description
+        "Whether or not the flow is transmitting";
     }
 
     leaf loss-pct {
@@ -185,48 +187,6 @@ module open-traffic-generator-flow {
       description
         "The total number of packets sent by the target for the flow. These
         packets may be generated or forwarded by the target.";
-    }
-  }
-
-  grouping flow-enumeration {
-    description
-      "tbd";
-
-    list enumeration {
-      key "name";
-
-      config false;
-
-      description
-        "A flow of packets between one or more internal and external sources
-        and one or more internal and external destinations that the target
-        is able to track and report statistics on. Each flow is identified by
-        an arbitrary string identifier.";
-
-
-      leaf name {
-        type leafref {
-          path "../state/name";
-        }
-        description
-          "Reference to the flow's name, acting as a key of the flow list.";
-      }
-
-      container state {
-        config false;
-
-        description
-          "Operational state of the individual flow.";
-
-        uses flow-state;
-
-        container counters {
-          description
-            "Counters that correspond to the individual flow.";
-
-          uses flow-counters;
-        }
-      }
     }
   }
 

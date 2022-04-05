@@ -1,34 +1,21 @@
 module: open-traffic-generator-flow
   +--rw flows
-     +--ro flow* [name metric-group]
-        +--ro name            -> ../state/name
-        +--ro metric-group    -> ../state/metric-group
+     +--ro flow* [name metric-groups filters]
+        +--ro name             -> ../state/name
+        +--ro metric-groups    -> ../state/metric-groups
+        +--ro filters          -> ../state/filters
         +--ro state
-        |  +--ro name?             string
-        |  +--ro metric-group?     string
-        |  +--ro loss-pct?         otg-types:ieeefloat32
-        |  +--ro out-frame-rate?   otg-types:ieeefloat32
-        |  +--ro in-frame-rate?    otg-types:ieeefloat32
-        |  +--ro out-rate?         otg-types:ieeefloat32
-        |  +--ro in-rate?          otg-types:ieeefloat32
-        |  +--ro counters
-        |     +--ro in-octets?    otg-types:counter64
-        |     +--ro in-pkts?      otg-types:counter64
-        |     +--ro out-octets?   otg-types:counter64
-        |     +--ro out-pkts?     otg-types:counter64
-        +--ro enumerations
-           +--ro enumeration* [name]
-              +--ro name     -> ../state/name
-              +--ro state
-                 +--ro name?             string
-                 +--ro metric-group?     string
-                 +--ro loss-pct?         otg-types:ieeefloat32
-                 +--ro out-frame-rate?   otg-types:ieeefloat32
-                 +--ro in-frame-rate?    otg-types:ieeefloat32
-                 +--ro out-rate?         otg-types:ieeefloat32
-                 +--ro in-rate?          otg-types:ieeefloat32
-                 +--ro counters
-                    +--ro in-octets?    otg-types:counter64
-                    +--ro in-pkts?      otg-types:counter64
-                    +--ro out-octets?   otg-types:counter64
-                    +--ro out-pkts?     otg-types:counter64
+           +--ro name?             string
+           +--ro metric-groups?    string
+           +--ro filters?          string
+           +--ro transmit?         boolean
+           +--ro loss-pct?         otg-types:ieeefloat32
+           +--ro out-frame-rate?   otg-types:ieeefloat32
+           +--ro in-frame-rate?    otg-types:ieeefloat32
+           +--ro out-rate?         otg-types:ieeefloat32
+           +--ro in-rate?          otg-types:ieeefloat32
+           +--ro counters
+              +--ro in-octets?    otg-types:counter64
+              +--ro in-pkts?      otg-types:counter64
+              +--ro out-octets?   otg-types:counter64
+              +--ro out-pkts?     otg-types:counter64
