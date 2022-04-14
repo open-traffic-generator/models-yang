@@ -36,7 +36,7 @@ module open-traffic-generator-flow {
         definition is outside of the context of the module.";
 
       list flow {
-        key "name metric-groups filters";
+        key "name";
 
         config false;
 
@@ -49,24 +49,6 @@ module open-traffic-generator-flow {
         leaf name {
           type leafref {
             path "../state/name";
-          }
-          description
-            "Reference to the flow's name, acting as a key of the
-            flow list.";
-        }
-
-        leaf metric-groups {
-          type leafref {
-            path "../state/metric-groups";
-          }
-          description
-            "Reference to the flow's name, acting as a key of the
-            flow list.";
-        }
-
-        leaf filters {
-          type leafref {
-            path "../state/filters";
           }
           description
             "Reference to the flow's name, acting as a key of the
@@ -101,20 +83,6 @@ module open-traffic-generator-flow {
       description
         "An arbitary name used for the flow tracked by the system. This
         name must be unique for the flows tracked and exported by the target.";
-    }
-
-    leaf metric-groups {
-      type string;
-      description
-        "A list of comma separated values used to enumerate
-        the state and counter values.";
-    }
-
-    leaf filters {
-      type string;
-      description
-        "A list of comma separated values used to filter metric-group
-        enumerations.";
     }
 
     leaf transmit {
