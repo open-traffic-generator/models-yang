@@ -1,13 +1,9 @@
 module: open-traffic-generator-flow
   +--rw flows
-     +--ro flow* [name metric-groups filters]
-        +--ro name             -> ../state/name
-        +--ro metric-groups    -> ../state/metric-groups
-        +--ro filters          -> ../state/filters
+     +--ro flow* [name]
+        +--ro name     -> ../state/name
         +--ro state
            +--ro name?             string
-           +--ro metric-groups?    string
-           +--ro filters?          string
            +--ro transmit?         boolean
            +--ro loss-pct?         otg-types:ieeefloat32
            +--ro out-frame-rate?   otg-types:ieeefloat32
