@@ -5,7 +5,6 @@ module open-traffic-generator-discovery {
   prefix "otg-disc";
 
   include open-traffic-generator-discovery-interfaces;
-  include open-traffic-generator-discovery-bgp;
 
   organization
     "OpenTrafficGenerator working group";
@@ -26,5 +25,4 @@ module open-traffic-generator-discovery {
   }
 
   uses interface-top;
-  uses bgp-top;
 }

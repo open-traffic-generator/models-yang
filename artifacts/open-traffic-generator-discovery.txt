@@ -1,49 +1,18 @@
 module: open-traffic-generator-discovery
   +--rw interfaces
-  |  +--ro interface* [name]
-  |     +--ro name              -> ../state/name
-  |     +--ro state
-  |     |  +--ro name?   string
-  |     +--ro ipv4-neighbors
-  |     |  +--ro ipv4-neighbor* [ipv4-address]
-  |     |     +--ro ipv4-address    -> ../state/ipv4-address
-  |     |     +--ro state
-  |     |        +--ro ipv4-address?         otg-types:ipv4-address
-  |     |        +--ro link-layer-address?   otg-types:mac-address
-  |     +--ro ipv6-neighbors
-  |        +--ro ipv6-neighbor* [ipv6-address]
-  |           +--ro ipv6-address    -> ../state/ipv6-address
-  |           +--ro state
-  |              +--ro ipv6-address?         otg-types:ipv6-address
-  |              +--ro link-layer-address?   otg-types:mac-address
-  +--rw bgp-peers
-     +--ro bgp-peer* [name]
-        +--ro name                     -> ../state/name
+     +--ro interface* [name]
+        +--ro name              -> ../state/name
         +--ro state
         |  +--ro name?   string
-        +--ro unicast-ipv4-prefixes
-        |  +--ro unicast-ipv4-prefix* [address prefix-length origin path-id]
-        |     +--ro address          -> ../state/address
-        |     +--ro prefix-length    -> ../state/prefix-length
-        |     +--ro origin           -> ../state/origin
-        |     +--ro path-id          -> ../state/path-id
+        +--ro ipv4-neighbors
+        |  +--ro ipv4-neighbor* [ipv4-address]
+        |     +--ro ipv4-address    -> ../state/ipv4-address
         |     +--ro state
-        |        +--ro address?                 otg-types:ipv4-address
-        |        +--ro prefix-length?           uint32
-        |        +--ro origin?                  enumeration
-        |        +--ro path-id?                 uint32
-        |        +--ro next-hop-ipv4-address?   otg-types:ipv4-address
-        |        +--ro next-hop-ipv6-address?   otg-types:ipv6-address
-        +--ro unicast-ipv6-prefixes
-           +--ro unicast-ipv6-prefix* [address prefix-length origin path-id]
-              +--ro address          -> ../state/address
-              +--ro prefix-length    -> ../state/prefix-length
-              +--ro origin           -> ../state/origin
-              +--ro path-id          -> ../state/path-id
+        |        +--ro ipv4-address?         otg-types:ipv4-address
+        |        +--ro link-layer-address?   otg-types:mac-address
+        +--ro ipv6-neighbors
+           +--ro ipv6-neighbor* [ipv6-address]
+              +--ro ipv6-address    -> ../state/ipv6-address
               +--ro state
-                 +--ro address?                 otg-types:ipv6-address
-                 +--ro prefix-length?           uint32
-                 +--ro origin?                  enumeration
-                 +--ro path-id?                 uint32
-                 +--ro next-hop-ipv4-address?   otg-types:ipv4-address
-                 +--ro next-hop-ipv6-address?   otg-types:ipv6-address
+                 +--ro ipv6-address?         otg-types:ipv6-address
+                 +--ro link-layer-address?   otg-types:mac-address

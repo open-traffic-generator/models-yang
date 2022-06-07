@@ -46,7 +46,6 @@ generate: lint ## go generation target
 		-path_structs_output_file=pkg/telemetry/device/device.go \
 		-split_pathstructs_by_module=true \
 		-schema_struct_path=github.com/open-traffic-generator/ixia-c-gnmi-server/pkg/telemetry \
-		-trim_path_package_oc_prefix=true \
 		-path_struct_package_suffix="" \
 		-base_import_path=github.com/open-traffic-generator/ixia-c-gnmi-server/pkg/telemetry \
 		-path_structs_split_files_count=3 \
