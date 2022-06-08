@@ -67,6 +67,10 @@ module open-traffic-generator-bgp {
             uses bgp-counters;
           }
         }
+
+        uses bgp-ipv4-prefixes;
+
+        uses bgp-ipv6-prefixes;
       }
     }
   }
@@ -202,6 +206,212 @@ module open-traffic-generator-bgp {
       type otg-types:counter64;
       description
         "The total number of NOTIFICATION messages sent.";
+    }
+  }
+
+  grouping bgp-ipv4-prefixes {
+    description
+      "Structural grouping for unicast ipv4 prefix information";
+
+    container unicast-ipv4-prefixes {
+      description
+        "Discovered unicast IPv4 prefixes of a BGP peer";
+
+      list unicast-ipv4-prefix {
+        key "address prefix-length origin path-id";
+
+        description
+          "A list of BGP unicast IPv4 prefixes.";
+
+        leaf address {
+          type leafref {
+            path "../state/address";
+          }
+          description
+            "Reference to a unicast IPv4 address, acting as part
+            of a key to the unicast-ipv4-prefix list.";
+        }
+
+        leaf prefix-length {
+          type leafref {
+            path "../state/prefix-length";
+          }
+          description
+            "Reference to a prefix-length, acting as part of a
+            key to the unicast-ipv4-prefix list.";
+        }
+
+        leaf origin {
+          type leafref {
+            path "../state/origin";
+          }
+          description
+            "Reference to an origin, acting as part of a
+            key to the unicast-ipv4-prefix list.";
+        }
+
+        leaf path-id {
+          type leafref {
+            path "../state/path-id";
+          }
+          description
+            "Reference to a path-id, acting as part of a
+            key to the unicast-ipv4-prefix list.";
+        }
+
+        container state {
+          description
+            "The container for unicast ipv4 prefix state.";
+
+          leaf address {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address.";
+          }
+
+          leaf prefix-length {
+            type uint32;
+            description
+              "The prefix length.";
+          }
+
+          leaf origin {
+            type enumeration {
+              enum IGP {
+                description
+                  "The origin is internal.";
+              }
+              enum EGP {
+                description
+                  "The origin is external.";
+              }
+            }
+            description
+              "The origin of the prefix.";
+          }
+
+          leaf path-id {
+            type uint32;
+            description
+              "The path id.";
+          }
+
+          leaf next-hop-ipv4-address {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address of the egress interface.";
+          }
+
+          leaf next-hop-ipv6-address {
+            type otg-types:ipv6-address;
+            description
+              "The IPv6 address of the egress interface.";
+          }
+        }
+      }
+    }
+  }
+
+  grouping bgp-ipv6-prefixes {
+    description
+      "Structural grouping for unicast ipv6 prefix information";
+
+    container unicast-ipv6-prefixes {
+      description
+        "Discovered unicast IPv6 prefixes of a BGP peer";
+
+      list unicast-ipv6-prefix {
+        key "address prefix-length origin path-id";
+
+        description
+          "A list of BGP unicast IPv6 prefixes.";
+
+        leaf address {
+          type leafref {
+            path "../state/address";
+          }
+          description
+            "Reference to a unicast IPv6 address, acting as part
+            of a key to the unicast-ipv6-prefix list.";
+        }
+
+        leaf prefix-length {
+          type leafref {
+            path "../state/prefix-length";
+          }
+          description
+            "Reference to a prefix-length, acting as part of a
+            key to the unicast-ipv6-prefix list.";
+        }
+
+        leaf origin {
+          type leafref {
+            path "../state/origin";
+          }
+          description
+            "Reference to an origin, acting as part of a
+            key to the unicast-ipv6-prefix list.";
+        }
+
+        leaf path-id {
+          type leafref {
+            path "../state/path-id";
+          }
+          description
+            "Reference to a path-id, acting as part of a
+            key to the unicast-ipv6-prefix list.";
+        }
+
+        container state {
+          description
+            "The container for unicast IPv6 prefix state.";
+
+          leaf address {
+            type otg-types:ipv6-address;
+            description
+              "The IPv6 address.";
+          }
+
+          leaf prefix-length {
+            type uint32;
+            description
+              "The prefix length.";
+          }
+
+          leaf origin {
+            type enumeration {
+              enum IGP {
+                description
+                  "The origin is internal.";
+              }
+              enum EGP {
+                description
+                  "The origin is external.";
+              }
+            }
+            description
+              "The origin of the prefix.";
+          }
+
+          leaf path-id {
+            type uint32;
+            description
+              "The path id.";
+          }
+
+          leaf next-hop-ipv4-address {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address of the egress interface.";
+          }
+
+          leaf next-hop-ipv6-address {
+            type otg-types:ipv6-address;
+            description
+              "The IPv6 address of the egress interface.";
+          }
+        }
+      }
     }
   }
 
