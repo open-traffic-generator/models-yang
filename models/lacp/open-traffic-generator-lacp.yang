@@ -1,0 +1,281 @@
+module open-traffic-generator-lacp {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/lacp";
+  prefix "otg-lacp";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to LACP sessions that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2022-06-08 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  // typedef statements
+
+  typedef lacp-activity-type {
+    type enumeration {
+      enum ACTIVE {
+        description
+          "Interface is an active member, i.e., will detect and
+          maintain aggregates";
+      }
+      enum PASSIVE {
+        description
+          "Interface is a passive member, i.e., it participates
+          with an active partner";
+      }
+    }
+    description
+      "Describes the LACP membership type, active or passive, of the
+      interface in the aggregate";
+    reference "IEEE 802.1AX-2008";
+  }
+
+  typedef lacp-timeout-type {
+    type enumeration {
+      enum LONG {
+        description
+          "Participant wishes to use long timeouts to detect
+          status of the aggregate, i.e., will expect less frequent
+          transmissions. Long timeout is 90 seconds.";
+      }
+      enum SHORT {
+        description
+          "Participant wishes to use short timeouts, i.e., expects
+          frequent transmissions to aggressively detect status
+          changes. Short timeout is 3 seconds.";
+      }
+    }
+    description
+      "Type of timeout used, short or long, by LACP participants";
+    reference "IEEE 802.1AX-2008";
+  }
+
+  typedef lacp-synchronization-type {
+    type enumeration {
+      enum IN_SYNC {
+        description
+          "Participant is in sync with the system id and key
+          transmitted";
+      }
+      enum OUT_SYNC {
+        description
+          "Participant is not in sync with the system id and key
+          transmitted";
+      }
+    }
+    description
+      "Indicates LACP synchronization state of participant";
+    reference "IEEE 802.1AX-2008";
+  }
+
+  typedef lacp-period-type {
+    type enumeration {
+      enum FAST {
+        description "Send LACP packets every second";
+      }
+      enum SLOW {
+        description "Send LACP packets every 30 seconds";
+      }
+    }
+    description
+      "Defines the period options for the time between sending
+      LACP messages";
+    reference "IEEE 802.3ad";
+  }
+
+  // grouping statements
+  grouping lacp-top {
+    description
+      "Top-level structural grouping for LACP session telemetry
+      entries.";
+
+    container lacp {
+        config false;
+
+        description
+        "LACP telemetry collected by the ATE device.";
+
+        uses lag-member-top;
+    }
+  }
+
+  grouping lag-member-top {
+    description
+      "Top-level structural grouping for LACP session telemetry for LAG-member
+      entries.";
+
+    container lag-members {
+      description
+        "LACP telemetry for LAG-member collected by the ATE device.";
+
+      list lag-member {
+        key "name";
+
+        config false;
+
+        description
+          "Each LAG member (port) is identified by an arbitrary string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the LAG member's name, acting as a key of the
+            LAG member list controlled by LACP.";
+        }
+
+        container state {
+          config false;
+
+          description
+            "Operational state of an individual LACP peer.";
+
+          uses lacp-state;
+
+          container counters {
+            description
+              "Counters of an individual LACP peer.";
+
+            uses lacp-counters;
+          }
+        }
+      }
+    }
+  }
+
+  grouping lacp-state {
+    description
+      "Operational state of the individual LACP peer.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitary name of the LACP peer determined by the ATE
+        configuration.";
+    }
+    leaf activity {
+      type lacp-activity-type;
+      description "Indicates participant is active or passive";
+    }
+
+    leaf timeout {
+      type lacp-timeout-type;
+      description
+        "The timeout type (short or long) used by the
+        participant";
+    }
+
+    leaf synchronization {
+      type lacp-synchronization-type;
+      description
+        "Indicates whether the participant is in-sync or
+        out-of-sync";
+    }
+
+    leaf aggregatable {
+      type boolean;
+      description
+        "A true value indicates that the participant will allow
+        the link to be used as part of the aggregate. A false
+        value indicates the link should be used as an individual
+        link";
+    }
+
+    leaf collecting {
+      type boolean;
+      description
+        "If true, the participant is collecting incoming frames
+        on the link, otherwise false";
+    }
+
+    leaf distributing {
+      type boolean;
+      description
+        "When true, the participant is distributing outgoing
+        frames; when false, distribution is disabled";
+    }
+
+    leaf system-id {
+      type otg-types:mac-address;
+      description
+        "MAC address that defines the local system ID for the
+        aggregate interface";
+    }
+
+    leaf oper-key {
+      type uint16;
+      description
+        "Current operational value of the key for the aggregate
+        interface";
+    }
+
+    leaf partner-id {
+      type otg-types:mac-address;
+      description
+        "MAC address representing the protocol partner's interface
+        system ID";
+    }
+
+    leaf partner-key {
+      type uint16;
+      description
+        "Operational value of the protocol partner's key";
+    }
+
+    leaf port-num {
+      type uint16;
+      description
+        "Port number of the local (actor) aggregation member";
+    }
+
+    leaf partner-port-num {
+      type uint16;
+      description
+        "Port number of the partner (remote) port for this member
+        port";
+    }
+  }
+
+  grouping lacp-counters {
+    description
+      "Counters of an indivdual LACP session.";
+
+    leaf lacp-in-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of LACPDUs received.";
+    }
+
+    leaf lacp-out-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of LACPDUs transmitted.";
+    }
+
+    leaf lacp-rx-errors {
+      type otg-types:counter64;
+      description
+        "The total number of LACPDUs receive packet errors.";
+    }
+  }
+
+  uses lacp-top;
+}
