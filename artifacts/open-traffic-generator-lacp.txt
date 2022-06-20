@@ -1,0 +1,23 @@
+module: open-traffic-generator-lacp
+  +--ro lacp
+     +--ro lag-members
+        +--ro lag-member* [name]
+           +--ro name     -> ../state/name
+           +--ro state
+              +--ro name?               string
+              +--ro activity?           lacp-activity-type
+              +--ro timeout?            lacp-timeout-type
+              +--ro synchronization?    lacp-synchronization-type
+              +--ro aggregatable?       boolean
+              +--ro collecting?         boolean
+              +--ro distributing?       boolean
+              +--ro system-id?          otg-types:mac-address
+              +--ro oper-key?           uint16
+              +--ro partner-id?         otg-types:mac-address
+              +--ro partner-key?        uint16
+              +--ro port-num?           uint16
+              +--ro partner-port-num?   uint16
+              +--ro counters
+                 +--ro lacp-in-pkts?     otg-types:counter64
+                 +--ro lacp-out-pkts?    otg-types:counter64
+                 +--ro lacp-rx-errors?   otg-types:counter64

@@ -1,0 +1,149 @@
+module open-traffic-generator-lag {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/otg-lag";
+  prefix "otg-lag";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to lags that are
+    defined by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2022-06-08 {
+    description
+      "Initial revision";
+    reference "0.1.0";
+  }
+
+  grouping lag-top {
+    description
+      "Top-level structural grouping for OTG lag entries.";
+
+    container lags {
+      description
+        "LAGs that are defined by an OTG.";
+
+      list lag {
+        key "name";
+
+        config false;
+
+        description
+          "An individual LAG defined by an OTG.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to an LAG's name, acting as a key of
+            the LAGs list.";
+        }
+
+        container state {
+          description
+            "Operational state of an individual LAG.";
+          uses lag-state;
+        }
+      }
+    }
+  }
+
+  grouping lag-state {
+    description
+      "Operational state of an OTG lag.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitary name of an OTG LAG determined by the OTG
+        configuration.";
+    }
+
+    leaf oper-status {
+      type enumeration {
+        enum UP {
+          description
+            "Indicates member ports >= min_links are in UP state";
+        }
+        enum DOWN {
+          description
+            "Indicates member ports < min_links are in UP state";
+        }
+      }
+
+      description
+        "The current operational state of an OTG LAG.";
+    }
+
+    leaf out-rate {
+      type otg-types:ieeefloat32;
+      units "bps";
+      description
+        "The current transmit rate of an OTG LAG, measured in
+        bits per second.";
+    }
+
+    leaf in-rate {
+      type otg-types:ieeefloat32;
+      units "bps";
+      description
+        "The current receive rate of an OTG LAG, measured in
+        bits per second.";
+    }
+
+    container counters {
+      description
+        "Counters of an OTG LAG.";
+      uses lag-counters;
+    }
+  }
+
+  grouping lag-counters {
+    description
+      "Counters of an OTG LAG.";
+
+      leaf member-ports-up {
+        type otg-types:counter64;
+        description
+          "The current *-number of member ports on the LAG in UP state.";
+      }
+
+      leaf out-octets {
+        type otg-types:counter64;
+        description
+          "The total number of octets transmitted on the LAG.";
+      }
+
+      leaf in-octets {
+        type otg-types:counter64;
+        description
+          "The total number of octets received on the LAG.";
+      }
+
+      leaf out-frames {
+        type otg-types:counter64;
+        description
+          "The total number of packets transmitted on the LAG.";
+      }
+
+      leaf in-frames {
+        type otg-types:counter64;
+        description
+          "The total number of packets received on the LAG.";
+      }
+  }
+
+  uses lag-top;
+}

@@ -47,6 +47,8 @@ jobs:
           git add -f artifacts/open-traffic-generator-isis.txt
           git add -f artifacts/open-traffic-generator-flow.txt
           git add -f artifacts/open-traffic-generator-discovery.txt
+          git add -f artifacts/open-traffic-generator-lag.txt
+          git add -f artifacts/open-traffic-generator-lacp.txt
           if git status --porcelain | grep .
             then
               git commit -m "Update auto generated content"
