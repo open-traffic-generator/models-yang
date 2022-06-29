@@ -218,7 +218,7 @@ module open-traffic-generator-bgp {
         "Discovered unicast IPv4 prefixes of a BGP peer";
 
       list unicast-ipv4-prefix {
-        key "address prefix-length origin path-id";
+        key "address prefix-length origin";
 
         description
           "A list of BGP unicast IPv4 prefixes.";
@@ -247,15 +247,6 @@ module open-traffic-generator-bgp {
           }
           description
             "Reference to an origin, acting as part of a
-            key to the unicast-ipv4-prefix list.";
-        }
-
-        leaf path-id {
-          type leafref {
-            path "../state/path-id";
-          }
-          description
-            "Reference to a path-id, acting as part of a
             key to the unicast-ipv4-prefix list.";
         }
 
@@ -321,7 +312,7 @@ module open-traffic-generator-bgp {
         "Discovered unicast IPv6 prefixes of a BGP peer";
 
       list unicast-ipv6-prefix {
-        key "address prefix-length origin path-id";
+        key "address prefix-length origin";
 
         description
           "A list of BGP unicast IPv6 prefixes.";
@@ -350,15 +341,6 @@ module open-traffic-generator-bgp {
           }
           description
             "Reference to an origin, acting as part of a
-            key to the unicast-ipv6-prefix list.";
-        }
-
-        leaf path-id {
-          type leafref {
-            path "../state/path-id";
-          }
-          description
-            "Reference to a path-id, acting as part of a
             key to the unicast-ipv6-prefix list.";
         }
 
