@@ -298,8 +298,121 @@ module open-traffic-generator-bgp {
             description
               "The IPv6 address of the egress interface.";
           }
+
+          list as-path {
+            description
+              "Unkeyed list of AS PATH segments
+              This attribute identifies the autonomous systems through which routing information
+              carried in this UPDATE message has passed.";
+            container state {
+              config false;
+              description
+                "Opstate data for AS-PATH segments";
+              uses bgp-as-path-attr-state;
+            }
+          }
+
+          list community {
+            description
+              "Unkeyed list of Optional community attributes.";
+            container state {
+              config false;
+              description
+                "Opstate data for communities";
+              uses bgp-community-state;
+            }
+          }
         }
       }
+    }
+  }
+
+  grouping bgp-as-path-attr-state {
+    description
+      "AS Path segments present in the received AS Path attribute.";
+    leaf segment-type {
+      type enumeration {
+        enum AS_SEQ {
+          description
+            "Segment type is as_seq.";
+        }
+        enum AS_SET {
+          description
+            "Segment type is as_set.";
+        }
+        enum AS_CONFED_SEQ {
+          description
+            "Segment type is as_confed_seq.";
+        }
+        enum AS_CONFED_SET {
+          description
+            "Segment type is as_confed_set.";
+        }
+      }
+      description
+        "Enumeration of segment types.";
+    }
+    leaf-list as_numbers {
+      type uint32;
+      description
+        "The AS numbers in this AS path segment.";
+    }
+
+  }
+
+  grouping bgp-community-state {
+    description
+      "The bgp-community-state";
+    leaf community-type {
+      type enumeration {
+        enum MANUAL_AS_NUMBER {
+          description
+            "Community type is custom.";
+        }
+        enum NO_EXPORT {
+          description
+            "Community type is no_export.";
+        }
+        enum NO_ADVERTISE {
+          description
+            "Community type is no_advertise.";
+        }
+        enum NO_EXPORT_SUBCONFED {
+          description
+            "Community type is no_export_subconfed.";
+        }
+        enum LLGR_STALE {
+          description
+            "Community type is llgr_stale.";
+        }
+        enum NO_LLGR {
+          description
+            "Community type is no_llgr.";
+        }
+      }
+      description
+        "The type of community AS number.";
+    }
+    container state {
+      config false;
+      description
+        "Opstate data for custom-as-number";
+      uses bgp-community-custom-as-number;
+    }
+  }
+
+  grouping bgp-community-custom-as-number {
+    description
+      "Custom as number and as value.";
+    leaf custom-as-number {
+      type uint16;
+      description
+        "First two octets of 32 bit community AS number between 0 to 65535.";
+    }
+    leaf custom-as-value {
+      type uint16;
+      description
+        "Last two octets of 32 bit community AS value between 0 to 65535.";
     }
   }
 
@@ -391,6 +504,30 @@ module open-traffic-generator-bgp {
             type otg-types:ipv6-address;
             description
               "The IPv6 address of the egress interface.";
+          }
+
+          list as-path {
+            description
+              "Unkeyed list of AS PATH segments
+              This attribute identifies the autonomous systems through which routing information
+              carried in this UPDATE message has passed.";
+            container state {
+              config false;
+              description
+                "Opstate data for AS-PATH segments";
+              uses bgp-as-path-attr-state;
+            }
+          }
+
+          list community {
+            description
+              "Unkeyed list of Optional community attributes.";
+            container state {
+              config false;
+              description
+                "Opstate data for communities";
+              uses bgp-community-state;
+            }
           }
         }
       }
