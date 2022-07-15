@@ -304,23 +304,13 @@ module open-traffic-generator-bgp {
               "Unkeyed list of AS PATH segments
               This attribute identifies the autonomous systems through which routing information
               carried in this UPDATE message has passed.";
-            container state {
-              config false;
-              description
-                "The container for AS-PATH segments";
               uses bgp-as-path-attr-state;
-            }
           }
 
           list community {
             description
               "Unkeyed list of optional community attributes present in the UPDATE message.";
-            container state {
-              config false;
-              description
-                "The container for communities";
               uses bgp-community-state;
-            }
           }
         }
       }
@@ -507,23 +497,13 @@ module open-traffic-generator-bgp {
               "Unkeyed list of AS PATH segments
               This attribute identifies the autonomous systems through which routing information
               carried in this UPDATE message has passed.";
-            container state {
-              config false;
-              description
-                "The container for AS-PATH segments";
               uses bgp-as-path-attr-state;
-            }
           }
 
           list community {
             description
               "Unkeyed list of optional community attributes present in the UPDATE message.";
-            container state {
-              config false;
-              description
-                "The container for communities";
               uses bgp-community-state;
-            }
           }
         }
       }
