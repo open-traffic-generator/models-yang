@@ -307,18 +307,18 @@ module open-traffic-generator-bgp {
             container state {
               config false;
               description
-                "Opstate data for AS-PATH segments";
+                "The container for AS-PATH segments";
               uses bgp-as-path-attr-state;
             }
           }
 
           list community {
             description
-              "Unkeyed list of Optional community attributes.";
+              "Unkeyed list of optional community attributes present in the UPDATE message.";
             container state {
               config false;
               description
-                "Opstate data for communities";
+                "The container for communities";
               uses bgp-community-state;
             }
           }
@@ -332,21 +332,21 @@ module open-traffic-generator-bgp {
       "AS Path segments present in the received AS Path attribute.";
     leaf segment-type {
       type enumeration {
-        enum AS_SEQ {
+        enum AS_SEQUENCE {
           description
-            "Segment type is as_seq.";
+            "Segment type is AS Sequence.";
         }
         enum AS_SET {
           description
-            "Segment type is as_set.";
+            "Segment type is AS Set.";
         }
-        enum AS_CONFED_SEQ {
+        enum AS_CONFED_SEQUENCE {
           description
-            "Segment type is as_confed_seq.";
+            "Segment type is AS Confederation Sequence";
         }
         enum AS_CONFED_SET {
           description
-            "Segment type is as_confed_set.";
+            "Segment type is AS Confederation Set.";
         }
       }
       description
@@ -362,7 +362,7 @@ module open-traffic-generator-bgp {
 
   grouping bgp-community-state {
     description
-      "The bgp-community-state";
+      "the information present in one received Community attribute";
     leaf community-type {
       type enumeration {
         enum MANUAL_AS_NUMBER {
@@ -510,18 +510,18 @@ module open-traffic-generator-bgp {
             container state {
               config false;
               description
-                "Opstate data for AS-PATH segments";
+                "The container for AS-PATH segments";
               uses bgp-as-path-attr-state;
             }
           }
 
           list community {
             description
-              "Unkeyed list of Optional community attributes.";
+              "Unkeyed list of optional community attributes present in the UPDATE message.";
             container state {
               config false;
               description
-                "Opstate data for communities";
+                "The container for communities";
               uses bgp-community-state;
             }
           }
