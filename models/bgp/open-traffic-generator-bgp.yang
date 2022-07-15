@@ -393,12 +393,8 @@ module open-traffic-generator-bgp {
       description
         "The type of community AS number.";
     }
-    container state {
-      config false;
-      description
-        "Opstate data for custom-as-number";
-      uses bgp-community-custom-as-number;
-    }
+
+    uses bgp-community-custom-as-number;
   }
 
   grouping bgp-community-custom-as-number {
