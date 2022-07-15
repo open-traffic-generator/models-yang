@@ -32,14 +32,12 @@ module: open-traffic-generator-bgp
         |        +--ro next-hop-ipv4-address?   otg-types:ipv4-address
         |        +--ro next-hop-ipv6-address?   otg-types:ipv6-address
         |        +--ro as-path* []
-        |        |  +--ro state
-        |        |     +--ro segment-type?   enumeration
-        |        |     +--ro as_numbers*     uint32
+        |        |  +--ro segment-type?   enumeration
+        |        |  +--ro as_numbers*     uint32
         |        +--ro community* []
-        |           +--ro state
-        |              +--ro community-type?     enumeration
-        |              +--ro custom-as-number?   uint16
-        |              +--ro custom-as-value?    uint16
+        |           +--ro community-type?     enumeration
+        |           +--ro custom-as-number?   uint16
+        |           +--ro custom-as-value?    uint16
         +--ro unicast-ipv6-prefixes
            +--ro unicast-ipv6-prefix* [address prefix-length origin]
               +--ro address          -> ../state/address
@@ -53,11 +51,9 @@ module: open-traffic-generator-bgp
                  +--ro next-hop-ipv4-address?   otg-types:ipv4-address
                  +--ro next-hop-ipv6-address?   otg-types:ipv6-address
                  +--ro as-path* []
-                 |  +--ro state
-                 |     +--ro segment-type?   enumeration
-                 |     +--ro as_numbers*     uint32
+                 |  +--ro segment-type?   enumeration
+                 |  +--ro as_numbers*     uint32
                  +--ro community* []
-                    +--ro state
-                       +--ro community-type?     enumeration
-                       +--ro custom-as-number?   uint16
-                       +--ro custom-as-value?    uint16
+                    +--ro community-type?     enumeration
+                    +--ro custom-as-number?   uint16
+                    +--ro custom-as-value?    uint16
