@@ -299,18 +299,66 @@ module open-traffic-generator-bgp {
               "The IPv6 address of the egress interface.";
           }
 
-          list as-path {
+          list as-paths {
+            key "index";
+
             description
-              "Unkeyed list of AS PATH segments
+              "List of AS PATH segments
               This attribute identifies the autonomous systems through which routing information
               carried in this UPDATE message has passed.";
+
+            leaf index {
+              type leafref {
+                path "../state/index";
+              }
+
+              description
+                "Reference to as-path index acting as a key of the as-path state attributes";
+            }
+
+            container state {
+              description
+                "State of an individual as-path.";
+
+              leaf index {
+                type uint32;
+
+                description
+                  "Auto-generated number for indexing each as-path attributes";
+              }
+
               uses bgp-as-path-attr-state;
+            }
           }
 
           list community {
+            key "index";
+
             description
-              "Unkeyed list of optional community attributes present in the UPDATE message.";
+              "List of optional community attributes present in the UPDATE message.";
+
+            leaf index {
+              type leafref {
+                path "../state/index";
+              }
+
+              description
+                "Reference to community index acting as a key of the community state attributes";
+            }
+
+            container state {
+              description
+                "State of an individual community.";
+
+              leaf index {
+                type uint32;
+
+                description
+                  "Auto-generated number for indexing each community attributes";
+              }
+
               uses bgp-community-state;
+            }
           }
         }
       }
@@ -492,18 +540,66 @@ module open-traffic-generator-bgp {
               "The IPv6 address of the egress interface.";
           }
 
-          list as-path {
+          list as-paths {
+            key "index";
+
             description
-              "Unkeyed list of AS PATH segments
+              "List of AS PATH segments
               This attribute identifies the autonomous systems through which routing information
               carried in this UPDATE message has passed.";
+
+            leaf index {
+              type leafref {
+                path "../state/index";
+              }
+
+              description
+                "Reference to as-path index acting as a key of the as-path state attributes";
+            }
+
+            container state {
+              description
+                "State of an individual as-path.";
+
+              leaf index {
+                type uint32;
+
+                description
+                  "Auto-generated number for indexing each as-path attributes";
+              }
+
               uses bgp-as-path-attr-state;
+            }
           }
 
           list community {
+            key "index";
+
             description
-              "Unkeyed list of optional community attributes present in the UPDATE message.";
+              "List of optional community attributes present in the UPDATE message.";
+
+            leaf index {
+              type leafref {
+                path "../state/index";
+              }
+
+              description
+                "Reference to community index acting as a key of the community state attributes";
+            }
+
+            container state {
+              description
+                "State of an individual community.";
+
+              leaf index {
+                type uint32;
+
+                description
+                  "Auto-generated number for indexing each community attributes";
+              }
+
               uses bgp-community-state;
+            }
           }
         }
       }
