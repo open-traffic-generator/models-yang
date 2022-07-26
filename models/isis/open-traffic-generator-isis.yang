@@ -81,7 +81,7 @@ module open-traffic-generator-isis {
 
     container link-state-databases {
       description
-        "link-state-database.";
+        "Link-State-Database.";
 
       uses lsp-states;
     }
@@ -107,566 +107,571 @@ module open-traffic-generator-isis {
   grouping lsp-states {
     description
       "This grouping defines ISIS LSP state information.";
-
-    list lsps {
-      key "system-id lsp-index";
+    container lsp-states {
       description
-        "The system ID of the router.";
-
-      leaf system-id {
-        type leafref {
-          path "../state/system-id";
-        }
+        "Test.";
+      list lsps {
+        key "system-id lsp-index";
         description
-        "A reference to the Link State PDU ID.";
-      }
-
-      leaf lsp-index {
-        type leafref {
-          path "../state/lsp-index";
-        }
-        description
-        "A reference to the Link State PDU ID.";
-      }
-
-      container state {
-        description
-          "State parameters of Link State PDU.";
+          "The system ID of the router.";
 
         leaf system-id {
-          type string;
-          description
-            "LSP ID of the LSP. The System ID for this emulated ISIS router, e.g. '640100010000'.";
-        }
-
-        leaf lsp-index{
-          type uint32;
-
-          description
-            "Specifies the LSP index.";
-        }
-
-        leaf maximum-area-addresses {
-          type uint8;
-          description
-            "Number of area addresses permitted for this ISs area. 0
-            indicates the IS only supports three area addresses (by
-            default). Any number inclusive of 1 and 254 indicates the
-            number of areas allowed.";
-        }
-
-        leaf version {
-          type uint8;
-          default 1;
-          description
-            "PDU version. This is set to 1.";
-        }
-
-        leaf version2 {
-          type uint8;
-          default 1;
-          description
-            "PDU version2. This is set to 1";
-        }
-
-        leaf id-length {
-          type uint8;
-          description
-            "Length of the ID field of NSAP addresses and NETs used in
-            this routing domain.";
-        }
-
-        leaf pdu-type {
-          type enumeration {
-            enum LEVEL_1 {
-              description "This enum describes ISIS level 1 PDU.";
-            }
-            enum LEVEL_2 {
-              description "This enum describes ISIS level 2 PDU.";
-            }
+          type leafref {
+            path "../state/system-id";
           }
           description
-            "Link State PDU type.";
+          "A reference to the Link State PDU ID.";
         }
 
-        leaf remaining-lifetime {
-          type uint16;
-          units "seconds";
-          description
-            "Remaining lifetime in seconds before the LSP expiration.";
-        }
-
-        leaf sequence-number {
-          type uint32;
-          description
-            "Sequence number of the LSP.";
-        }
-
-        leaf pdu-length {
-          type uint16;
-          description
-            "Total length of the LSP.";
-        }
-
-        leaf-list flags {
-          type enumeration {
-            enum PARTITION_REPAIR {
-              description
-                "When set, the originator supports partition
-                repair.";
-            }
-            enum ATTACHED_ERROR {
-              description
-                "When set, the originator is attached to another
-                area using the referred metric.";
-            }
-            enum ATTACHED_EXPENSE {
-              description
-                "When set, the originator is attached to another
-                area using the referred metric.";
-            }
-            enum ATTACHED_DELAY {
-              description
-                "When set, the originator is attached to another
-                area using the referred metric.";
-            }
-            enum ATTACHED_DEFAULT {
-              description
-                "When set, the originator is attached to another
-                area using the referred metric.";
-            }
-            enum OVERLOAD {
-              description
-                "When set, the originator is overloaded, and must
-                be avoided in path calculation.";
-            }
+        leaf lsp-index {
+          type leafref {
+            path "../state/lsp-index";
           }
           description
-            "LSP Type-Block flags.";
+          "A reference to the Link State PDU ID.";
         }
 
-        leaf is-type {
-          // type oc-isis-types:level-number; TODO
-          type uint8;
+        container state {
           description
-            "Type of neighboring system.";
-        }
-      }
-      container tlvs {
-        description
-          "This container defines Link State PDU State TLVs.";
+            "State parameters of Link State PDU.";
 
-        list tlv {
-          key "type";
-
-          description
-            "List of TLV types in the LSDB for the specified LSP.";
-
-          leaf type {
-            type leafref {
-              path "../state/type";
-            }
+          leaf system-id {
+            type string;
             description
-              "Reference to the TLV's type.";
+              "LSP ID of the LSP. The System ID for this emulated ISIS router, e.g. '640100010000'.";
           }
 
-          container state {
-            config false;
-            description
-              "Operational state parameters relating to the specified
-              LSP";
+          leaf lsp-index{
+            type uint32;
 
-            uses isis-lsdb-tlv-type-state;
+            description
+              "Specifies the LSP index.";
           }
 
-          container area-address {
+          leaf maximum-area-addresses {
+            type uint8;
             description
-              "This container defines TLV 1.";
+              "Number of area addresses permitted for this ISs area. 0
+              indicates the IS only supports three area addresses (by
+              default). Any number inclusive of 1 and 254 indicates the
+              number of areas allowed.";
+          }
 
-            container state {
-              description
-                "State parameters of ISIS TLV 1.";
+          leaf version {
+            type uint8;
+            default 1;
+            description
+              "PDU version. This is set to 1.";
+          }
 
-              leaf-list address {
-                type string;
-                description
-                  "Area adress(es) of the IS. Set of manual area
-                  addresses of this IS.";
-              reference
-                "ISO 10589 Intermediate System to Intermediate System
-                Intra- Domain Routeing Exchange Protocol for use in
-                Conjunction with the Protocol for Providing the
-                Connectionless-mode Network Service (ISO 8473 )
-                International Standard 10589: 2002, Second Edition,
-                2002. TLV 1.";
+
+          leaf version2 {
+            type uint8;
+            default 1;
+            description
+              "PDU version2. This is set to 1";
+          }
+
+
+          leaf id-length {
+            type uint8;
+            description
+              "Length of the ID field of NSAP addresses and NETs used in
+              this routing domain.";
+          }
+
+          leaf pdu-type {
+            type enumeration {
+              enum LEVEL_1 {
+                description "This enum describes ISIS level 1 PDU.";
+              }
+              enum LEVEL_2 {
+                description "This enum describes ISIS level 2 PDU.";
               }
             }
+            description
+              "Link State PDU type.";
           }
 
-          container hostname {
+          leaf remaining-lifetime {
+            type uint16;
+            units "seconds";
             description
-              "This container defines TLV 137.";
+              "Remaining lifetime in seconds before the LSP expiration.";
+          }
+
+          leaf sequence-number {
+            type uint32;
+            description
+              "Sequence number of the LSP.";
+          }
+
+          leaf pdu-length {
+            type uint16;
+            description
+              "Total length of the LSP.";
+          }
+
+          leaf-list flags {
+            type enumeration {
+              enum PARTITION_REPAIR {
+                description
+                  "When set, the originator supports partition
+                  repair.";
+              }
+              enum ATTACHED_ERROR {
+                description
+                  "When set, the originator is attached to another
+                  area using the referred metric.";
+              }
+              enum ATTACHED_EXPENSE {
+                description
+                  "When set, the originator is attached to another
+                  area using the referred metric.";
+              }
+              enum ATTACHED_DELAY {
+                description
+                  "When set, the originator is attached to another
+                  area using the referred metric.";
+              }
+              enum ATTACHED_DEFAULT {
+                description
+                  "When set, the originator is attached to another
+                  area using the referred metric.";
+              }
+              enum OVERLOAD {
+                description
+                  "When set, the originator is overloaded, and must
+                  be avoided in path calculation.";
+              }
+            }
+            description
+              "LSP Type-Block flags.";
+          }
+
+          leaf is-type {
+            // type oc-isis-types:level-number; TODO
+            type uint8;
+            description
+              "Type of neighboring system.";
+          }
+        }
+        container tlvs {
+          description
+            "This container defines Link State PDU State TLVs.";
+
+          list tlv {
+            key "type";
+
+            description
+              "List of TLV types in the LSDB for the specified LSP.";
+
+            leaf type {
+              type leafref {
+                path "../state/type";
+              }
+              description
+                "Reference to the TLV's type.";
+            }
 
             container state {
+              config false;
               description
-                "State parameters of ISIS TLV 137.";
+                "Operational state parameters relating to the specified
+                LSP";
 
-              leaf-list hostname {
-                type string;
+              uses isis-lsdb-tlv-type-state;
+            }
+
+            container area-address {
+              description
+                "This container defines TLV 1.";
+
+              container state {
                 description
-                  "Name of the node.";
+                  "State parameters of ISIS TLV 1.";
 
+                leaf-list address {
+                  type string;
+                  description
+                    "Area adress(es) of the IS. Set of manual area
+                    addresses of this IS.";
                 reference
-                  "RFC6233: IS-IS Registry Extension for Purges, RFC
-                  5301: Dynamic Hostname Exchange Mechanism for IS-IS.
-                  TLV 137";
+                  "ISO 10589 Intermediate System to Intermediate System
+                  Intra- Domain Routeing Exchange Protocol for use in
+                  Conjunction with the Protocol for Providing the
+                  Connectionless-mode Network Service (ISO 8473 )
+                  International Standard 10589: 2002, Second Edition,
+                  2002. TLV 1.";
+                }
+              }
+            }
+
+            container hostname {
+              description
+                "This container defines TLV 137.";
+
+              container state {
+                description
+                  "State parameters of ISIS TLV 137.";
+
+                leaf-list hostname {
+                  type string;
+                  description
+                    "Name of the node.";
+
+                  reference
+                    "RFC6233: IS-IS Registry Extension for Purges, RFC
+                    5301: Dynamic Hostname Exchange Mechanism for IS-IS.
+                    TLV 137";
+                }
+              }
+            }
+            container ipv4-interface-address {
+              description
+                "This container defines sub-TLV 6.";
+
+              container state {
+                description
+                  "State parameters of sub-TLV 6.";
+
+                leaf-list address {
+                  type otg-types:ipv4-address;
+                  description
+                    "A 4-octet IPv4 address for the interface described by
+                    the (main) TLV. This sub-TLV can occur multiple
+                    times.";
+                  reference
+                    "RFC5305: IS-IS Extensions for Traffic Engineering.
+                    sub-TLV 6: TLV 22,23,41,222,223.";
+                }
               }
             }
           }
-          container ipv4-interface-address {
+
+          container ipv4-neighbor-address {
             description
-              "This container defines sub-TLV 6.";
+              "This container defines sub-TLV 8.";
 
             container state {
               description
-                "State parameters of sub-TLV 6.";
+                "State parameters of sub-TLV 8.";
 
               leaf-list address {
                 type otg-types:ipv4-address;
                 description
-                  "A 4-octet IPv4 address for the interface described by
-                  the (main) TLV. This sub-TLV can occur multiple
-                  times.";
+                  "A single IPv4 address for a neighboring router on
+                  this link. This sub-TLV can occur multiple times.";
                 reference
                   "RFC5305: IS-IS Extensions for Traffic Engineering.
-                  sub-TLV 6: TLV 22,23,41,222,223.";
+                  sub-TLV 8: TLV 22,23, 141,222,223.";
               }
             }
           }
-        }
 
-        container ipv4-neighbor-address {
-          description
-            "This container defines sub-TLV 8.";
-
-          container state {
+          container ipv6-interface-address {
             description
-              "State parameters of sub-TLV 8.";
+              "This container defines sub-TLV 12.";
 
-            leaf-list address {
-              type otg-types:ipv4-address;
+            container state {
               description
-                "A single IPv4 address for a neighboring router on
-                this link. This sub-TLV can occur multiple times.";
-              reference
-                "RFC5305: IS-IS Extensions for Traffic Engineering.
-                sub-TLV 8: TLV 22,23, 141,222,223.";
+                "State parameters of sub-TLV 12.";
+
+              leaf-list address {
+                type otg-types:ipv6-address;
+                description
+                  "Contains a 16-octet IPv6 address for the interface
+                  described by the containing  Extended IS Reachability
+                  TLV. This sub-TLV can occur multiple times.";
+                reference
+                  "RFC6119: IPv6 Traffic Engineering in IS-IS. sub-TLV
+                  12: TLV 22,23,141,222,223.";
+              }
             }
           }
-        }
 
-        container ipv6-interface-address {
-          description
-            "This container defines sub-TLV 12.";
-
-          container state {
+          container ipv6-neighbor-address {
             description
-              "State parameters of sub-TLV 12.";
+              "This container defines sub-TLV 13.";
 
-            leaf-list address {
-              type otg-types:ipv6-address;
+            container state {
               description
-                "Contains a 16-octet IPv6 address for the interface
-                described by the containing  Extended IS Reachability
-                TLV. This sub-TLV can occur multiple times.";
-              reference
-                "RFC6119: IPv6 Traffic Engineering in IS-IS. sub-TLV
-                12: TLV 22,23,141,222,223.";
+                "State parameters of sub-TLV 13.";
+
+              leaf-list address {
+                type otg-types:ipv6-address;
+                description
+                  "Contains a 16-octet IPv6 address for a neighboring
+                  router on the link described by the (main) TLV. This
+                  sub-TLV can occur multiple times.";
+                reference
+                  "RFC6119: IPv6 Traffic Engineering in IS-IS. sub-TLV
+                  13: ISIS TLV 22,23,141,222,223.";
+              }
             }
           }
-        }
 
-        container ipv6-neighbor-address {
-          description
-            "This container defines sub-TLV 13.";
-
-          container state {
+          container ipv4-te-router-id {
             description
-              "State parameters of sub-TLV 13.";
+              "This container defines TLV 134.";
 
-            leaf-list address {
-              type otg-types:ipv6-address;
+            container state {
               description
-                "Contains a 16-octet IPv6 address for a neighboring
-                router on the link described by the (main) TLV. This
-                sub-TLV can occur multiple times.";
+                "State parameters of ISIS TLV 134.";
+
+              leaf-list router-id {
+                type otg-types:ipv4-address;
+                description
+                  "IPv4 Traffic Engineering router ID of the node. For
+                  traffic engineering, it guarantees that we have a
+                  single stable address that can always be referenced in
+                  a path that will be reachable from multiple hops away,
+                  regardless of the state of the node's interfaces.";
               reference
-                "RFC6119: IPv6 Traffic Engineering in IS-IS. sub-TLV
-                13: ISIS TLV 22,23,141,222,223.";
+                "RFC5305: IS-IS Extensions for Traffic Engineering. TLV
+                134.";
+              }
             }
           }
-        }
 
-        container ipv4-te-router-id {
-          description
-            "This container defines TLV 134.";
-
-          container state {
+          container is-reachability {
             description
-              "State parameters of ISIS TLV 134.";
+              "This container describes list of ISIS neighbors and
+              attributes.";
 
-            leaf-list router-id {
-              type otg-types:ipv4-address;
+            reference
+              "ISO 10589, Intermediate System to Intermediate System
+              Intra- Domain Routeing Exchange Protocol for use in
+              Conjunction with the Protocol for Providing the
+              Connectionless-mode Network Service (ISO 8473),
+              International Standard 10589: 2002, Second Edition,
+              2002. TLV 2.";
+
+            container neighbors {
               description
-                "IPv4 Traffic Engineering router ID of the node. For
-                traffic engineering, it guarantees that we have a
-                single stable address that can always be referenced in
-                a path that will be reachable from multiple hops away,
-                regardless of the state of the node's interfaces.";
-             reference
+                "This container describes IS neighbors.";
+
+              list neighbor {
+                key "system-id";
+                description
+                  "IS reachability neighbor attributes.";
+
+                leaf system-id {
+                  type leafref {
+                    path "../state/system-id";
+                  }
+                  description
+                    "Reference to the system ID of the neighbor.";
+                }
+
+                uses isis-lsdb-neighbor;
+              }
+            }
+          }
+
+
+          container ipv4-internal-reachability {
+            description
+              "This container defines list of IPv4 internal reachability
+              information.";
+
+            reference
+              "RFC1195: OSI ISIS for IP and Dual Environments. RFC5302:
+              Domain-Wide Prefix Distribution with Two-Level IS-IS. TLV
+              128";
+
+            container prefixes {
+              description
+                "This container describes IS prefixes.";
+
+              list prefix {
+                key "prefix";
+
+                description
+                  "IPv4 prefixes and internal reachability attributes.";
+
+                leaf prefix {
+                  type leafref {
+                    path "../state/prefix";
+                  }
+                  description
+                    "Reference to the IPv4 prefix";
+                }
+
+                uses ipv4-prefix-attributes-state;
+              }
+            }
+          }
+
+          container ipv4-external-reachability {
+            description
+            "This container defines list of IPv4 external reachability
+              information.";
+
+            reference
+              "RFC1195: OSI ISIS for IP and Dual Environments.  RFC5302:
+              Domain-Wide Prefix Distribution with Two-Level IS-IS. TLV
+              130";
+
+            container prefixes {
+              description
+                "This container describes IS neighbors.";
+
+              list prefix {
+                key "prefix";
+
+                description
+                  "IPv4 external prefixes and reachability attributes.";
+
+                leaf prefix {
+                  type leafref {
+                    path "../state/prefix";
+                  }
+                  description
+                    "Reference to the IPv4 prefix.";
+                }
+
+                uses ipv4-prefix-attributes-state;
+              }
+            }
+          }
+
+          container extended-is-reachability {
+            description
+              "This container defines list of ISIS extended reachability
+              neighbors.";
+
+            reference
               "RFC5305: IS-IS Extensions for Traffic Engineering. TLV
-              134.";
+              22.";
+
+            uses isis-lsdb-common-extisreach-neighbors;
+          }
+
+          container extended-ipv4-reachability {
+            description
+              "This container defines list of IPv4 extended reachability
+              information.";
+
+            reference
+              "RFC5305: IS-IS Extensions for Traffic Engineering. TLV
+              135";
+
+            container prefixes {
+              description
+                "This container describes IS prefixes.";
+
+              list prefix {
+                key "prefix";
+
+                description
+                  "This list describes IPv4 extended prefixes and
+                  attributes.";
+
+                leaf prefix {
+                  type leafref {
+                    path "../state/prefix";
+                  }
+                  description
+                    "Reference to the IPv4 prefix that the TLV describes
+                    the attributes of.";
+                }
+
+                uses ipv4-prefix-extended-state;
+              }
             }
           }
-        }
 
-        container is-reachability {
-          description
-            "This container describes list of ISIS neighbors and
-            attributes.";
-
-           reference
-             "ISO 10589, Intermediate System to Intermediate System
-             Intra- Domain Routeing Exchange Protocol for use in
-             Conjunction with the Protocol for Providing the
-             Connectionless-mode Network Service (ISO 8473),
-             International Standard 10589: 2002, Second Edition,
-             2002. TLV 2.";
-
-          container neighbors {
+          container ipv6-reachability {
             description
-              "This container describes IS neighbors.";
+              "This container defines list of IPv6 reachability
+              information.";
 
-            list neighbor {
-              key "system-id";
+            reference
+              "RFC5308: Routing IPv6 with IS-IS. TLV 236";
+
+            container prefixes {
               description
-                "IS reachability neighbor attributes.";
+                "This container describes IS prefixes.";
 
-              leaf system-id {
-                type leafref {
-                  path "../state/system-id";
-                }
+              list prefix {
+                key "prefix";
+
                 description
-                  "Reference to the system ID of the neighbor.";
-              }
+                  "This list defines IPv6 extended prefix attributes.";
 
-              uses isis-lsdb-neighbor;
+                leaf prefix {
+                  type leafref {
+                    path "../state/prefix";
+                  }
+                  description
+                    "Reference to the IPv6 prefix that the TLV
+                    corresponds to.";
+                }
+
+                uses ipv6-prefix-extended-state;
+              }
             }
           }
-        }
 
-
-        container ipv4-internal-reachability {
-          description
-            "This container defines list of IPv4 internal reachability
-            information.";
-
-          reference
-            "RFC1195: OSI ISIS for IP and Dual Environments. RFC5302:
-            Domain-Wide Prefix Distribution with Two-Level IS-IS. TLV
-            128";
-
-          container prefixes {
+          container multi-topology {
             description
-              "This container describes IS prefixes.";
+              "This container defines the topology supported.";
 
-            list prefix {
-              key "prefix";
+            reference
+              "RFC5120: M-ISIS: Multi Topology (MT) Routing in
+              Intermediate System to Intermediate Systems (IS-ISs). TLV
+              229";
 
+            container topologies {
               description
-                "IPv4 prefixes and internal reachability attributes.";
+                "This container describes IS topologies.";
 
-              leaf prefix {
-                type leafref {
-                  path "../state/prefix";
-                }
+              list topology {
+                key "mt-id";
+
                 description
-                  "Reference to the IPv4 prefix";
-              }
-
-              uses ipv4-prefix-attributes-state;
-            }
-          }
-        }
-
-        container ipv4-external-reachability {
-          description
-           "This container defines list of IPv4 external reachability
-            information.";
-
-          reference
-            "RFC1195: OSI ISIS for IP and Dual Environments.  RFC5302:
-            Domain-Wide Prefix Distribution with Two-Level IS-IS. TLV
-            130";
-
-          container prefixes {
-            description
-              "This container describes IS neighbors.";
-
-            list prefix {
-              key "prefix";
-
-              description
-                "IPv4 external prefixes and reachability attributes.";
-
-              leaf prefix {
-                type leafref {
-                  path "../state/prefix";
-                }
-                description
-                  "Reference to the IPv4 prefix.";
-              }
-
-              uses ipv4-prefix-attributes-state;
-            }
-          }
-        }
-
-        container extended-is-reachability {
-          description
-            "This container defines list of ISIS extended reachability
-            neighbors.";
-
-          reference
-            "RFC5305: IS-IS Extensions for Traffic Engineering. TLV
-            22.";
-
-          uses isis-lsdb-common-extisreach-neighbors;
-        }
-
-        container extended-ipv4-reachability {
-          description
-            "This container defines list of IPv4 extended reachability
-            information.";
-
-          reference
-            "RFC5305: IS-IS Extensions for Traffic Engineering. TLV
-            135";
-
-          container prefixes {
-            description
-              "This container describes IS prefixes.";
-
-            list prefix {
-              key "prefix";
-
-              description
-                "This list describes IPv4 extended prefixes and
-                attributes.";
-
-              leaf prefix {
-                type leafref {
-                  path "../state/prefix";
-                }
-                description
-                  "Reference to the IPv4 prefix that the TLV describes
-                  the attributes of.";
-              }
-
-              uses ipv4-prefix-extended-state;
-            }
-          }
-        }
-
-        container ipv6-reachability {
-          description
-            "This container defines list of IPv6 reachability
-            information.";
-
-          reference
-            "RFC5308: Routing IPv6 with IS-IS. TLV 236";
-
-          container prefixes {
-            description
-              "This container describes IS prefixes.";
-
-            list prefix {
-              key "prefix";
-
-              description
-                "This list defines IPv6 extended prefix attributes.";
-
-              leaf prefix {
-                type leafref {
-                  path "../state/prefix";
-                }
-                description
-                  "Reference to the IPv6 prefix that the TLV
-                  corresponds to.";
-              }
-
-              uses ipv6-prefix-extended-state;
-            }
-          }
-        }
-
-        container multi-topology {
-          description
-            "This container defines the topology supported.";
-
-          reference
-            "RFC5120: M-ISIS: Multi Topology (MT) Routing in
-            Intermediate System to Intermediate Systems (IS-ISs). TLV
-            229";
-
-          container topologies {
-            description
-              "This container describes IS topologies.";
-
-            list topology {
-              key "mt-id";
-
-              description
-                "This list describes a topology.";
-
-              leaf mt-id {
-                type leafref {
-                  path "../state/mt-id";
-                }
-                description
-                  "Reference to the multi-topology ID being described
-                  by the list entry.";
-              }
-
-              container state {
-                description
-                  "State parameters of IS multi-topology TLV 229.";
+                  "This list describes a topology.";
 
                 leaf mt-id {
-                  type uint16 {
-                    range "0 .. 4095";
+                  type leafref {
+                    path "../state/mt-id";
                   }
                   description
-                    "Multi-topology ID.";
+                    "Reference to the multi-topology ID being described
+                    by the list entry.";
                 }
 
-                leaf attributes {
-                  type enumeration {
-                    enum OVERLOAD {
-                      description
-                        "When set, node is overloaded, still part of
-                        the topology but cannot be used for transit.";
-                    }
-                    enum ATTACHED {
-                      description
-                        "When set, node is attached to another area
-                        using the referred metric and can be used as
-                        default gateway.";
-                    }
-                  }
+                container state {
                   description
-                    "Attributes of the LSP for the associated
-                    topology.";
+                    "State parameters of IS multi-topology TLV 229.";
+
+                  leaf mt-id {
+                    type uint16 {
+                      range "0 .. 4095";
+                    }
+                    description
+                      "Multi-topology ID.";
+                  }
+
+                  leaf attributes {
+                    type enumeration {
+                      enum OVERLOAD {
+                        description
+                          "When set, node is overloaded, still part of
+                          the topology but cannot be used for transit.";
+                      }
+                      enum ATTACHED {
+                        description
+                          "When set, node is attached to another area
+                          using the referred metric and can be used as
+                          default gateway.";
+                      }
+                    }
+                    description
+                      "Attributes of the LSP for the associated
+                      topology.";
+                  }
                 }
               }
             }
