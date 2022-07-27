@@ -20,10 +20,11 @@ module: open-traffic-generator-bgp
         |     +--ro in-notifications?     otg-types:counter64
         |     +--ro out-notifications?    otg-types:counter64
         +--ro unicast-ipv4-prefixes
-        |  +--ro unicast-ipv4-prefix* [address prefix-length origin]
+        |  +--ro unicast-ipv4-prefix* [address prefix-length origin path-id]
         |     +--ro address          -> ../state/address
         |     +--ro prefix-length    -> ../state/prefix-length
         |     +--ro origin           -> ../state/origin
+        |     +--ro path-id          -> ../state/path-id
         |     +--ro state
         |        +--ro address?                 otg-types:ipv4-address
         |        +--ro prefix-length?           uint32
@@ -39,10 +40,11 @@ module: open-traffic-generator-bgp
         |           +--ro custom-as-number?   uint16
         |           +--ro custom-as-value?    uint16
         +--ro unicast-ipv6-prefixes
-           +--ro unicast-ipv6-prefix* [address prefix-length origin]
+           +--ro unicast-ipv6-prefix* [address prefix-length origin path-id]
               +--ro address          -> ../state/address
               +--ro prefix-length    -> ../state/prefix-length
               +--ro origin           -> ../state/origin
+              +--ro path-id          -> ../state/path-id
               +--ro state
                  +--ro address?                 otg-types:ipv6-address
                  +--ro prefix-length?           uint32
