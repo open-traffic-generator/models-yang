@@ -313,11 +313,109 @@ module open-traffic-generator-bgp {
             description
               "The IPv6 address of the egress interface.";
           }
+
+          list as-path {
+            description
+              "Unkeyed list of AS PATH segments
+              This attribute identifies the autonomous systems through which routing information
+              carried in this UPDATE message has passed.";
+              uses bgp-as-path-attr-state;
+          }
+
+          list community {
+            description
+              "Unkeyed list of optional community attributes present in the UPDATE message.";
+              uses bgp-community-state;
+          }
         }
       }
     }
   }
 
+  grouping bgp-as-path-attr-state {
+    description
+      "AS Path segments present in the received AS Path attribute.";
+    leaf segment-type {
+      type enumeration {
+        enum AS_SEQUENCE {
+          description
+            "Segment type is AS Sequence.";
+        }
+        enum AS_SET {
+          description
+            "Segment type is AS Set.";
+        }
+        enum AS_CONFED_SEQUENCE {
+          description
+            "Segment type is AS Confederation Sequence";
+        }
+        enum AS_CONFED_SET {
+          description
+            "Segment type is AS Confederation Set.";
+        }
+      }
+      description
+        "Enumeration of segment types.";
+    }
+    leaf-list as_numbers {
+      type uint32;
+      description
+        "The AS numbers in this AS path segment.";
+    }
+
+  }
+
+  grouping bgp-community-state {
+    description
+      "the information present in one received Community attribute";
+    leaf community-type {
+      type enumeration {
+        enum MANUAL_AS_NUMBER {
+          description
+            "Community type is custom.";
+        }
+        enum NO_EXPORT {
+          description
+            "Community type is no_export.";
+        }
+        enum NO_ADVERTISE {
+          description
+            "Community type is no_advertise.";
+        }
+        enum NO_EXPORT_SUBCONFED {
+          description
+            "Community type is no_export_subconfed.";
+        }
+        enum LLGR_STALE {
+          description
+            "Community type is llgr_stale.";
+        }
+        enum NO_LLGR {
+          description
+            "Community type is no_llgr.";
+        }
+      }
+      description
+        "The type of community AS number.";
+    }
+
+    uses bgp-community-custom-as-number;
+  }
+
+  grouping bgp-community-custom-as-number {
+    description
+      "Custom as number and as value.";
+    leaf custom-as-number {
+      type uint16;
+      description
+        "First two octets of 32 bit community AS number between 0 to 65535.";
+    }
+    leaf custom-as-value {
+      type uint16;
+      description
+        "Last two octets of 32 bit community AS value between 0 to 65535.";
+    }
+  }
 
   grouping bgp-ipv6-prefixes {
     description
@@ -423,9 +521,24 @@ module open-traffic-generator-bgp {
             description
               "The IPv6 address of the egress interface.";
           }
+
+          list as-path {
+            description
+              "Unkeyed list of AS PATH segments
+              This attribute identifies the autonomous systems through which routing information
+              carried in this UPDATE message has passed.";
+              uses bgp-as-path-attr-state;
+          }
+
+          list community {
+            description
+              "Unkeyed list of optional community attributes present in the UPDATE message.";
+              uses bgp-community-state;
+          }
         }
       }
     }
   }
+
   uses bgp-top;
 }
