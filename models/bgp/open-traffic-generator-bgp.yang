@@ -296,7 +296,7 @@ module open-traffic-generator-bgp {
             description
               "If the route is learned from a neighbor, the path-id
               corresponds to the path-id for the route in the
-              corresponding adj-rib-in-post table. If the route is
+              corresponding adj-rib-in-post table.  If the route is
               injected from another protocol, or the neighbor does not
               support BGP add-paths, the path-id should be set
               to zero, also the default value.";
@@ -366,7 +366,7 @@ module open-traffic-generator-bgp {
           }
           description
             "Reference to an path-id, acting as part of a
-            key to the unicast-ipv4-prefix list.";
+            key to the unicast-ipv6-prefix list.";
         }
 
         container state {
@@ -406,7 +406,7 @@ module open-traffic-generator-bgp {
             description
               "If the route is learned from a neighbor, the path-id
               corresponds to the path-id for the route in the
-              corresponding adj-rib-in-post table. If the route is
+              corresponding adj-rib-in-post table.  If the route is
               injected from another protocol, or the neighbor does not
               support BGP add-paths, the path-id should be set
               to zero, also the default value.";
