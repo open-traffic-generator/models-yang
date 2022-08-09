@@ -61,7 +61,7 @@ module: open-traffic-generator-isis
                        |        +--ro prefix    -> ../state/prefix
                        |        +--ro state
                        |           +--ro prefix?                otg-types:ipv4-address
-                       |           +--ro prefix-lenght?         uint32
+                       |           +--ro prefix-length?         uint32
                        |           +--ro redistribution-type?   enumeration
                        |           +--ro origin-type?           enumeration
                        |           +--ro default-metric?        uint8
@@ -71,7 +71,7 @@ module: open-traffic-generator-isis
                        |        +--ro prefix    -> ../state/prefix
                        |        +--ro state
                        |           +--ro prefix?                otg-types:ipv4-address
-                       |           +--ro prefix-lenght?         uint32
+                       |           +--ro prefix-length?         uint32
                        |           +--ro redistribution-type?   enumeration
                        |           +--ro origin-type?           enumeration
                        |           +--ro default-metric?        uint8
