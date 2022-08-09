@@ -465,9 +465,6 @@ module open-traffic-generator-isis {
           "System-ID of IS neighbor, e.g. '640100010000'.";
       }
     }
-
-    //uses isis-lsdb-common-metric-specification;
-
   }
 
   grouping isis-lsdb-common-metric-specification {
@@ -522,7 +519,7 @@ module open-traffic-generator-isis {
           "IPv4 prefix contained within reachability TLVs.";
       }
 
-      leaf prefix-lenght {
+      leaf prefix-length {
         type uint32;
         description
           "The length of the IPv4 prefix.";
