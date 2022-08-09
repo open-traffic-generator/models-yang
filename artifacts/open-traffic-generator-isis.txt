@@ -46,81 +46,61 @@ module: open-traffic-generator-isis
                     |  +--ro flags*                enumeration
                     |  +--ro is-type               uint8
                     +--ro tlvs
-                       +--ro tlv* [type]
-                          +--ro type                          -> ../state/type
-                          +--ro state
-                          |  +--ro type    uint8
-                          +--ro hostname
-                          |  +--ro state
-                          |     +--ro hostname*   string
-                          +--ro is-reachability
-                          |  +--ro neighbors
-                          |     +--ro neighbor* [system-id]
-                          |        +--ro system-id    -> ../state/system-id
-                          |        +--ro state
-                          |           +--ro system-id    otg-types:hex-string
-                          +--ro ipv4-internal-reachability
-                          |  +--ro prefixes
-                          |     +--ro prefix* [prefix]
-                          |        +--ro prefix            -> ../state/prefix
-                          |        +--ro state
-                          |        |  +--ro up-down?   boolean
-                          |        |  +--ro prefix?    otg-types:ipv4-address
-                          |        +--ro default-metric
-                          |           +--ro state
-                          |              +--ro flags?    enumeration
-                          |              +--ro metric?   uint8
-                          +--ro ipv4-external-reachability
-                          |  +--ro prefixes
-                          |     +--ro prefix* [prefix]
-                          |        +--ro prefix            -> ../state/prefix
-                          |        +--ro state
-                          |        |  +--ro up-down?   boolean
-                          |        |  +--ro prefix?    otg-types:ipv4-address
-                          |        +--ro default-metric
-                          |           +--ro state
-                          |              +--ro flags?    enumeration
-                          |              +--ro metric?   uint8
-                          +--ro extended-is-reachability
-                          |  +--ro neighbors
-                          |     +--ro neighbor* [system-id]
-                          |        +--ro system-id    -> ../state/system-id
-                          |        +--ro state
-                          |           +--ro system-id?   otg-types:hex-string
-                          +--ro extended-ipv4-reachability
-                          |  +--ro prefixes
-                          |     +--ro prefix* [prefix]
-                          |        +--ro prefix     -> ../state/prefix
-                          |        +--ro state
-                          |        |  +--ro up-down?   boolean
-                          |        |  +--ro s-bit?     boolean
-                          |        |  +--ro prefix?    otg-types:ipv4-address
-                          |        |  +--ro metric?    uint32
-                          |        +--ro subtlvs
-                          |           +--ro subtlv* [type]
-                          |              +--ro type     -> ../state/type
-                          |              +--ro state
-                          |              |  +--ro type    uint8
-                          |              +--ro flags
-                          |                 +--ro state
-                          |                    +--ro type     uint8
-                          |                    +--ro flags*   enumeration
-                          +--ro ipv6-reachability
-                             +--ro prefixes
-                                +--ro prefix* [prefix]
-                                   +--ro prefix     -> ../state/prefix
-                                   +--ro state
-                                   |  +--ro up-down?   boolean
-                                   |  +--ro x-bit?     boolean
-                                   |  +--ro s-bit?     boolean
-                                   |  +--ro prefix?    otg-types:ipv6-address
-                                   |  +--ro metric?    uint32
-                                   +--ro subtlvs
-                                      +--ro subtlv* [type]
-                                         +--ro type     -> ../state/type
-                                         +--ro state
-                                         |  +--ro type    uint8
-                                         +--ro flags
-                                            +--ro state
-                                               +--ro type     uint8
-                                               +--ro flags*   enumeration
+                       +--ro hostnames
+                       |  +--ro state
+                       |     +--ro hostname*   string
+                       +--ro is-reachability
+                       |  +--ro neighbors
+                       |     +--ro neighbor* [system-id]
+                       |        +--ro system-id    -> ../state/system-id
+                       |        +--ro state
+                       |           +--ro system-id    otg-types:hex-string
+                       +--ro ipv4-internal-reachability
+                       |  +--ro prefixes
+                       |     +--ro prefix* [prefix]
+                       |        +--ro prefix    -> ../state/prefix
+                       |        +--ro state
+                       |           +--ro prefix?                otg-types:ipv4-address
+                       |           +--ro prefix-lenght?         uint32
+                       |           +--ro redistribution-type?   enumeration
+                       |           +--ro origin-type?           enumeration
+                       |           +--ro default-metric?        uint8
+                       +--ro ipv4-external-reachability
+                       |  +--ro prefixes
+                       |     +--ro prefix* [prefix]
+                       |        +--ro prefix    -> ../state/prefix
+                       |        +--ro state
+                       |           +--ro prefix?                otg-types:ipv4-address
+                       |           +--ro prefix-lenght?         uint32
+                       |           +--ro redistribution-type?   enumeration
+                       |           +--ro origin-type?           enumeration
+                       |           +--ro default-metric?        uint8
+                       +--ro extended-is-reachability
+                       |  +--ro neighbors
+                       |     +--ro neighbor* [system-id]
+                       |        +--ro system-id    -> ../state/system-id
+                       |        +--ro state
+                       |           +--ro system-id?   otg-types:hex-string
+                       +--ro extended-ipv4-reachability
+                       |  +--ro prefixes
+                       |     +--ro prefix* [prefix]
+                       |        +--ro prefix    -> ../state/prefix
+                       |        +--ro state
+                       |           +--ro prefix?                otg-types:ipv4-address
+                       |           +--ro prefix-length?         uint32
+                       |           +--ro metric?                uint32
+                       |           +--ro redistribution-type?   enumeration
+                       |           +--ro prefix-attributes
+                       |              +--ro flags*   enumeration
+                       +--ro ipv6-reachability
+                          +--ro prefixes
+                             +--ro prefix* [prefix]
+                                +--ro prefix    -> ../state/prefix
+                                +--ro state
+                                   +--ro prefix?                otg-types:ipv6-address
+                                   +--ro prefix-length?         uint32
+                                   +--ro redistribution-type?   enumeration
+                                   +--ro origin-type?           enumeration
+                                   +--ro metric?                uint32
+                                   +--ro prefix-attributes
+                                      +--ro flags*   enumeration
