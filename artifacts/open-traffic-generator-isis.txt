@@ -3,7 +3,7 @@ module: open-traffic-generator-isis
      +--ro isis-router* [name]
         +--ro name     -> ../state/name
         +--ro state
-           +--ro name?                   string
+           +--ro name?                  string
            +--ro counters
            |  +--ro level1
            |  |  +--ro sessions-up?        otg-types:counter64
@@ -33,7 +33,7 @@ module: open-traffic-generator-isis
            |     +--ro in-csnp?            otg-types:counter64
            |     +--ro out-lsp?            otg-types:counter64
            |     +--ro in-lsp?             otg-types:counter64
-           +--ro link-state-databases
+           +--ro link-state-database
               +--ro lsp-states
                  +--ro lsps* [lsp-id]
                     +--ro lsp-id    -> ../state/lsp-id
