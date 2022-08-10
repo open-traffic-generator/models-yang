@@ -79,7 +79,7 @@ module open-traffic-generator-isis {
       uses isis-level-counters;
     }
 
-    container link-state-databases {
+    container link-state-database {
       description
         "This sub-module describes a YANG model for the IS-IS Link State
          Database (LSDB)";
@@ -307,7 +307,7 @@ module open-traffic-generator-isis {
 
             container prefixes {
               description
-                "This container describes IS prefixes.";
+                "This container describes learned IPv4 prefixes.";
 
               list prefix {
                 key "prefix";
@@ -341,7 +341,7 @@ module open-traffic-generator-isis {
 
             container prefixes {
               description
-                "This container describes IS neighbors.";
+                "This container describes learned IPv4 prefixes.";
 
               list prefix {
                 key "prefix";
@@ -424,7 +424,7 @@ module open-traffic-generator-isis {
 
             container prefixes {
               description
-                "This container describes IS prefixes.";
+                "This container describes learned IPv6 prefixes.";
 
               list prefix {
                 key "prefix";
