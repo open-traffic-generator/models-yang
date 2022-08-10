@@ -245,7 +245,7 @@ module open-traffic-generator-isis {
               leaf-list hostname {
                 type string;
                 description
-                  "Name of the node.";
+                  "Host name of the originating node.";
 
                 reference
                   "RFC6233: IS-IS Registry Extension for Purges, RFC
