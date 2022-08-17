@@ -46,11 +46,11 @@ module open-traffic-generator-lldp {
       "Top-level structural grouping for LLDP session telemetry for interface-member
       entries.";
 
-    container interface-members {
+    container lldp-interfaces {
       description
         "LLDP telemetry for interface-member collected by the ATE device.";
 
-      list interface-member {
+      list lldp-interface {
         key "name";
 
         config false;
@@ -78,7 +78,7 @@ module open-traffic-generator-lldp {
 
           container counters {
             description
-              "Counters of an individual LACP peer.";
+              "Counters of an individual LLDP interface.";
 
             uses lldp-counters;
           }
@@ -333,6 +333,7 @@ module open-traffic-generator-lldp {
 
         }
         list custom-tlv {
+          key "custom-type oui oui-subtype";
 
           description
             "The list of custom tlvs from a LLDP neighbor.";
@@ -400,6 +401,7 @@ module open-traffic-generator-lldp {
        }
 
        list capabilities {
+         key "name";
 
          description
             "The list of capabilities of a LLDP neighbor.";
