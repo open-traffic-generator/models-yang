@@ -1,6 +1,6 @@
 module: open-traffic-generator-lldp
-  +--rw interface-members
-     +--ro interface-member* [name]
+  +--rw lldp-interfaces
+     +--ro lldp-interface* [name]
         +--ro name              -> ../state/name
         +--ro state
         |  +--ro name?       string
@@ -29,17 +29,17 @@ module: open-traffic-generator-lldp
               |  +--ro port-description?          string
               |  +--ro management-address?        string
               |  +--ro management-address-type?   string
-              +--ro custom-tlv* []
-              |  +--ro custom-type?   -> ../state/custom-type
-              |  +--ro oui?           -> ../state/oui
-              |  +--ro oui-subtype?   -> ../state/oui-subtype
+              +--ro custom-tlv* [custom-type oui oui-subtype]
+              |  +--ro custom-type    -> ../state/custom-type
+              |  +--ro oui            -> ../state/oui
+              |  +--ro oui-subtype    -> ../state/oui-subtype
               |  +--ro state
               |     +--ro custom-type?   uint32
               |     +--ro oui?           string
               |     +--ro oui-subtype?   string
               |     +--ro tlv-value?     string
-              +--ro capabilities* []
-                 +--ro name?    -> ../state/name
+              +--ro capabilities* [name]
+                 +--ro name     -> ../state/name
                  +--ro state
                     +--ro name?      enumeration
                     +--ro enabled?   boolean
