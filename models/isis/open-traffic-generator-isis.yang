@@ -135,6 +135,13 @@ module open-traffic-generator-isis {
           description
             "A reference to the Link State PDU ID.";
         }
+        leaf pdu-type {
+          type leafref {
+            path "../state/pdu-type";
+          }
+          description
+            "A reference to the Link State PDU Type.";
+        }
 
         container state {
           description
