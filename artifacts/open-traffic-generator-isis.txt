@@ -35,8 +35,9 @@ module: open-traffic-generator-isis
            |     +--ro in-lsp?             otg-types:counter64
            +--ro link-state-database
               +--ro lsp-states
-                 +--ro lsps* [lsp-id]
-                    +--ro lsp-id    -> ../state/lsp-id
+                 +--ro lsps* [lsp-id pdu-type]
+                    +--ro lsp-id      -> ../state/lsp-id
+                    +--ro pdu-type    -> ../state/pdu-type
                     +--ro state
                     |  +--ro lsp-id                otg-types:hex-string
                     |  +--ro pdu-type              enumeration
