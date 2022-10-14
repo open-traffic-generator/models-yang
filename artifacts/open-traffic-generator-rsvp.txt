@@ -5,6 +5,9 @@ module: open-traffic-generator-rsvp
         +--ro state
         |  +--ro name?       string
         |  +--ro counters
+        |     +--ro ingress-p2p-lsps-configured?   otg-types:counter64
+        |     +--ro ingress-p2p-lsps-up?           otg-types:counter64
+        |     +--ro egress-p2p-lsps-up?            otg-types:counter64
         |     +--ro in-paths?                      otg-types:counter64
         |     +--ro in-path-tears?                 otg-types:counter64
         |     +--ro in-path-errors?                otg-types:counter64
@@ -32,9 +35,6 @@ module: open-traffic-generator-rsvp
         |     +--ro out-path-reevaluation-reqs?    otg-types:counter64
         |     +--ro path-reoptimizations?          otg-types:counter64
         |     +--ro lsp-flaps?                     otg-types:counter64
-        |     +--ro egress-p2p-lsps-up?            otg-types:counter64
-        |     +--ro ingress-p2p-lsps-up?           otg-types:counter64
-        |     +--ro ingress-p2p-lsps-configured?   otg-types:counter64
         +--ro lsps
            +--ro ipv4-lsp* [source-address destination-address tunnel-id lsp-id]
               +--ro source-address         -> ../state/source-address
@@ -51,7 +51,6 @@ module: open-traffic-generator-rsvp
                  +--ro label-out?             otg-types:mpls-label
                  +--ro session-status?        enumeration
                  +--ro last-flap-reason?      enumeration
-                 +--ro setup-time?            uint32
                  +--ro up-time?               uint32
                  +--ro rro* [index]
                  |  +--ro index    -> ../state/index
@@ -65,5 +64,5 @@ module: open-traffic-generator-rsvp
                     +--ro state
                        +--ro index?    uint64
                        +--ro prefix?   otg-types:ipv4-address
-                       +--ro asn?      uint16
+                       +--ro asn?      uint32
                        +--ro type?     enumeration
