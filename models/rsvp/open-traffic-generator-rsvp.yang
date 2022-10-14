@@ -41,7 +41,7 @@ module open-traffic-generator-rsvp {
         config false;
 
         description
-          "Each RSVP-TE router is identified by an arbitrary string
+          "Each RSVP-TE router is identified by a unique string
           identifier.";
 
         leaf name {
@@ -89,6 +89,24 @@ module open-traffic-generator-rsvp {
   grouping rsvp-counters {
     description
       "Counters of an indivdual RSVP-TE router.";
+
+    leaf ingress-p2p-lsps-configured {
+      type otg-types:counter64;
+      description
+        "The number of ingress lsps that are configured.";
+    }
+
+    leaf ingress-p2p-lsps-up {
+      type otg-types:counter64;
+      description
+        "The number of ingress lsps that are currently up.";
+    }
+
+    leaf egress-p2p-lsps-up {
+      type otg-types:counter64;
+      description
+        "The number of egress lsps that are currently up.";
+    }
 
     leaf in-paths {
       type otg-types:counter64;
@@ -252,24 +270,6 @@ module open-traffic-generator-rsvp {
         "The number of times an lsp went from up to down state.";
     }
 
-    leaf egress-p2p-lsps-up {
-      type otg-types:counter64;
-      description
-        "The number of egress lsps that are currently up.";
-    }
-
-    leaf ingress-p2p-lsps-up {
-      type otg-types:counter64;
-      description
-        "The number of ingress lsps that are currently up.";
-    }
-
-    leaf ingress-p2p-lsps-configured {
-      type otg-types:counter64;
-      description
-        "The number of ingress lsps that are configured.";
-    }
-
   }
   grouping rsvp-lsps {
     description
@@ -290,7 +290,7 @@ module open-traffic-generator-rsvp {
             path "../state/source-address";
           }
           description
-            "Reference to a origin IPV4 address of RSVP session, acting as part of a key to the lsp list.";
+            "Reference to a origin IPV4 address of RSVP session, acting as part of the key to the lsp list.";
         }
 
         leaf destination-address {
@@ -298,7 +298,7 @@ module open-traffic-generator-rsvp {
             path "../state/destination-address";
           }
           description
-            "Reference to a IPV4 destination address of RSVP session, acting as part of a key to the lsp list.";
+            "Reference to a IPV4 destination address of RSVP session, acting as part of the key to the lsp list.";
         }
 
         leaf tunnel-id {
@@ -307,7 +307,7 @@ module open-traffic-generator-rsvp {
           }
           description
             "Reference to a tunnel id of RSVP session which acts as an identifier that remains constant over the life of the tunnel, 
-             acting as part of a key to the lsp list.";
+             acting as part of the key to the lsp list.";
         }
 
         leaf lsp-id {
@@ -315,8 +315,8 @@ module open-traffic-generator-rsvp {
             path "../state/lsp-id";
           }
           description
-            "Reference to a LSP ID of RSVP session which acts as an differentiaator for two LSPs originating from the same headend, 
-             commonly used to distinguish RSVP sessions during make before breaak operations, acting as part of a key to the lsp list.";
+            "Reference to a LSP ID of RSVP session which acts as an differentiator for two LSPs originating from the same headend, 
+             commonly used to distinguish RSVP sessions during make before break operations, acting as part of the key to the lsp list.";
         }
 
         container state {
@@ -399,16 +399,10 @@ module open-traffic-generator-rsvp {
               "Reference to the reason for the last flap of this RSVP session.";
           }
 
-          leaf setup-time {
-            type uint32;
-            description
-              "The Setup time.";
-          }
-
           leaf up-time {
             type uint32;
             description
-              "The Up time.";
+              "The Up time in ms.";
           }
 
           list rro {
@@ -438,12 +432,12 @@ module open-traffic-generator-rsvp {
         path "../state/index";
       }
       description
-        "Index of object in the list.";
+        "Index of RRO sub object in the list.";
     }
 
     container state {
       description
-        "The container for LLDP neighbor custom tlv state.";
+        "The container for RSVP-TE RRO sub object.";
 
       leaf index {
         type uint8;
@@ -454,7 +448,7 @@ module open-traffic-generator-rsvp {
       leaf address {
         type otg-types:ipv4-address;
         description
-          "IP router hop for RRO entry.";
+          "IPv4 hop for RRO entry.";
        }
 
       leaf reported-label {
@@ -480,12 +474,12 @@ module open-traffic-generator-rsvp {
         path "../state/index";
       }
       description
-        "Index of the entry in the ERO. Entries are ordered in ascending order from the source to the destination of the LSP";
+        "Index of the entry in the ERO.";
     }
 
     container state {
       description
-        "The container for LLDP neighbor custom tlv state.";
+        "The container for RSVP-TE ERO sub object.";
 
       leaf index {
         type uint64;
@@ -501,7 +495,7 @@ module open-traffic-generator-rsvp {
        }
 
       leaf asn {
-        type uint16;
+        type uint32;
         description
           "The autonomous system number indicated by the ERO. Specified only when the ERO hop
            is an 2 or 4-byte AS number.";
