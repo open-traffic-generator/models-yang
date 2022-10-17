@@ -46,7 +46,7 @@ module open-traffic-generator-lldp {
       "Top-level structural grouping for LLDP session telemetry for interface-member
       entries.";
 
-    container lldp {
+    container lldps {
       description
         "LLDP telemetry for interface-member collected by the ATE device.";
 
