@@ -58,7 +58,6 @@ module: open-traffic-generator-rsvp
                  |     +--ro index?            uint8
                  |     +--ro address?          otg-types:ipv4-address
                  |     +--ro reported-label?   otg-types:mpls-label
-                 |     +--ro reported-flags?   uint8
                  +--ro ero* [index]
                     +--ro index    -> ../state/index
                     +--ro state
