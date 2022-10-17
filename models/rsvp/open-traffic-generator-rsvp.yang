@@ -315,7 +315,7 @@ module open-traffic-generator-rsvp {
             path "../state/lsp-id";
           }
           description
-            "Reference to a LSP ID of RSVP session which acts as an differentiator for two LSPs originating from the same headend, 
+            "Reference to a lsp-id of RSVP session which acts as a differentiator for two lsps originating from the same headend, 
              commonly used to distinguish RSVP sessions during make before break operations, acting as part of the key to the lsp list.";
         }
 
@@ -442,7 +442,7 @@ module open-traffic-generator-rsvp {
       leaf index {
         type uint8;
         description
-          "Index of object in the list.";
+          "Index of object in the ERO list. Entries are ordered in ascending order with the nearest hop at the top and furthest hop at bottom.";
        }
 
       leaf address {
@@ -457,11 +457,6 @@ module open-traffic-generator-rsvp {
           "Label reported for RRO hop.";
        }
 
-      leaf reported-flags {
-        type uint8;
-        description
-          "Subobject flags for MPLS Label.";
-       }
     }
   }
 
@@ -474,7 +469,7 @@ module open-traffic-generator-rsvp {
         path "../state/index";
       }
       description
-        "Index of the entry in the ERO.";
+        "Index of the entry in the ERO. Entries are ordered in ascending order from the source to destination of the lsp.";
     }
 
     container state {
