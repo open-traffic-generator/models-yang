@@ -1,5 +1,5 @@
 module: open-traffic-generator-lldp
-  +--rw lldp
+  +--rw lldps
      +--ro lldp-interface* [name]
         +--ro name              -> ../state/name
         +--ro state
