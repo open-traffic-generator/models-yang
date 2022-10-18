@@ -64,7 +64,7 @@ module open-traffic-generator-lldp {
             path "../state/name";
           }
           description
-            "Reference to the LLDP interfce  member's name, acting as a key of the
+            "Reference to the LLDP interface  member's name, acting as a key of the
             LLDP interface member list.";
         }
 
@@ -392,11 +392,6 @@ module open-traffic-generator-lldp {
                defining organization.";
            }
 
-           leaf tlv-value {
-             type string;
-             description
-              "A variable-length octet-string containing the instance-specific information for this TLV."; 
-           }
          }
        }
 
