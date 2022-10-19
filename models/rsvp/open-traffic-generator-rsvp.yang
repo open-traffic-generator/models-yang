@@ -283,7 +283,7 @@ module open-traffic-generator-rsvp {
         key "source-address destination-address tunnel-id lsp-id";
 
         description
-          "A list of RSVP-TE Discovered LSPs.";
+          "A list of IPv4 RSVP-TE Discovered LSPs.";
 
         leaf source-address {
           type leafref {
@@ -396,7 +396,7 @@ module open-traffic-generator-rsvp {
               }
             }
             description
-              "Reference to the reason for the last flap of this RSVP session.";
+              "The reason for the last flap of this RSVP session.";
           }
 
           leaf up-time {
@@ -408,14 +408,14 @@ module open-traffic-generator-rsvp {
           list rro {
             key "index";
             description
-              "Unkeyed list of MPLS RRO objects associated with the traffic engineering tunnel.";
+              "List of MPLS RRO objects associated with the traffic engineering tunnel.";
             uses rsvp-rro-state;
           }
 
           list ero {
             key "index";
             description
-              "Unkeyed list of MPLS ERO objects associated with the traffic engineering tunnel.";
+              "List of MPLS ERO objects associated with the traffic engineering tunnel.";
             uses rsvp-ero-state;
           }
         }
@@ -442,7 +442,7 @@ module open-traffic-generator-rsvp {
       leaf index {
         type uint8;
         description
-          "Index of object in the ERO list. Entries are ordered in ascending order with the nearest hop at the top and furthest hop at bottom.";
+          "Reference index of object in the ERO list. Entries are ordered in ascending order with the nearest hop at the top and furthest hop at bottom.";
        }
 
       leaf address {
@@ -469,7 +469,7 @@ module open-traffic-generator-rsvp {
         path "../state/index";
       }
       description
-        "Index of the entry in the ERO. Entries are ordered in ascending order from the source to destination of the lsp.";
+        "Reference index of the entry in the ERO. Entries are ordered in ascending order from the source to destination of the lsp.";
     }
 
     container state {
