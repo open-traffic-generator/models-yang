@@ -67,8 +67,14 @@ module open-traffic-generator-rsvp {
 
             uses rsvp-counters;
           }
+          container label-switched-path-database {
+            description
+              "This sub-module describes a YANG model for the RSVP Label Switched Path";
+
+            uses rsvp-lsps;
+    	 }
+
         }
-        uses rsvp-lsps;
       }
     }
   }
