@@ -3,65 +3,66 @@ module: open-traffic-generator-rsvp
      +--ro rsvpte-router* [name]
         +--ro name     -> ../state/name
         +--ro state
-        |  +--ro name?       string
-        |  +--ro counters
-        |     +--ro ingress-p2p-lsps-configured?   otg-types:counter64
-        |     +--ro ingress-p2p-lsps-up?           otg-types:counter64
-        |     +--ro egress-p2p-lsps-up?            otg-types:counter64
-        |     +--ro in-paths?                      otg-types:counter64
-        |     +--ro in-path-tears?                 otg-types:counter64
-        |     +--ro in-path-errors?                otg-types:counter64
-        |     +--ro in-resvs?                      otg-types:counter64
-        |     +--ro in-resv-tears?                 otg-types:counter64
-        |     +--ro in-resv-errors?                otg-types:counter64
-        |     +--ro in-hellos?                     otg-types:counter64
-        |     +--ro in-srefreshs?                  otg-types:counter64
-        |     +--ro in-acks?                       otg-types:counter64
-        |     +--ro in-nacks?                      otg-types:counter64
-        |     +--ro in-bundles?                    otg-types:counter64
-        |     +--ro in-resv-confs?                 otg-types:counter64
-        |     +--ro out-paths?                     otg-types:counter64
-        |     +--ro out-path-tears?                otg-types:counter64
-        |     +--ro out-path-errors?               otg-types:counter64
-        |     +--ro out-resvs?                     otg-types:counter64
-        |     +--ro out-resv-tears?                otg-types:counter64
-        |     +--ro out-resv-errors?               otg-types:counter64
-        |     +--ro out-hellos?                    otg-types:counter64
-        |     +--ro out-srefreshs?                 otg-types:counter64
-        |     +--ro out-acks?                      otg-types:counter64
-        |     +--ro out-nacks?                     otg-types:counter64
-        |     +--ro out-bundles?                   otg-types:counter64
-        |     +--ro out-resv-confs?                otg-types:counter64
-        |     +--ro out-path-reevaluation-reqs?    otg-types:counter64
-        |     +--ro path-reoptimizations?          otg-types:counter64
-        |     +--ro lsp-flaps?                     otg-types:counter64
-        +--ro lsps
-           +--ro ipv4-lsp* [source-address destination-address tunnel-id lsp-id]
-              +--ro source-address         -> ../state/source-address
-              +--ro destination-address    -> ../state/destination-address
-              +--ro tunnel-id              -> ../state/tunnel-id
-              +--ro lsp-id                 -> ../state/lsp-id
-              +--ro state
-                 +--ro source-address?        otg-types:ipv4-address
-                 +--ro destination-address?   otg-types:ipv4-address
-                 +--ro tunnel-id?             uint16
-                 +--ro lsp-id?                uint16
-                 +--ro session-name?          string
-                 +--ro label-in?              otg-types:mpls-label
-                 +--ro label-out?             otg-types:mpls-label
-                 +--ro session-status?        enumeration
-                 +--ro last-flap-reason?      enumeration
-                 +--ro up-time?               uint32
-                 +--ro rro* [index]
-                 |  +--ro index    -> ../state/index
-                 |  +--ro state
-                 |     +--ro index?            uint8
-                 |     +--ro address?          otg-types:ipv4-address
-                 |     +--ro reported-label?   otg-types:mpls-label
-                 +--ro ero* [index]
-                    +--ro index    -> ../state/index
+           +--ro name?                           string
+           +--ro counters
+           |  +--ro ingress-p2p-lsps-configured?   otg-types:counter64
+           |  +--ro ingress-p2p-lsps-up?           otg-types:counter64
+           |  +--ro egress-p2p-lsps-up?            otg-types:counter64
+           |  +--ro in-paths?                      otg-types:counter64
+           |  +--ro in-path-tears?                 otg-types:counter64
+           |  +--ro in-path-errors?                otg-types:counter64
+           |  +--ro in-resvs?                      otg-types:counter64
+           |  +--ro in-resv-tears?                 otg-types:counter64
+           |  +--ro in-resv-errors?                otg-types:counter64
+           |  +--ro in-hellos?                     otg-types:counter64
+           |  +--ro in-srefreshs?                  otg-types:counter64
+           |  +--ro in-acks?                       otg-types:counter64
+           |  +--ro in-nacks?                      otg-types:counter64
+           |  +--ro in-bundles?                    otg-types:counter64
+           |  +--ro in-resv-confs?                 otg-types:counter64
+           |  +--ro out-paths?                     otg-types:counter64
+           |  +--ro out-path-tears?                otg-types:counter64
+           |  +--ro out-path-errors?               otg-types:counter64
+           |  +--ro out-resvs?                     otg-types:counter64
+           |  +--ro out-resv-tears?                otg-types:counter64
+           |  +--ro out-resv-errors?               otg-types:counter64
+           |  +--ro out-hellos?                    otg-types:counter64
+           |  +--ro out-srefreshs?                 otg-types:counter64
+           |  +--ro out-acks?                      otg-types:counter64
+           |  +--ro out-nacks?                     otg-types:counter64
+           |  +--ro out-bundles?                   otg-types:counter64
+           |  +--ro out-resv-confs?                otg-types:counter64
+           |  +--ro out-path-reevaluation-reqs?    otg-types:counter64
+           |  +--ro path-reoptimizations?          otg-types:counter64
+           |  +--ro lsp-flaps?                     otg-types:counter64
+           +--ro label-switched-path-database
+              +--ro lsps
+                 +--ro ipv4-lsp* [source-address destination-address tunnel-id lsp-id]
+                    +--ro source-address         -> ../state/source-address
+                    +--ro destination-address    -> ../state/destination-address
+                    +--ro tunnel-id              -> ../state/tunnel-id
+                    +--ro lsp-id                 -> ../state/lsp-id
                     +--ro state
-                       +--ro index?    uint64
-                       +--ro prefix?   otg-types:ipv4-address
-                       +--ro asn?      uint32
-                       +--ro type?     enumeration
+                       +--ro source-address?        otg-types:ipv4-address
+                       +--ro destination-address?   otg-types:ipv4-address
+                       +--ro tunnel-id?             uint16
+                       +--ro lsp-id?                uint16
+                       +--ro session-name?          string
+                       +--ro label-in?              otg-types:mpls-label
+                       +--ro label-out?             otg-types:mpls-label
+                       +--ro session-status?        enumeration
+                       +--ro last-flap-reason?      enumeration
+                       +--ro up-time?               uint32
+                       +--ro rro* [index]
+                       |  +--ro index    -> ../state/index
+                       |  +--ro state
+                       |     +--ro index?            uint8
+                       |     +--ro address?          otg-types:ipv4-address
+                       |     +--ro reported-label?   otg-types:mpls-label
+                       +--ro ero* [index]
+                          +--ro index    -> ../state/index
+                          +--ro state
+                             +--ro index?    uint64
+                             +--ro prefix?   otg-types:ipv4-address
+                             +--ro asn?      uint32
+                             +--ro type?     enumeration
