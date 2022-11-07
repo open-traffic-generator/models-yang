@@ -1,0 +1,479 @@
+module open-traffic-generator-lldp {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/lldp";
+  prefix "otg-lldp";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to LLDP sessions that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2022-08-09 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  // grouping statements
+  grouping lldp-top {
+    description
+      "Top-level structural grouping for LLDP session telemetry
+      entries.";
+
+    container lldp {
+        config false;
+
+        description
+        "LLDP telemetry collected by the ATE device.";
+
+        uses lldp-interface-top;
+    }
+  }
+
+  grouping lldp-interface-top {
+    description
+      "Top-level structural grouping for LLDP session telemetry for interface-member
+      entries.";
+
+    container lldps {
+      description
+        "LLDP telemetry for interface-member collected by the ATE device.";
+
+      list lldp-interface {
+        key "name";
+
+        config false;
+
+        description
+          "Each LLDP interface is identified by an arbitrary string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the LLDP interface  member's name, acting as a key of the
+            LLDP interface member list.";
+        }
+
+        container state {
+          config false;
+
+          description
+            "Operational state of an individual LLDP interface.";
+
+          uses lldp-state;
+
+          container counters {
+            description
+              "Counters of an individual LLDP interface.";
+
+            uses lldp-counters;
+          }
+        }
+        uses lldp-neighbors;
+      }
+    }
+  }
+
+  grouping lldp-state {
+    description
+      "Operational state of the individual LLDP interface.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitary name of the LLDP interface determined by the ATE
+        configuration.";
+    }
+  }
+
+  grouping lldp-counters {
+    description
+      "Counters of an indivdual LLDP session.";
+
+    leaf frame-in {
+      type otg-types:counter64;
+      description
+        "The total number of LLDP frames received.";
+    }
+
+    leaf frame-out {
+      type otg-types:counter64;
+      description
+        "The total number of LLDP frames transmitted.";
+    }
+
+    leaf frame-error-in {
+      type otg-types:counter64;
+      description
+        "The total number of LLDP frames received having errors.";
+    }
+
+    leaf frame-discard {
+      type otg-types:counter64;
+      description
+        "The total number of LLDP frames discarded.";
+    }
+
+    leaf tlv-discard {
+      type otg-types:counter64;
+      description
+        "The total number of LLDP tlvs discarded.";
+    }
+    leaf tlv-unknown {
+      type otg-types:counter64;
+      description
+        "The total number of LLDP unknown tlvs received.";
+    }
+
+    leaf frame-error-out {
+      type otg-types:counter64;
+      description
+        "The total number of LLDP frames transmitted having errors.";
+    }
+
+  }
+
+  grouping lldp-neighbors {
+    description
+      "Structural grouping for LLDP neighbor information";
+
+    container lldp-neighbors {
+      description
+        "Discovered neighbors of a LLDP interface";
+
+      list lldp-neighbor {
+        key "neighbor_id";
+
+        description
+          "A list of LLDP neighbors.";
+
+        leaf neighbor_id {
+          type leafref {
+            path "../state/neighbor_id";
+          }
+          description
+            "Reference to an neighbor-id, acting as part of a
+            key to the neighbor list.";
+        }
+
+        container state {
+          description
+            "The container for LLDP neighbor state.";
+
+          leaf system-name {
+            type string;
+            description
+              "The system name field shall contain an alpha-numeric string that 
+               indicates the system's administratively assigned name. The system name 
+               should be the system's fully qualified domain name. If implementations 
+               support IETF RFC 3418, the sysName object should be used for this field.";
+          }
+
+          leaf system-description {
+            type string;
+            description
+              "The system description field shall contain an alpha-numeric string that 
+               is the textual description of the network entity. The system description 
+               should include the full name and version identification of the system's 
+               hardware type, software operating system, and networking software. If 
+               implementations support IETF RFC 3418, the sysDescr object should be used 
+               for this field.";
+          }
+
+          leaf chassis-id {
+            type string;
+            description
+              "The Chassis ID is a mandatory TLV which identifies the chassis component of 
+               the endpoint identifier associated with the transmitting LLDP agent."; 
+          }
+
+          leaf chassis-id-type {
+            type enumeration {
+              enum PORT_COMPONENT {
+                description
+                  "The type is port component.";
+              }
+              enum NETWORK_ADDRESS {
+                description
+                  "The type is network address.";
+              }
+              enum CHASSIS_COMPONENT {
+                description
+                  "The type is chassis component.";
+              }
+              enum MAC_ADDRESS {
+                description
+                  "The type is mac address.";
+              }
+              enum INTERFACE_NAME {
+                description
+                  "The type is interface name.";
+              }
+              enum LOCAL {
+                description
+                  "The type is local.";
+              }
+              enum INTERFACE_ALIAS {
+                description
+                  "The type is interface alias.";
+              }
+            }
+            description
+              "This field identifies the format and source of the chassis identifier string. 
+               It is an enumerator defined by the LldpChassisIdSubtype object from IEEE 802.1AB MIB.";
+          }
+
+          leaf neighbor_id {
+            type string;
+            description
+              "System generated identifier for the neighbor on the interface.";
+          }
+
+          leaf age {
+            type uint32;
+            default 0;
+            description
+              "Age since discovery in seconds.";
+          }
+
+          leaf last_update {
+            type uint32;
+            default 0;
+            description
+              "Seconds since last update received.";
+          }
+
+          leaf ttl {
+            type uint32;
+            default 0;
+            description
+              "The time-to-live (TTL) is a mandatory TLV which indicates how long information from the neighbor 
+               should be considered valid.";
+          }
+
+          leaf port-id {
+            type string;
+            description
+              "The Port ID is a mandatory TLV which identifies the port component of the endpoint identifier associated 
+               with the transmitting LLDP agent. If the specified port is an IEEE 802.3 Repeater port, then this TLV 
+               is optional."; 
+          }
+
+          leaf port-id-type {
+            type enumeration {
+              enum PORT_COMPONENT {
+                description
+                  "The type is port component.";
+              }
+              enum NETWORK_ADDRESS {
+                description
+                  "The type is network address.";
+              }
+              enum AGENT_CIRCUIT_ID {
+                description
+                  "The type is agent circuit id.";
+              }
+              enum MAC_ADDRESS {
+                description
+                  "The type is mac address.";
+              }
+              enum INTERFACE_NAME {
+                description
+                  "The type is interface name.";
+              }
+              enum LOCAL {
+                description
+                  "The type is local.";
+              }
+              enum INTERFACE_ALIAS {
+                description
+                  "The type is interface alias.";
+              }
+            }
+            description
+              "This field identifies the format and source of the port identifier string. It is an 
+               enumerator defined by the PtopoPortIdType object from RFC2922.This field identifies the 
+               format and source of the chassis identifier string."; 
+          }
+
+          leaf port-description {
+            type string;
+            description
+              "The binary string containing the actual port identifier for the port which this LLDP PDU was 
+               transmitted. The source and format of this field is defined by PtopoPortId from RFC2922."; 
+          }
+
+          leaf management-address {
+            type string;
+            description
+              "The Management Address is a mandatory TLV which identifies a network address associated with the 
+               local LLDP agent, which can be used to reach the agent on the port identified in the Port ID TLV."; 
+          }
+
+          leaf management-address-type {
+            type string;
+            description
+              "The enumerated value for the network address type identified in this TLV. This enumeration is 
+               defined in the 'Assigned Numbers' RFC [RFC3232] and the ianaAddressFamilyNumbers object."; 
+          }
+
+        }
+        list custom-tlv {
+          key "custom-type oui oui-subtype";
+
+          description
+            "The list of custom tlvs from a LLDP neighbor.";
+
+          leaf custom-type {
+            type leafref {
+              path "../state/custom-type";
+            }
+            description
+              "The integer value identifying the type of information contained in the value field.";
+         }
+
+         leaf oui {
+            type leafref {
+              path "../state/oui";
+            }
+            description
+              "The organizationally unique identifier field shall contain the organization's OUI as defined 
+               in Clause 9 of IEEE Std 802. The high-order octet is 0 and the low-order 3 octets are the SMI 
+               Network Management Private Enterprise Code of the Vendor in network byte order, as defined in 
+               the 'Assigned Numbers' RFC [RFC3232].";
+         }
+
+         leaf oui-subtype {
+            type leafref {
+              path "../state/oui-subtype";
+            }
+            description
+              "The organizationally defined subtype field shall contain a unique subtype value assigned by the 
+               defining organization.";
+         }
+
+         container state {
+           description
+             "The container for LLDP neighbor custom tlv state.";
+
+           leaf custom-type {
+             type uint32;
+             description
+               "The integer value identifying the type of information contained in the value field.";
+           }
+
+           leaf oui {
+             type string;
+             description
+              "The organizationally unique identifier field shall contain the organization's OUI as defined 
+               in Clause 9 of IEEE Std 802. The high-order octet is 0 and the low-order 3 octets are the SMI 
+               Network Management Private Enterprise Code of the Vendor in network byte order, as defined in 
+               the 'Assigned Numbers' RFC [RFC3232].";
+           }
+
+           leaf oui-subtype {
+             type string;
+             description
+              "The organizationally defined subtype field shall contain a unique subtype value assigned by the 
+               defining organization.";
+           }
+
+         }
+       }
+
+       list capabilities {
+         key "name";
+
+         description
+            "The list of capabilities of a LLDP neighbor.";
+
+          leaf name {
+            type leafref {
+              path "../state/name";
+            }
+            description
+              "Name of the system capability advertised by the neighbor. Capabilities are represented in a 
+               bitmap that defines the primary functions of the system."; 
+         }
+
+         container state {
+           description
+             "The container for LLDP neighbor capabilities.";
+
+           leaf name {
+             type enumeration {
+               enum MAC_BRIDGE {
+                 description
+                   "The capability is mac bridge.";
+               }
+               enum TWO_PORT_MAC_RELAY {
+                 description
+                   "The capability is two port mac delay.";
+               }
+               enum REPEATER {
+                 description
+                   "The capability is repeater.";
+               }
+               enum DOCSYS_CABLE_DEVICE {
+                 description
+                   "The capability is docsis cable device.";
+               }
+               enum S_VLAN {
+                 description
+                   "The capability is s vlan.";
+               }
+               enum TELEPHONE {
+                 description
+                   "The capability is telephone.";
+               }
+               enum OTHER {
+                 description
+                   "The capability is other.";
+               }
+               enum ROUTER {
+                 description
+                   "The capability is router.";
+               }
+               enum C_VLAN {
+                 description
+                   "The capability is c vlan.";
+               }
+               enum STATION_ONLY {
+                 description
+                   "The capability is station only.";
+               }
+               enum WLAN_ACCESS_POINT {
+                 description
+                   "The capability is wlan access point.";
+               }
+             }
+             description
+               "The integer value identifying the type of information contained in the value field.";
+           }
+
+           leaf enabled {
+             type boolean;
+             description
+               "Indicates whether the corresponding system capability is enabled on the neighbor.";
+           }
+         }
+       }
+     }
+   }
+  }
+  uses lldp-interface-top;
+}

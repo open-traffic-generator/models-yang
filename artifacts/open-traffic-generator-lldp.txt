@@ -1,0 +1,44 @@
+module: open-traffic-generator-lldp
+  +--rw lldps
+     +--ro lldp-interface* [name]
+        +--ro name              -> ../state/name
+        +--ro state
+        |  +--ro name?       string
+        |  +--ro counters
+        |     +--ro frame-in?          otg-types:counter64
+        |     +--ro frame-out?         otg-types:counter64
+        |     +--ro frame-error-in?    otg-types:counter64
+        |     +--ro frame-discard?     otg-types:counter64
+        |     +--ro tlv-discard?       otg-types:counter64
+        |     +--ro tlv-unknown?       otg-types:counter64
+        |     +--ro frame-error-out?   otg-types:counter64
+        +--ro lldp-neighbors
+           +--ro lldp-neighbor* [neighbor_id]
+              +--ro neighbor_id     -> ../state/neighbor_id
+              +--ro state
+              |  +--ro system-name?               string
+              |  +--ro system-description?        string
+              |  +--ro chassis-id?                string
+              |  +--ro chassis-id-type?           enumeration
+              |  +--ro neighbor_id?               string
+              |  +--ro age?                       uint32
+              |  +--ro last_update?               uint32
+              |  +--ro ttl?                       uint32
+              |  +--ro port-id?                   string
+              |  +--ro port-id-type?              enumeration
+              |  +--ro port-description?          string
+              |  +--ro management-address?        string
+              |  +--ro management-address-type?   string
+              +--ro custom-tlv* [custom-type oui oui-subtype]
+              |  +--ro custom-type    -> ../state/custom-type
+              |  +--ro oui            -> ../state/oui
+              |  +--ro oui-subtype    -> ../state/oui-subtype
+              |  +--ro state
+              |     +--ro custom-type?   uint32
+              |     +--ro oui?           string
+              |     +--ro oui-subtype?   string
+              +--ro capabilities* [name]
+                 +--ro name     -> ../state/name
+                 +--ro state
+                    +--ro name?      enumeration
+                    +--ro enabled?   boolean
