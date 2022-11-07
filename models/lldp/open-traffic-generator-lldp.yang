@@ -82,8 +82,14 @@ module open-traffic-generator-lldp {
 
             uses lldp-counters;
           }
+          container lldp-neighbor-database {
+            description
+              "Discovered neighbors of an individual LLDP interface.";
+
+            uses lldp-neighbors;
+          }
+
         }
-        uses lldp-neighbors;
       }
     }
   }
