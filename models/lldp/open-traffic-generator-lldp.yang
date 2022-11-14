@@ -145,12 +145,6 @@ module open-traffic-generator-lldp {
         "The total number of LLDP unknown tlvs received.";
     }
 
-    leaf frame-error-out {
-      type otg-types:counter64;
-      description
-        "The total number of LLDP frames transmitted having errors.";
-    }
-
   }
 
   grouping lldp-neighbors {
