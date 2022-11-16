@@ -5,13 +5,12 @@ module: open-traffic-generator-lldp
         +--ro state
            +--ro name?                     string
            +--ro counters
-           |  +--ro frame-in?          otg-types:counter64
-           |  +--ro frame-out?         otg-types:counter64
-           |  +--ro frame-error-in?    otg-types:counter64
-           |  +--ro frame-discard?     otg-types:counter64
-           |  +--ro tlv-discard?       otg-types:counter64
-           |  +--ro tlv-unknown?       otg-types:counter64
-           |  +--ro frame-error-out?   otg-types:counter64
+           |  +--ro frame-in?         otg-types:counter64
+           |  +--ro frame-out?        otg-types:counter64
+           |  +--ro frame-error-in?   otg-types:counter64
+           |  +--ro frame-discard?    otg-types:counter64
+           |  +--ro tlv-discard?      otg-types:counter64
+           |  +--ro tlv-unknown?      otg-types:counter64
            +--ro lldp-neighbor-database
               +--ro lldp-neighbors
                  +--ro lldp-neighbor* [neighbor_id]
