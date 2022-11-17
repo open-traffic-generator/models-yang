@@ -428,7 +428,7 @@ module open-traffic-generator-lldp {
                  description
                    "The capability is repeater.";
                }
-               enum DOCSYS_CABLE_DEVICE {
+               enum DOCSIS_CABLE_DEVICE {
                  description
                    "The capability is docsis cable device.";
                }
