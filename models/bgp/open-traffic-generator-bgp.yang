@@ -285,6 +285,10 @@ module open-traffic-generator-bgp {
                 description
                   "The origin is external.";
               }
+              enum INCOMPLETE {
+                description
+                  "The origin is neither internal nor external.";
+              }
             }
             description
               "The origin of the prefix.";
@@ -492,6 +496,10 @@ module open-traffic-generator-bgp {
               enum EGP {
                 description
                   "The origin is external.";
+              }
+              enum INCOMPLETE {
+                description
+                  "The origin is neither internal nor external.";
               }
             }
             description
