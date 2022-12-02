@@ -1,0 +1,538 @@
+module open-traffic-generator-rsvp {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/rsvp";
+  prefix "otg-rsvp";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to RSVP-TE sessions that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2022-06-08 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  // grouping statements
+  grouping rsvpte-top {
+    description
+      "Top-level structural grouping for RSVP-TE session telemetry
+      entries.";
+
+    container rsvpte-routers {
+        description
+        "RSVP TE router telemetry collected by the ATE device.";
+
+      list rsvpte-router {
+        key "name";
+
+        config false;
+
+        description
+          "Each RSVP-TE router is identified by a unique string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the RSVP-TE router's name, acting as a key of the
+            RSVP-TE router list.";
+        }
+
+        container state {
+          config false;
+
+          description
+            "Operational state of an individual RSVP-TE router.";
+
+          uses rsvp-state;
+
+          container counters {
+            description
+              "Counters of an individual RSVP-TE router.";
+
+            uses rsvp-counters;
+          }
+          container label-switched-path-database {
+            description
+              "This sub-module describes a YANG model for the RSVP Label Switched Path";
+
+            uses rsvp-lsps;
+    	 }
+
+        }
+      }
+    }
+  }
+
+  grouping rsvp-state {
+    description
+      "Operational state of the individual RSVP-TE session.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitary name of the RSVP-TE router determined by the ATE
+        configuration.";
+    }
+
+  }
+
+  grouping rsvp-counters {
+    description
+      "Counters of an indivdual RSVP-TE router.";
+
+    leaf ingress-p2p-lsps-configured {
+      type otg-types:counter64;
+      description
+        "The number of ingress lsps that are configured.";
+    }
+
+    leaf ingress-p2p-lsps-up {
+      type otg-types:counter64;
+      description
+        "The number of ingress lsps that are currently up.";
+    }
+
+    leaf egress-p2p-lsps-up {
+      type otg-types:counter64;
+      description
+        "The number of egress lsps that are currently up.";
+    }
+
+    leaf in-paths {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP path messages.";
+    }
+
+    leaf in-path-tears {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP path tear messages.";
+    }
+
+    leaf in-path-errors {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP path error messages.";
+    }
+
+    leaf in-resvs {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP resv messages.";
+    }
+
+    leaf in-resv-tears {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP resv tear messages.";
+    }
+
+    leaf in-resv-errors {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP resv error messages.";
+    }
+
+    leaf in-hellos {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP hello messages.";
+    }
+
+    leaf in-srefreshs {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP summary refresh messages.";
+    }
+
+    leaf in-acks {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP refresh reduction ack messages.";
+    }
+
+    leaf in-nacks {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP refresh reduction nack messages.";
+    }
+
+    leaf in-bundles {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP bundle messages.";
+    }
+
+    leaf in-resv-confs {
+      type otg-types:counter64;
+      description
+        "The number of received RSVP resv conf messages.";
+    }
+
+    leaf out-paths {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP path messages.";
+    }
+
+    leaf out-path-tears {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP path tear messages.";
+    }
+
+    leaf out-path-errors {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP path error messages.";
+    }
+
+    leaf out-resvs {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP resv messages.";
+    }
+
+    leaf out-resv-tears {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP resv tear messages.";
+    }
+
+    leaf out-resv-errors {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP resv error messages.";
+    }
+
+    leaf out-hellos {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP hello messages.";
+    }
+
+    leaf out-srefreshs {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP summary refresh messages.";
+    }
+
+    leaf out-acks {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP refresh reduction ack messages.";
+    }
+
+    leaf out-nacks {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP refresh reduction nack messages.";
+    }
+
+    leaf out-bundles {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP bundle messages.";
+    }
+
+    leaf out-resv-confs {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP resv conf messages.";
+    }
+
+    leaf out-path-reevaluation-reqs {
+      type otg-types:counter64;
+      description
+        "The number of sent RSVP path messages with path re-evaluation request enabled.";
+    }
+
+    leaf path-reoptimizations {
+      type otg-types:counter64;
+      description
+        "The number of successfully completed make before break operations.";
+    }
+
+    leaf lsp-flaps {
+      type otg-types:counter64;
+      description
+        "The number of times an lsp went from up to down state.";
+    }
+
+  }
+  grouping rsvp-lsps {
+    description
+      "Structural grouping for lsps information";
+
+    container lsps {
+      description
+        "Discovered LSPs of a RSVP-TE router";
+
+      list ipv4-lsp {
+        key "source-address destination-address tunnel-id lsp-id";
+
+        description
+          "A list of IPv4 RSVP-TE Discovered LSPs.";
+
+        leaf source-address {
+          type leafref {
+            path "../state/source-address";
+          }
+          description
+            "Reference to a origin IPV4 address of RSVP session, acting as part of the key to the lsp list.";
+        }
+
+        leaf destination-address {
+          type leafref {
+            path "../state/destination-address";
+          }
+          description
+            "Reference to a IPV4 destination address of RSVP session, acting as part of the key to the lsp list.";
+        }
+
+        leaf tunnel-id {
+          type leafref {
+            path "../state/tunnel-id";
+          }
+          description
+            "Reference to a tunnel id of RSVP session which acts as an identifier that remains constant over the life of the tunnel, 
+             acting as part of the key to the lsp list.";
+        }
+
+        leaf lsp-id {
+          type leafref {
+            path "../state/lsp-id";
+          }
+          description
+            "Reference to a lsp-id of RSVP session which acts as a differentiator for two lsps originating from the same headend, 
+             commonly used to distinguish RSVP sessions during make before break operations, acting as part of the key to the lsp list.";
+        }
+
+        container state {
+          description
+            "The container for discovered RSVP_TE LSP state.";
+
+          leaf source-address {
+            type otg-types:ipv4-address;
+            description
+              "The origin RSVP session address.";
+          }
+
+          leaf destination-address {
+            type otg-types:ipv4-address;
+            description
+              "The RSVP session destination address.";
+          }
+
+          leaf tunnel-id {
+            type uint16;
+            description
+              "The tunnnel id.";
+          }
+
+          leaf lsp-id {
+            type uint16;
+            description
+              "The lsp id.";
+          }
+
+          leaf session-name {
+            type string;
+            description
+              "The session name.";
+          }
+
+          leaf label-in {
+            type otg-types:mpls-label;
+            description
+              "The label in.";
+          }
+
+          leaf label-out {
+            type otg-types:mpls-label;
+            description
+              "The label out.";
+          }
+
+          leaf session-status {
+            type enumeration {
+              enum UP {
+                description
+                  "RSVP LSP is up";
+              }
+              enum DOWN {
+                description
+                  "RSVP LSP is down";
+              }
+            }
+            description
+              "Operational state of the RSVP LSP";
+          }
+
+          leaf last-flap-reason {
+            type enumeration {
+              enum RESVTEAR {
+                description
+                  "RESV TEAR Received";
+              }
+              enum PATHTEAR {
+                description
+                  "PATH TEAR Received";
+              }
+              enum PATHTIMEOUT {
+                description
+                  "PATH Timeout";
+              }
+            }
+            description
+              "The reason for the last flap of this RSVP session.";
+          }
+
+          leaf up-time {
+            type uint32;
+            description
+              "The Up time in ms.";
+          }
+
+          list rro {
+            key "index";
+            description
+              "List of MPLS RRO objects associated with the traffic engineering tunnel.";
+            uses rsvp-rro-state;
+          }
+
+          list ero {
+            key "index";
+            description
+              "List of MPLS ERO objects associated with the traffic engineering tunnel.";
+            uses rsvp-ero-state;
+          }
+        }
+      }
+    }
+  }
+
+  grouping rsvp-rro-state {
+    description
+      "the container for RSVP RRO sub objects";
+
+    leaf index {
+      type leafref {
+        path "../state/index";
+      }
+      description
+        "Index of RRO sub object in the list.";
+    }
+
+    container state {
+      description
+        "The container for RSVP-TE RRO sub object.";
+
+      leaf index {
+        type uint8;
+        description
+          "Reference index of object in the ERO list. Entries are ordered in ascending order with the nearest hop at the top and furthest hop at bottom.";
+       }
+
+      leaf address {
+        type otg-types:ipv4-address;
+        description
+          "IPv4 hop for RRO entry.";
+       }
+
+      leaf reported-label {
+        type otg-types:mpls-label;
+        description
+          "Label reported for RRO hop.";
+       }
+
+    }
+  }
+
+  grouping rsvp-ero-state {
+    description
+      "the container for RSVP ERO sub objects";
+
+    leaf index {
+      type leafref {
+        path "../state/index";
+      }
+      description
+        "Reference index of the entry in the ERO. Entries are ordered in ascending order from the source to destination of the lsp.";
+    }
+
+    container state {
+      description
+        "The container for RSVP-TE ERO sub object.";
+
+      leaf index {
+        type uint64;
+        description
+          "Index of the entry in the ERO. Entries are ordered in ascending order from the source to the destination of the LSP";
+       }
+
+      leaf prefix {
+        type otg-types:ipv4-address;
+        description
+          "The IPv4 prefix indicated by the ERO. Specified only when the ERO hop
+           is an IPv4 prefix.";
+       }
+
+      leaf asn {
+        type uint32;
+        description
+          "The autonomous system number indicated by the ERO. Specified only when the ERO hop
+           is an 2 or 4-byte AS number.";
+       }
+
+       leaf type {
+          type enumeration {
+            enum IPV4 {
+              description
+                "ERO Type is IPV4";
+            }
+            enum IPV6 {
+              description
+                "ERO Type is IPV6";
+            }
+            enum ASN {
+              description
+                "ERO Type is ASN 2 bytes";
+            }
+            enum ASN4 {
+              description
+                "ERO Type is ASN 5 bytes";
+            }
+            enum LABEL {
+              description
+                "ERO Type is Label";
+            }
+            enum UNNUMBERED_INTERFACE {
+              description
+                "ERO Type is unnumbered interface";
+            }
+          }
+          description
+            "The type indicated by the ERO.";
+       }
+    }
+  }
+  uses rsvpte-top;
+}
