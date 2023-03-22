@@ -71,6 +71,8 @@ module open-traffic-generator-flow {
           }
         }
       }
+
+      uses flow-metric-tags;
     }
   }
 
@@ -155,6 +157,77 @@ module open-traffic-generator-flow {
       description
         "The total number of packets sent by the target for the flow. These
         packets may be generated or forwarded by the target.";
+    }
+  }
+
+  grouping flow-metric-tags {
+    description
+      "Structural grouping for flow-metric-tags information";
+
+    container flow-metric-tags {
+      description
+        "Metric Tags of a Flow";
+
+      list flow-metric-tag {
+        key "name-value-request";
+
+        description
+          "A list of Flow Metric Tag";
+
+        leaf name-value-request {
+          type leafref {
+            path "../state/name-value-request";
+          }
+          description
+            "Reference to a name-value-request, acting as part
+            of a key to the flow-metric-tag list.";
+        }
+
+        container state {
+          description
+            "The container for metric-tag state.";
+
+          leaf name-value-request {
+            type string;
+            description
+              "The name-value-request.";
+          }
+
+          list metric {
+            key "name-value-response";
+
+            description
+              "A list of metric.";
+
+            leaf name-value-response {
+              type leafref {
+                path "../state/name-value-response";
+              }
+              description
+                "Reference to a name-value-response, acting as part
+                of a key to the metric list.";
+            }
+
+            container state {
+              description
+                "The container for metric state.";
+
+              leaf name-value-response {
+                type string;
+                description
+                  "The name-value-response.";
+              }
+
+              container counters {
+                description
+                  "Counters that correspond to the individual metric.";
+
+                uses flow-counters;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
