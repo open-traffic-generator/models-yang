@@ -1,31 +1,31 @@
 module: open-traffic-generator-flow
   +--rw flows
      +--ro flow* [name]
-     |  +--ro name     -> ../state/name
-     |  +--ro state
-     |     +--ro name?             string
-     |     +--ro transmit?         boolean
-     |     +--ro loss-pct?         otg-types:ieeefloat32
-     |     +--ro out-frame-rate?   otg-types:ieeefloat32
-     |     +--ro in-frame-rate?    otg-types:ieeefloat32
-     |     +--ro out-rate?         otg-types:ieeefloat32
-     |     +--ro in-rate?          otg-types:ieeefloat32
-     |     +--ro counters
-     |        +--ro in-octets?    otg-types:counter64
-     |        +--ro in-pkts?      otg-types:counter64
-     |        +--ro out-octets?   otg-types:counter64
-     |        +--ro out-pkts?     otg-types:counter64
-     +--rw flow-metric-tags
-        +--rw flow-metric-tag* [name-value-request]
-           +--rw name-value-request    -> ../state/name-value-request
-           +--rw state
-              +--rw name-value-request?   string
-              +--rw metric* [name-value-response]
-                 +--rw name-value-response    -> ../state/name-value-response
-                 +--rw state
-                    +--rw name-value-response?   string
-                    +--rw counters
-                       +--rw in-octets?    otg-types:counter64
-                       +--rw in-pkts?      otg-types:counter64
-                       +--rw out-octets?   otg-types:counter64
-                       +--rw out-pkts?     otg-types:counter64
+        +--ro name                -> ../state/name
+        +--ro state
+        |  +--ro name?             string
+        |  +--ro transmit?         boolean
+        |  +--ro loss-pct?         otg-types:ieeefloat32
+        |  +--ro out-frame-rate?   otg-types:ieeefloat32
+        |  +--ro in-frame-rate?    otg-types:ieeefloat32
+        |  +--ro out-rate?         otg-types:ieeefloat32
+        |  +--ro in-rate?          otg-types:ieeefloat32
+        |  +--ro counters
+        |     +--ro in-octets?    otg-types:counter64
+        |     +--ro in-pkts?      otg-types:counter64
+        |     +--ro out-octets?   otg-types:counter64
+        |     +--ro out-pkts?     otg-types:counter64
+        +--ro flow-metric-tags
+           +--ro flow-metric-tag* [name-value-request]
+              +--ro name-value-request    -> ../state/name-value-request
+              +--ro state
+                 +--ro name-value-request?   string
+                 +--ro metric* [name-value-response]
+                    +--ro name-value-response    -> ../state/name-value-response
+                    +--ro state
+                       +--ro name-value-response?   string
+                       +--ro counters
+                          +--ro in-octets?    otg-types:counter64
+                          +--ro in-pkts?      otg-types:counter64
+                          +--ro out-octets?   otg-types:counter64
+                          +--ro out-pkts?     otg-types:counter64
