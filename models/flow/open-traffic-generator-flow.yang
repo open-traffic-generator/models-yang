@@ -70,9 +70,9 @@ module open-traffic-generator-flow {
             uses flow-counters;
           }
         }
-      }
 
-      uses flow-metric-tags;
+        uses flow-metric-tags;
+      }
     }
   }
 
