@@ -83,7 +83,7 @@ module open-traffic-generator-flow {
     leaf name {
       type string;
       description
-        "An arbitary name used for the flow tracked by the system. This
+        "An arbitrary name used for the flow tracked by the system. This
         name must be unique for the flows tracked and exported by the target.";
     }
 
@@ -166,61 +166,82 @@ module open-traffic-generator-flow {
 
     container flow-metric-tags {
       description
-        "Metric Tags of a Flow";
+        "Container of flow-metric-tags information";
 
       list flow-metric-tag {
         key "name-value-request";
 
         description
-          "A list of Flow Metric Tag";
+          "A list of flow-metric-tag which represent one or more metric tags (request)
+              to disaggregate flow metrics and associated disaggregated flow metrics (response).
+              Each flow-metric-tag is identified by a name-value-request.";
 
         leaf name-value-request {
           type leafref {
             path "../state/name-value-request";
           }
           description
-            "Reference to a name-value-request, acting as part
-            of a key to the flow-metric-tag list.";
+            "Reference to a name-value-request, acting as
+            a key to the flow-metric-tag list.";
         }
 
         container state {
           description
-            "The container for metric-tag state.";
+            "Operational state of the individual flow-metric-tag.";
 
           leaf name-value-request {
             type string;
             description
-              "The name-value-request.";
+              "Encoded string representing one or more metric tag name and corresponding filter value
+              used as request to disaggregate the flow metrics.
+              Encoding format:
+                  tag_name=value&tag_name=value
+                  name can be specified multiple times.
+                  value is optional, need to be supplied only for retrieving subset of disaggregated flow metrics
+                  matching with the tag name and value.
+              Example:
+                  ipv4_src&vlan_id
+                  ipv4_src=0x11&vlan_id=0x01
+                  ipv4_src=0x11&ipv4_src=0x12&vlan_id=0x01";
           }
 
           list metric {
             key "name-value-response";
 
             description
-              "A list of metric.";
+              "A list of disaggregated flow metric, based on metric tags & values specified in name-value-request.
+              Each disaggregated flow metric is identified by a name-value-response";
 
             leaf name-value-response {
               type leafref {
                 path "../state/name-value-response";
               }
               description
-                "Reference to a name-value-response, acting as part
-                of a key to the metric list.";
+                "Reference to a name-value-response, acting as
+                a key of the metric list.";
             }
 
             container state {
               description
-                "The container for metric state.";
+                "Operational state of the individual metric.";
 
               leaf name-value-response {
                 type string;
                 description
-                  "The name-value-response.";
+                  "Encoded string represents one or more metric tag name and corresponding tag value,
+                  to identify each disaggregated flow.
+                  Encoding format:
+                      tag_name=value&tag_name=value
+                  Example:
+                      ipv4_src=0x11
+                      ipv4_src=0x11&vlan_id=0x01
+                      ipv4_src=0x12&vlan_id=0x01";
               }
 
               container counters {
                 description
-                  "Counters that correspond to the individual metric.";
+                  "Counters that correspond to the disaggregated flow metrics associated
+                  with a name-value-response as identifier of that disaggregated flow.";
 
                 uses flow-counters;
               }
