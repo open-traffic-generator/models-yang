@@ -3,13 +3,16 @@ module: open-traffic-generator-flow
      +--ro flow* [name]
         +--ro name     -> ../state/name
         +--ro state
-           +--ro name?             string
-           +--ro transmit?         boolean
-           +--ro loss-pct?         otg-types:ieeefloat32
-           +--ro out-frame-rate?   otg-types:ieeefloat32
-           +--ro in-frame-rate?    otg-types:ieeefloat32
-           +--ro out-rate?         otg-types:ieeefloat32
-           +--ro in-rate?          otg-types:ieeefloat32
+           +--ro name?              string
+           +--ro transmit?          boolean
+           +--ro loss-pct?          otg-types:ieeefloat32
+           +--ro out-frame-rate?    otg-types:ieeefloat32
+           +--ro in-frame-rate?     otg-types:ieeefloat32
+           +--ro out-rate?          otg-types:ieeefloat32
+           +--ro in-rate?           otg-types:ieeefloat32
+           +--ro minimum-latency?   otg-types:timeticks64
+           +--ro maximum-latency?   otg-types:timeticks64
+           +--ro average-latency?   otg-types:timeticks64
            +--ro counters
               +--ro in-octets?    otg-types:counter64
               +--ro in-pkts?      otg-types:counter64
