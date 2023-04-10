@@ -1,7 +1,7 @@
 module: open-traffic-generator-flow
   +--rw flows
      +--ro flow* [name]
-        +--ro name               -> ../state/name
+        +--ro name           -> ../state/name
         +--ro state
         |  +--ro name?             string
         |  +--ro transmit?         boolean
@@ -15,16 +15,13 @@ module: open-traffic-generator-flow
         |     +--ro in-pkts?      otg-types:counter64
         |     +--ro out-octets?   otg-types:counter64
         |     +--ro out-pkts?     otg-types:counter64
-        +--ro flow-metric-tag* [name-value-request]
-           +--ro name-value-request    -> ../state/name-value-request
-           +--ro state
-              +--ro name-value-request?   string
-              +--ro metric* [name-value-response]
-                 +--ro name-value-response    -> ../state/name-value-response
-                 +--ro state
-                    +--ro name-value-response?   string
-                    +--ro counters
-                       +--ro in-octets?    otg-types:counter64
-                       +--ro in-pkts?      otg-types:counter64
-                       +--ro out-octets?   otg-types:counter64
-                       +--ro out-pkts?     otg-types:counter64
+        +--ro tag-metrics
+           +--ro tag-metric* [name-value]
+              +--ro name-value    -> ../state/name-value
+              +--ro state
+                 +--ro name-value?   string
+                 +--ro counters
+                    +--ro in-octets?    otg-types:counter64
+                    +--ro in-pkts?      otg-types:counter64
+                    +--ro out-octets?   otg-types:counter64
+                    +--ro out-pkts?     otg-types:counter64
