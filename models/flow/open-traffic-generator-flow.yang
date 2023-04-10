@@ -71,7 +71,7 @@ module open-traffic-generator-flow {
           }
         }
 
-        uses flow-metric-tag;
+        uses tag-metrics;
       }
     }
   }
@@ -160,88 +160,55 @@ module open-traffic-generator-flow {
     }
   }
 
-  grouping flow-metric-tag {
+  grouping tag-metrics {
     description
-      "Structural grouping for flow-metric-tag information";
+      "Structural grouping for tag-metrics information";
 
-    list flow-metric-tag {
-      key "name-value-request";
-
+    container tag-metrics {
       description
-        "A list of flow-metric-tag which represent one or more metric tags (request)
+        "A list of tag-metrics which represent one or more metric tags (request)
             to enumerate flow metrics and associated enumerated flow metrics (response).
-            Each flow-metric-tag is identified by a name-value-request.";
+            Each tag-metrics is identified by a name-value-request.";
 
-      leaf name-value-request {
-        type leafref {
-          path "../state/name-value-request";
-        }
+      list tag-metric {
+        key "name-value";
+
         description
-          "Reference to a name-value-request, acting as
-          a key to the flow-metric-tag list.";
-      }
+          "A list of enumerated flow metric, based on metric tags in the configuration.
+          Each enumerated flow metric is identified by a name-value";
 
-      container state {
-        description
-          "Operational state of the individual flow-metric-tag.";
-
-        leaf name-value-request {
-          type string;
+        leaf name-value {
+          type leafref {
+            path "../state/name-value";
+          }
           description
-            "Encoded string representing one or more metric tag name and corresponding filter value
-            used as request to enumerate the flow metrics.
-            Encoding format:
-                tag_name=value&tag_name=value
-                name can be specified multiple times.
-                value is optional, need to be supplied only for retrieving subset of enumerated flow metrics
-                matching with the tag name and value.
-                The datatype of value can only be hex.
-            Example:
-                ipv4_src&vlan_id
-                ipv4_src=0x11&vlan_id=0x01
-                ipv4_src=0x11&ipv4_src=0x12&vlan_id=0x01";
+            "Reference to a name-value, acting as
+            a key of the tag-metric list.";
         }
 
-        list metric {
-          key "name-value-response";
-
+        container state {
           description
-            "A list of enumerated flow metric, based on metric tags & values specified in name-value-request.
-            Each enumerated flow metric is identified by a name-value-response";
+            "Operational state of the individual metric.";
 
-          leaf name-value-response {
-            type leafref {
-              path "../state/name-value-response";
-            }
+          leaf name-value {
+            type string;
             description
-              "Reference to a name-value-response, acting as
-              a key of the metric list.";
+              "Encoded string represents one or more metric tag name and corresponding tag value,
+              to identify each enumerated flow.
+              Encoding format:
+                  tag_name=value&tag_name=value
+              Example:
+                  ipv4_src=0x11
+                  ipv4_src=0x11&vlan_id=0x01
+                  ipv4_src=0x12&vlan_id=0x01";
           }
 
-          container state {
+          container counters {
             description
-              "Operational state of the individual metric.";
+              "Counters that correspond to the enumerated flow metrics associated
+              with a name-value as identifier of that enumerated flow.";
 
-            leaf name-value-response {
-              type string;
-              description
-                "Encoded string represents one or more metric tag name and corresponding tag value,
-                to identify each enumerated flow.
-                Encoding format:
-                    tag_name=value&tag_name=value
-                Example:
-                    ipv4_src=0x11
-                    ipv4_src=0x11&vlan_id=0x01
-                    ipv4_src=0x12&vlan_id=0x01";
-            }
-
-            container counters {
-              description
-                "Counters that correspond to the enumerated flow metrics associated
-                with a name-value-response as identifier of that enumerated flow.";
-
-              uses flow-counters;
-            }
+            uses flow-counters;
           }
         }
       }
