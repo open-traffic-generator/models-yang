@@ -166,16 +166,14 @@ module open-traffic-generator-flow {
 
     container tag-metrics {
       description
-        "A list of tag-metrics which represent one or more metric tags (request)
-            to enumerate flow metrics and associated enumerated flow metrics (response).
-            Each tag-metrics is identified by a name-value-request.";
+        "Container of tag metric information.";
 
       list tag-metric {
         key "name-value";
 
         description
-          "A list of enumerated flow metric, based on metric tags in the configuration.
-          Each enumerated flow metric is identified by a name-value";
+          "A list of enumerated metric, based on all metric tags present in the configuration.
+          Each enumerated metric is identified by a name-value";
 
         leaf name-value {
           type leafref {
@@ -188,7 +186,7 @@ module open-traffic-generator-flow {
 
         container state {
           description
-            "Operational state of the individual metric.";
+            "Operational state of the individual tag-metric.";
 
           leaf name-value {
             type string;
@@ -200,7 +198,12 @@ module open-traffic-generator-flow {
               Example:
                   ipv4_src=0x11
                   ipv4_src=0x11&vlan_id=0x01
-                  ipv4_src=0x12&vlan_id=0x01";
+                  ipv4_src=0x12&vlan_id=0x01
+                  ipv4_dst=2.2.2.2&mpls_label=1000
+              Note:
+                  If metric tag is set match a packet field partially, value format will be in hex (e.g. last 8 bit of IPv4 Src field)
+                  However if metric tag is enabled for the entire packet field, value will be in the native format of the field
+                  (e.g. value format in IPv4 if metric tag set for entire IPv4 Dst field)";
           }
 
           container counters {
