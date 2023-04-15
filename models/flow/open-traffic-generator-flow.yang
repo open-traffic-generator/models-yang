@@ -191,19 +191,128 @@ module open-traffic-generator-flow {
           leaf name-value {
             type string;
             description
-              "Encoded string represents one or more metric tag name and corresponding tag value,
+              "Encoded string represents one or more metric tag names and corresponding tag value,
               to identify each enumerated flow.
               Encoding format:
                   tag_name=value&tag_name=value
+              In encoded string, metric tags MUST be arranged in alphabetical order of the tag name. And tag value(s) in lowercase only.
               Example:
-                  ipv4_src=0x11
-                  ipv4_src=0x11&vlan_id=0x01
-                  ipv4_src=0x12&vlan_id=0x01
-                  ipv4_dst=2.2.2.2&mpls_label=1000
+                ipv4_src=0x11
+                ipv4_src=0x11&vlan_id=0x12ab
+                ipv4_dst=2.2.2.2&mpls_label=1000
+              Incorrect encoding example:
+                vlan_id=0x12AB                  // value in uppercase
+                vlan_id=0x12ab&ipv4_src=0x11    // tag name not in alphabetical order
               Note:
-                  If metric tag is set match a packet field partially, value format will be in hex (e.g. last 8 bit of IPv4 Src field)
-                  However if metric tag is enabled for the entire packet field, value will be in the native format of the field
-                  (e.g. value format in IPv4 if metric tag set for entire IPv4 Dst field)";
+                  If the metric tag is set to match a packet field partially, the value format will be in hex
+                  (e.g. tag set on last 8 bits of the IPv4 Src field)
+                  However, if the metric tag is enabled for the entire packet field, the value will be in the native format of the field
+                  (e.g. value format in IPv4 address if the metric tag is set for the entire IPv4 Dst field)";
+          }
+
+          list tags {
+            description
+              "A list of metric tag names and associated tag values, in a structured manner to identify each enumerated flow.
+              The order of the metric tags in the list is by alphabetical order of the tag name";
+
+            leaf tag-name {
+              type string;
+              description
+                "The name of the metric tag corresponding to this enumerated flow.";
+            }
+
+            container tag-value {
+              description
+                "The value of the metric tag corresponding to this enumerated flow.
+                Value format is based on the metric tag configuration of the Flow";
+
+              leaf value-type {
+                type enumeration {
+                  enum STRING {
+                    description
+                      "Indicates Tag value in String format. Only 'value-as-string' contains the value";
+                  }
+                  enum HEX {
+                    description
+                      "Indicates Tag value in Hex String format. Only 'value-as-hex' contains the value";
+                  }
+                  enum BOOL {
+                    description
+                      "Indicates Tag value in Boolean format. Only 'value-as-bool' contains the value";
+                  }
+                  enum COUNTER64 {
+                    description
+                      "Indicates Tag value in counter64 (64-bit unsigned number) format. Only 'value-as-counter64' contains the value";
+                  }
+                  enum FLOAT32 {
+                    description
+                      "Indicates Tag value in 32-bit floating point number format. Only 'value-as-float32' contains the value";
+                  }
+                  enum IPV4 {
+                    description
+                      "Indicates Tag value in IPv4 address format. Only 'value-as-ipv4' contains the value";
+                  }
+                  enum IPV6 {
+                    description
+                      "Indicates Tag value in IPv6 address format. Only 'value-as-ipv6' contains the value";
+                  }
+                  enum MAC {
+                    description
+                      "Indicates Tag value in MAC address format. Only 'value-as-mac' contains the value";
+                  }
+                }
+                description
+                  "Indicates the format of the tag value. Based on the format, only one 'value-as-*' field will be populated.";
+              }
+
+              leaf value-as-string {
+                type string;
+                description
+                  "Contains Tag Value in String format.";
+              }
+
+              leaf value-as-hex {
+                type otg-types:hex-string;
+                description
+                  "Contains Tag Value in Hex String format.";
+              }
+
+              leaf value-as-bool {
+                type boolean;
+                description
+                  "Contains Tag Value in Boolean format.";
+              }
+
+              leaf value-as-counter64 {
+                type otg-types:counter64;
+                description
+                  "Contains Tag Value in Counter64 (64-bit unsigned number) format.";
+              }
+
+              leaf value-as-float32 {
+                type otg-types:ieeefloat32;
+                description
+                  "Contains Tag Value in 32-bit floating point number format.";
+              }
+
+              leaf value-as-ipv4 {
+                type otg-types:ipv4-address;
+                description
+                  "Contains Tag Value in IPv4 address format.";
+              }
+
+              leaf value-as-ipv6 {
+                type otg-types:ipv6-address;
+                description
+                  "Contains Tag Value in IPv6 address format.";
+              }
+
+              leaf value-as-mac {
+                type otg-types:mac-address;
+                description
+                  "Contains Tag Value in MAC address format.";
+              }
+            }
           }
 
           container counters {
