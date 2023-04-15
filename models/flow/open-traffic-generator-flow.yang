@@ -212,8 +212,7 @@ module open-traffic-generator-flow {
 
           list tags {
             description
-              "A list of metric tag names and associated tag values, in a structured manner to identify each enumerated flow.
-              The order of the metric tags in the list is by alphabetical order of the tag name";
+              "A list of metric tag names and associated tag values, in a structured manner to identify each enumerated flow.";
 
             leaf tag-name {
               type string;
