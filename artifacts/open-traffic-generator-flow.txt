@@ -20,6 +20,18 @@ module: open-traffic-generator-flow
               +--ro name-value    -> ../state/name-value
               +--ro state
                  +--ro name-value?   string
+                 +--ro tags* []
+                 |  +--ro tag-name?    string
+                 |  +--ro tag-value
+                 |     +--ro value-type?           enumeration
+                 |     +--ro value-as-string?      string
+                 |     +--ro value-as-hex?         otg-types:hex-string
+                 |     +--ro value-as-bool?        boolean
+                 |     +--ro value-as-counter64?   otg-types:counter64
+                 |     +--ro value-as-float32?     otg-types:ieeefloat32
+                 |     +--ro value-as-ipv4?        otg-types:ipv4-address
+                 |     +--ro value-as-ipv6?        otg-types:ipv6-address
+                 |     +--ro value-as-mac?         otg-types:mac-address
                  +--ro counters
                     +--ro in-octets?    otg-types:counter64
                     +--ro in-pkts?      otg-types:counter64
