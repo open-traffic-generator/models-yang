@@ -71,7 +71,7 @@ module open-traffic-generator-flow {
           }
         }
 
-        uses tag-metrics;
+        uses tagged-metrics;
       }
     }
   }
@@ -160,27 +160,27 @@ module open-traffic-generator-flow {
     }
   }
 
-  grouping tag-metrics {
+  grouping tagged-metrics {
     description
-      "Structural grouping for tag-metrics information";
+      "Structural grouping for tagged-metrics information";
 
-    container tag-metrics {
+    container tagged-metrics {
       description
         "Container of tag metric information.";
 
-      list tag-metric {
-        key "name-value";
+      list tagged-metric {
+        key "name-value-pairs";
 
         description
           "A list of enumerated metric, based on all metric tags present in the configuration.
-          Each enumerated metric is identified by a name-value";
+          Each enumerated metric is identified by a name-value-pairs";
 
-        leaf name-value {
+        leaf name-value-pairs {
           type leafref {
-            path "../state/name-value";
+            path "../state/name-value-pairs";
           }
           description
-            "Reference to a name-value, acting as
+            "Reference to a name-value-pairs, acting as
             a key of the tag-metric list.";
         }
 
@@ -188,7 +188,7 @@ module open-traffic-generator-flow {
           description
             "Operational state of the individual tag-metric.";
 
-          leaf name-value {
+          leaf name-value-pairs {
             type string;
             description
               "Encoded string represents one or more metric tag names and corresponding tag value,
@@ -317,7 +317,7 @@ module open-traffic-generator-flow {
           container counters {
             description
               "Counters that correspond to the enumerated flow metrics associated
-              with a name-value as identifier of that enumerated flow.";
+              with a name-value-pairs as identifier of that enumerated flow.";
 
             uses flow-counters;
           }
