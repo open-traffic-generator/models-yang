@@ -166,7 +166,7 @@ module open-traffic-generator-flow {
 
     container tagged-metrics {
       description
-        "Container of tag metric information.";
+        "Container of tagged metric information.";
 
       list tagged-metric {
         key "name-value-pairs";
@@ -181,12 +181,12 @@ module open-traffic-generator-flow {
           }
           description
             "Reference to a name-value-pairs, acting as
-            a key of the tag-metric list.";
+            a key of the tagged-metric list.";
         }
 
         container state {
           description
-            "Operational state of the individual tag-metric.";
+            "Operational state of the individual tagged-metric.";
 
           leaf name-value-pairs {
             type string;
