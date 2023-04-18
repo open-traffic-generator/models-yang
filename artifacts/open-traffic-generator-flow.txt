@@ -1,7 +1,7 @@
 module: open-traffic-generator-flow
   +--rw flows
      +--ro flow* [name]
-        +--ro name           -> ../state/name
+        +--ro name              -> ../state/name
         +--ro state
         |  +--ro name?             string
         |  +--ro transmit?         boolean
@@ -15,11 +15,11 @@ module: open-traffic-generator-flow
         |     +--ro in-pkts?      otg-types:counter64
         |     +--ro out-octets?   otg-types:counter64
         |     +--ro out-pkts?     otg-types:counter64
-        +--ro tag-metrics
-           +--ro tag-metric* [name-value]
-              +--ro name-value    -> ../state/name-value
+        +--ro tagged-metrics
+           +--ro tagged-metric* [name-value-pairs]
+              +--ro name-value-pairs    -> ../state/name-value-pairs
               +--ro state
-                 +--ro name-value?   string
+                 +--ro name-value-pairs?   string
                  +--ro tags* []
                  |  +--ro tag-name?    string
                  |  +--ro tag-value
