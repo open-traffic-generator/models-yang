@@ -127,6 +127,27 @@ module open-traffic-generator-flow {
         "The rate, measured in bits per second, at which the flow is being
         received.";
     }
+
+    leaf minimum-latency {
+      type otg-types:timeticks64;
+      description
+        "The minimum latency value, measured in nanoseconds. The latency value is dependent
+        on the configured type of latency measurement mode.";
+    }
+
+    leaf maximum-latency {
+      type otg-types:timeticks64;
+      description
+        "The maximum latency value, measured in nanoseconds. The latency value is dependent
+        on the configured type of latency measurement mode.";
+    }
+
+    leaf average-latency {
+      type otg-types:timeticks64;
+      description
+        "The average latency value, measured in nanoseconds. The latency value is dependent
+        on the configured type of latency measurement mode.";
+    }
   }
 
   grouping flow-counters {
