@@ -211,7 +211,7 @@ module open-traffic-generator-bgp {
     leaf in-end-of-rib {
       type otg-types:counter64;
       description
-        "Number of End-of-RIB markers received indicating the completion of the initial routing update for a particular <AFI, SAFI> address family after the session is established. For the IPv4 unicast address family, the End-of-RIB marker is an UPDATE message with the minimum length. For any other address family, it is an UPDATE message that contains only the MP_UNREACH_NLRI attribute with no withdrawn routes for that <AFI, SAFI>.";
+        "The total number of End-of-RIB markers received indicating the completion of the initial routing update for a particular <AFI, SAFI> address family after the session is established. For the IPv4 unicast address family, the End-of-RIB marker is an UPDATE message with the minimum length. For any other address family, it is an UPDATE message that contains only the MP_UNREACH_NLRI attribute with no withdrawn routes for that <AFI, SAFI>.";
     }
 
   }
