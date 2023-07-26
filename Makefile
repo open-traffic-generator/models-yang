@@ -7,7 +7,7 @@ help:
 default: lint ## default target is to just lint
 
 setup: ## setup target just installs python and go requirements
-	pip install -r requirements.txt
+	pip install --prefer-binary -r requirements.txt
 
 lint: setup ## pyang lint target
 	rm -rf artifacts
@@ -32,7 +32,7 @@ generate: lint ## go generation target
 		-list_builder_key_threshold=4 \
 		-output_dir=pkg/telemetry \
 		-package_name=telemetry \
-		-path_structs_split_files_count=3 \
+		-path_structs_split_files_count=2 \
 		${COMMON_ARGS} \
 		${MODELS}
 
@@ -48,7 +48,7 @@ generate: lint ## go generation target
 		-schema_struct_path=github.com/open-traffic-generator/ixia-c-gnmi-server/pkg/telemetry \
 		-path_struct_package_suffix="" \
 		-base_import_path=github.com/open-traffic-generator/ixia-c-gnmi-server/pkg/telemetry \
-		-path_structs_split_files_count=3 \
+		-path_structs_split_files_count=2 \
 		$(COMMON_ARGS) \
 		${MODELS}
 

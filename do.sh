@@ -23,7 +23,7 @@ install_deps() {
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
     && apt-get -y install curl git python-is-python3 python3-pip \
     && get_go \
-    && python -m pip install -r requirements.txt \
+    && python -m pip install --prefer-binary -r requirements.txt \
     && get_go_deps
 }
 
