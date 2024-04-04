@@ -1,0 +1,182 @@
+module open-traffic-generator-dhcpv4client {
+  yang-version "1";
+
+  namespace "http://gitub.com/open-traffic-generator/models-yang/models/dhcp/vclient";
+  prefix "otg-dhcpv4client";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relOTGs to dhcpv4client sessions that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2022-01-21 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  grouping dhcpv4clients-top {
+    description
+      "Top-level structural grouping for DHCPv4 Client telemetry
+      entries.";
+
+    container dhcpv4-clients {
+      description
+        "DHCPv4 Clients telemetry collected by the OTG device.";
+
+      list dhcpv4-client {
+        key "name";
+
+        config false;
+
+        description
+          "Each DHCPv4 Client is identified by an arbitrary string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the DHCPv4 Client's name, acting as a key of
+            the DHCPv4 Client list.";
+        }
+
+        container state {
+          config false;
+          description
+            "Operational state of an individual DHCPv4 Client.";
+          uses dhcpv4client-state;
+        }
+      }
+    }
+  }
+
+  grouping dhcpv4client-state {
+    description
+      "Operational state of an individual DHCPv4 Client.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitary name of the DHCPv4 Client determined by the OTG
+        configuration.";
+    }
+
+    container counters {
+      description
+        "Counters of an indivdual DHCPv4 session.";
+
+      uses dhcp4client-counters;
+    }
+    container address {
+      description
+        "Information about address learned by an indivdual DHCPv4 session.";
+
+      uses dhcp4client-address;
+    }
+  }
+
+  grouping dhcp4client-counters {
+    description
+      "Counters of the DHCPv4 Client.";
+
+    leaf sessions-up {
+      type otg-types:counter64;
+      description
+        "The total number of sessions that are fully up.";
+    }
+    leaf sessions-down {
+      type otg-types:counter64;
+      description
+        "The total number of sessions that are down.";
+    }
+    leaf discovers-sent {
+      type otg-types:counter64;
+      description
+        "Number of DHCPDISCOVER messages sent.";
+    }
+    leaf offers-received {
+      type otg-types:counter64;
+      description
+        "Number of DHCPOFFER messages received.";
+    }
+    leaf requests-sent {
+      type otg-types:counter64;
+      description
+        "Number of DHCPREQUEST messages sent.";
+    }
+    leaf acks-received {
+      type otg-types:counter64;
+      description
+        "Number of DHCPACKS messages received.";
+    }
+    leaf nacks-received {
+      type otg-types:counter64;
+      description
+        "Number of NACKS messages received.";
+    }
+    leaf releases-sent {
+      type otg-types:counter64;
+      description
+        "Number of RELEASE messages sent.";
+    }
+    leaf declines-sent {
+      type otg-types:counter64;
+      description
+        "Number of RELEASE messages sent.";
+    }
+  }
+
+  grouping dhcp4client-address {
+    description
+      "This grouping defines learning of IPv4 address information.";
+    reference
+      "1. https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/open-traffic-generator/models/dhcp_support_pr/artifacts/openapi.yaml&nocors";
+
+    leaf address {
+      type otg-types:ipv4-address;
+      description
+        "The IPv4 address associated with this DHCP Client session.";
+    }
+
+    leaf prefix-length {
+      type uint32;
+      description
+        "The length of the prefix";
+    }
+
+    leaf gateway_address {
+      type otg-types:ipv4-address;
+      description
+        "The Gateway address associated with this DHCP Client session.";
+    }
+    leaf lease_time {
+      type uint32;
+      description
+        "The length of the prefix.";
+    }
+    leaf renew_time {
+      type uint32;
+      description
+        "Time in seconds until the DHCPv4 client starts renewing the lease.";
+    }
+    leaf rebind_time {
+      type uint32;
+      description
+        "Time in seconds until the DHCPv4 client starts rebinding.";
+    }
+  }
+
+  uses dhcpv4clients-top;
+}
