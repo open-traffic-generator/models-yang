@@ -27,7 +27,7 @@ module open-traffic-generator-dhcpv4server {
 
   grouping dhcpv4servers-top {
     description
-      "Top-level structural grouping for DHCPv4 Server telemetry
+      "Top-level structural grouping for the DHCPv4 Server telemetry
       entries.";
 
     container dhcpv4-servers {

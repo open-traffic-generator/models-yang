@@ -159,7 +159,7 @@ module open-traffic-generator-dhcpv4client {
     leaf gateway_address {
       type otg-types:ipv4-address;
       description
-        "The Gateway address associated with this DHCP Client session.";
+        "The Gateway address associated with the DHCP Client session.";
     }
     leaf lease_time {
       type uint32;
