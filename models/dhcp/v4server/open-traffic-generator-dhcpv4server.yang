@@ -34,7 +34,7 @@ module open-traffic-generator-dhcpv4server {
       description
         "DHCPv4 Servers telemetry collected by the OTG device.";
 
-      list dhcpv4-server {
+      list servers {
         key "name";
         config false;
         description
@@ -80,7 +80,7 @@ module open-traffic-generator-dhcpv4server {
         "This sub-module describes a YANG model for
          the Host allocated status of a DHCPv4 Server";
 
-      uses dhcpv4server-leases;
+      uses dhcpv4server-leases-states;
     }
   }
 
@@ -124,58 +124,62 @@ module open-traffic-generator-dhcpv4server {
     }
   }
 
-  grouping dhcpv4server-leases {
+  grouping dhcpv4server-leases-states {
     description
-      "This grouping defines ISIS LSP state information.";
-    list addresses {
-      key "address";
-        description
-          "The IPv4 address associated with this lease";
-        leaf address {
-          type leafref {
-            path "../state/address";
-          }
+      "This grouping defines DHCPv4 Server Leases States information.";
+    container leases-states {
+      description
+        "Container of DHCPv4 Server Leases States information.";
+      list leases {
+        key "address";
           description
-            "A reference to address that has been leased.";
+            "The IPv4 address associated with this lease";
+          leaf address {
+            type leafref {
+              path "../state/address";
+            }
+            description
+              "A reference to address that has been leased.";
+          }
+        container state {
+          description
+            "State parameters of the leased address.";
+          leaf address {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address associated with this DHCP Client session.";
+          }
+          leaf valid-time {
+            type uint32;
+            description
+              "The time in seconds, IP address lease will expire";
+          }
+          leaf preferred_time {
+            type uint32;
+            description
+              "The time in seconds, elapsed time since address has been renewed.";
+          }
+          leaf renew_time {
+            type uint32;
+            description
+              "Time in seconds until the DHCPv4 client starts renewing the lease..";
+          }
+          leaf rebind_time {
+            type uint32;
+            description
+              "Time in seconds until the DHCPv4 client starts rebinding.";
+          }
+          leaf client-id {
+            type string;
+            description
+              "The ID of the DHCPv4 client holding this lease.";
+          }
+          leaf circuit-id {
+            type string;
+            description
+              "The Circuit ID option found in the last request message";
+          }
         }
-      container state {
-        description
-          "State parameters of the leased address.";
-        leaf address {
-        type otg-types:ipv4-address;
-        description
-          "The IPv4 address associated with this DHCP Client session.";
-        }
-      }
-      leaf valid-time {
-        type uint32;
-        description
-          "The time in seconds, IP address lease will expire";
-      }
-      leaf preferred_time {
-        type uint32;
-        description
-          "The time in seconds, elapsed time since address has been renewed.";
-      }
-      leaf renew_time {
-        type uint32;
-        description
-          "Time in seconds until the DHCPv4 client starts renewing the lease..";
-      }
-      leaf rebind_time {
-        type uint32;
-        description
-          "Time in seconds until the DHCPv4 client starts rebinding.";
-      }
-      leaf client-id {
-        type string;
-        description
-          "The ID of the DHCPv4 client holding this lease.";
-      }
-      leaf circuit-id {
-        type string;
-        description
-          "The Circuit ID option found in the last request message";
       }
     }
   }
