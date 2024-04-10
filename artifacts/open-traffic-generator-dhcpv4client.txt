@@ -1,0 +1,21 @@
+module: open-traffic-generator-dhcpv4client
+  +--rw dhcpv4-clients
+     +--ro dhcpv4-client* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?       string
+           +--ro counters
+           |  +--ro discovers-sent?    otg-types:counter64
+           |  +--ro offers-received?   otg-types:counter64
+           |  +--ro requests-sent?     otg-types:counter64
+           |  +--ro acks-received?     otg-types:counter64
+           |  +--ro nacks-received?    otg-types:counter64
+           |  +--ro releases-sent?     otg-types:counter64
+           |  +--ro declines-sent?     otg-types:counter64
+           +--ro address
+              +--ro address?           otg-types:ipv4-address
+              +--ro prefix-length?     uint32
+              +--ro gateway_address?   otg-types:ipv4-address
+              +--ro lease_time?        uint32
+              +--ro renew_time?        uint32
+              +--ro rebind_time?       uint32
