@@ -16,11 +16,11 @@ module open-traffic-generator-dhcpv4server {
      opentrafficgenerator@googlegroups.com";
 
   description
-    "This module defines telemetry that relOTGs to dhcpv4Server that
+    "This module defines telemetry that relates OTG to dhcpv4Server that
     are controlled by an open traffic generator (OTG) whose definition
     is outside of the context of this module.";
 
-  revision 2022-01-21 {
+  revision 2024-04-10 {
     description "Initial revision.";
     reference "0.1.0";
   }
@@ -70,7 +70,7 @@ module open-traffic-generator-dhcpv4server {
     }
     container counters {
       description
-        "Counters of an indivdual DHCPv4 session.";
+        "Counters of an individual DHCPv4 session.";
 
       uses dhcp4server-counters;
     }
@@ -110,17 +110,17 @@ module open-traffic-generator-dhcpv4server {
     leaf nacks-sent {
       type otg-types:counter64;
       description
-        "Number of NACKS messages sent.";
+        "Number of DHCPNACKS messages sent.";
     }
     leaf releases-received {
       type otg-types:counter64;
       description
-        "Number of RELEASE messages received.";
+        "Number of DHCPRELEASES messages received.";
     }
     leaf declines-received {
       type otg-types:counter64;
       description
-        "Number of RELEASE messages received.";
+        "Number of DHCPDECLINES messages received.";
     }
   }
 
@@ -143,7 +143,7 @@ module open-traffic-generator-dhcpv4server {
           }
         container state {
           description
-            "State parameters of the leased address.";
+            "State parameters of the leased addresses.";
           leaf address {
             type otg-types:ipv4-address;
             description
@@ -162,7 +162,7 @@ module open-traffic-generator-dhcpv4server {
           leaf renew_time {
             type uint32;
             description
-              "Time in seconds until the DHCPv4 client starts renewing the lease..";
+              "Time in seconds until the DHCPv4 client starts renewing the lease.";
           }
           leaf rebind_time {
             type uint32;
