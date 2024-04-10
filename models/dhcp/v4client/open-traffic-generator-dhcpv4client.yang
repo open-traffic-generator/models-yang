@@ -29,6 +29,8 @@ module open-traffic-generator-dhcpv4client {
     description
       "Top-level structural grouping for DHCPv4 Client telemetry
       entries.";
+    reference
+      "1. https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/open-traffic-generator/models/dhcp_support_support/artifacts/openapi.yaml&nocors";
 
     container dhcpv4-clients {
       description
@@ -130,9 +132,6 @@ module open-traffic-generator-dhcpv4client {
   grouping dhcp4client-address {
     description
       "This grouping defines learning of IPv4 address information.";
-    reference
-      "1. https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/open-traffic-generator/models/dhcp_support_pr/artifacts/openapi.yaml&nocors";
-
     leaf address {
       type otg-types:ipv4-address;
       description
