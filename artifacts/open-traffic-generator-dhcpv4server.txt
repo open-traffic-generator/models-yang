@@ -14,7 +14,7 @@ module: open-traffic-generator-dhcpv4server
            |  +--ro declines-received?    otg-types:counter64
            +--ro leases
               +--ro leases-states
-                 +--ro leases* [address]
+                 +--ro hosts* [address]
                     +--ro address    -> ../state/address
                     +--ro state
                        +--ro address?          otg-types:ipv4-address
