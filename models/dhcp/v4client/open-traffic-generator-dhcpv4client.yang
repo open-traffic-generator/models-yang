@@ -81,11 +81,11 @@ module open-traffic-generator-dhcpv4client {
 
       uses dhcp4client-counters;
     }
-    container address {
+    container interface {
       description
         "Information about address learned by an indivdual DHCPv4 session.";
 
-      uses dhcp4client-address;
+      uses dhcp4-interface;
     }
   }
 
@@ -129,7 +129,7 @@ module open-traffic-generator-dhcpv4client {
     }
   }
 
-  grouping dhcp4client-address {
+  grouping dhcp4-interface {
     description
       "This grouping defines learning of IPv4 address information.";
     leaf address {

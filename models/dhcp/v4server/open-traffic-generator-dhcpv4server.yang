@@ -82,7 +82,7 @@ module open-traffic-generator-dhcpv4server {
         "This sub-module describes a YANG model for
          the Host allocated status of a DHCPv4 Server";
 
-      uses dhcpv4server-leases-states;
+      uses dhcpv4-leases-states;
     }
   }
 
@@ -126,22 +126,22 @@ module open-traffic-generator-dhcpv4server {
     }
   }
 
-  grouping dhcpv4server-leases-states {
+  grouping dhcpv4-leases-states {
     description
       "This grouping defines DHCPv4 Server Leases States information.";
     container leases-states {
       description
         "Container of DHCPv4 Server Leases States information.";
-      list leases {
+      list hosts {
         key "address";
           description
-            "The IPv4 address associated with this lease";
+            "The IPv4 address associated with this lease for the Host";
           leaf address {
             type leafref {
               path "../state/address";
             }
             description
-              "A reference to address that has been leased.";
+              "A reference to address that has been leased for the Host.";
           }
         container state {
           description
