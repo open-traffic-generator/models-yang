@@ -1,0 +1,84 @@
+module open-traffic-generator-platform {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/platform";
+  prefix "otg-platform";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines data related to open traffic generator (OTG) components";
+
+  revision 2022-01-21 {
+    description
+      "Initial revision";
+    reference "0.1.0";
+  }
+
+  grouping platform-top {
+    description
+      "Top-level structural grouping for OTG component entries.";
+
+    container components {
+      description
+        "components that are defined by an OTG.";
+
+      list component {
+        key "name";
+
+        config false;
+
+        description
+          "An individual component defined by an OTG.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to an component's name, acting as a key of
+            the components list.";
+        }
+
+        container state {
+          description
+            "Operational state of an individual component.";
+          uses component-state;
+        }
+      }
+    }
+  }
+
+  grouping component-state {
+    description
+      "Operational state of an OTG component.";
+
+    leaf name {
+      type enumeration {
+        enum keng-controller {
+          description
+            "The OTG component is keng-controller.";
+        }
+      }
+      description
+        "An arbitrary name of an OTG component.";
+    }
+
+    leaf sw-version {
+      type string;
+      description
+        "Software version information of an OTG component";
+    }
+  }
+
+  uses platform-top;
+}
