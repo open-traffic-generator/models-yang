@@ -1,0 +1,7 @@
+module: open-traffic-generator-platform
+  +--rw components
+     +--ro component* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?         enumeration
+           +--ro sw-version?   string
