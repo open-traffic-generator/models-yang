@@ -14,7 +14,7 @@ module open-traffic-generator-platform {
   description
     "This module defines data related to open traffic generator (OTG) components";
 
-  revision 2022-01-21 {
+  revision 2024-04-22 {
     description
       "Initial revision";
     reference "0.1.0";
@@ -22,11 +22,11 @@ module open-traffic-generator-platform {
 
   grouping platform-top {
     description
-      "Top-level structural grouping for OTG component entries.";
+      "Top-level structural grouping for for components if an Open Traffic Generator compliant implementation.";
 
     container components {
       description
-        "components that are defined by an OTG.";
+        "Components which are part of an Open Traffic Generator compliant implementation.";
 
       list component {
         key "name";
@@ -34,7 +34,7 @@ module open-traffic-generator-platform {
         config false;
 
         description
-          "An individual component defined by an OTG.";
+          "An individual component of an OTG compliant implementation.";
 
         leaf name {
           type leafref {
@@ -66,7 +66,7 @@ module open-traffic-generator-platform {
         }
       }
       description
-        "An arbitrary name of an OTG component.";
+        "The name of the OTG component ";
     }
 
     leaf sw-version {
