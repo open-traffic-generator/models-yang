@@ -22,7 +22,7 @@ module open-traffic-generator-platform {
 
   grouping platform-top {
     description
-      "Top-level structural grouping for for components if an Open Traffic Generator compliant implementation.";
+      "Top-level structural grouping for components if an Open Traffic Generator compliant implementation.";
 
     container components {
       description
