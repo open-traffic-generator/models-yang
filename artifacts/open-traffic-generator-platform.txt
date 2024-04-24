@@ -3,5 +3,6 @@ module: open-traffic-generator-platform
      +--ro component* [name]
         +--ro name     -> ../state/name
         +--ro state
-           +--ro name?      enumeration
-           +--ro version?   string
+           +--ro name?               enumeration
+           +--ro software-version?   string
+           +--ro sdk-version?        string

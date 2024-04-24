@@ -65,20 +65,21 @@ module open-traffic-generator-platform {
             "The keng-controller component of the OTG implementation.";
         }
 
-        enum sdk {
-          description
-            "The snappi/gosnappi sdk supported by the OTG implementation.";
-        }
-
       }
       description
         "The name of the OTG component ";
     }
 
-    leaf version {
+    leaf software-version {
       type string;
       description
-        "version information of an OTG component";
+        "Software version information of an OTG component";
+    }
+
+    leaf sdk-version {
+      type string;
+      description
+        "snappi/gosnappi version information of an OTG component";
     }
   }
 
