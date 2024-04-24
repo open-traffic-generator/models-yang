@@ -469,7 +469,8 @@ module open-traffic-generator-bgp {
     container route_target_subtype {
       config false;
       description
-        "TBD: xxx";
+        "The Route Target Community identifies one or more routers that may receive a set of routes (that carry this Community)
+        carried by BGP. It is sent with sub-type as 0x02.";
 
       leaf global_2byte_as {
           type uint16;
@@ -489,7 +490,8 @@ module open-traffic-generator-bgp {
     container route_origin_subtype {
       config false;
       description
-        "TBD: xxx";
+        "The Route Origin Community identifies one or more routers that inject a set of routes (that carry this Community)
+        into BGP. It is sent with sub-type as 0x03.";
 
       leaf global_2byte_as {
           type uint16;
@@ -528,7 +530,8 @@ module open-traffic-generator-bgp {
     container route_target_subtype {
       config false;
       description
-        "TBD: xxx";
+        "The Route Target Community identifies one or more routers that may receive a set of routes (that carry this Community)
+        carried by BGP. It is sent with sub-type as 0x02.";
 
       leaf global_ipv4_admin {
           type otg-types:ipv4-address;
@@ -548,7 +551,8 @@ module open-traffic-generator-bgp {
     container route_origin_subtype {
       config false;
       description
-        "TBD: xxx";
+        "The Route Origin Community identifies one or more routers that inject a set of routes (that carry this Community)
+        into BGP It is sent with sub-type as 0x03.";
 
       leaf global_ipv4_admin {
           type otg-types:ipv4-address;
@@ -588,7 +592,8 @@ module open-traffic-generator-bgp {
     container route_target_subtype {
       config false;
       description
-        "TBD: xxx";
+        "The Route Target Community identifies one or more routers that may receive a set of routes (that carry this Community)
+        carried by BGP. It is sent with sub-type as 0x02.";
 
       leaf global_4byte_as {
           type uint32;
@@ -608,7 +613,8 @@ module open-traffic-generator-bgp {
     container route_origin_subtype {
       config false;
       description
-        "TBD: xxx";
+        "The Route Origin Community identifies one or more routers that inject a set of routes (that carry this Community)
+        into BGP. It is sent with sub-type as 0x03.";
 
       leaf global_4byte_as {
           type uint32;
@@ -648,7 +654,9 @@ module open-traffic-generator-bgp {
     container color_subtype {
       config false;
       description
-        "TBD: xxx";
+        "The Color Community contains locally administrator defined 'color' value which is used in conjunction with
+        Encapsulation attribute to decide whether a data packet can be transmitted on a certain tunnel or not.
+        It is defined in RFC9012 and sent with sub-type as 0x0b.";
 
       leaf flags {
           type uint16;
@@ -668,7 +676,8 @@ module open-traffic-generator-bgp {
     container encapsulation_subtype {
       config false;
       description
-        "TBD: xxx";
+        "This identifies the type of tunneling technology being signalled.
+        It is defined in RFC9012 and sent with sub-type as 0x0c.";
 
       leaf reserved {
           type uint32;
