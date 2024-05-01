@@ -5,7 +5,7 @@ on:
   pull_request:
   workflow_dispatch:
     paths:
-    - '!artifacts/**'
+      - "!artifacts/**"
 
 jobs:
   build:
@@ -51,6 +51,7 @@ jobs:
           git add -f artifacts/open-traffic-generator-lacp.txt
           git add -f artifacts/open-traffic-generator-rsvp.txt
           git add -f artifacts/open-traffic-generator-lldp.txt
+          git add -f artifacts/open-traffic-generator-platform.txt
           if git status --porcelain | grep .
             then
               git commit -m "Update auto generated content"
