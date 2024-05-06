@@ -48,7 +48,7 @@ generate: lint ## go generation target
 		-schema_struct_path=github.com/open-traffic-generator/ixia-c-gnmi-server/pkg/telemetry \
 		-path_struct_package_suffix="" \
 		-base_import_path=github.com/open-traffic-generator/ixia-c-gnmi-server/pkg/telemetry \
-		-path_structs_split_files_count=2 \
+		-path_structs_split_files_count=1 \
 		$(COMMON_ARGS) \
 		${MODELS}
 
