@@ -339,6 +339,12 @@ module open-traffic-generator-bgp {
               uses bgp-community-state;
           }
 
+          list extended-community {
+            description
+              "Unkeyed list of optional extended community attributes present in the UPDATE message.";
+              uses bgp-extended-community-state;
+          }
+
           leaf local-preference {
             type uint32;
             description
@@ -438,6 +444,372 @@ module open-traffic-generator-bgp {
       type uint16;
       description
         "Last two octets of 32 bit community AS value between 0 to 65535.";
+    }
+  }
+
+  grouping transitive_2octet_as {
+    description
+      "Structural grouping for Transitive Two-Octet AS-Specific Extended Community";
+
+    leaf transitive_2octet_as_type {
+      type enumeration {
+        enum ROUTE_TARGET_SUBTYPE {
+          description
+            "Transitive Two-Octet AS-Specific Extended Community is route_target_subtype";
+        }
+        enum ROUTE_ORIGIN_SUBTYPE {
+          description
+            "Transitive Two-Octet AS-Specific Extended Community is route_origin_subtype";
+        }
+      }
+      description
+        "The type of Transitive Two-Octet AS-Specific Extended Community";
+    }
+
+    container route_target_subtype {
+      config false;
+      description
+        "The Route Target Community identifies one or more routers that may receive a set of routes (that carry this Community)
+        carried by BGP. It is sent with sub-type as 0x02.";
+
+      leaf global_2byte_as {
+          type uint16;
+          description
+            "The two octet IANA assigned AS value assigned to the Autonomous System.";
+      }
+
+      leaf local_4byte_admin {
+          type uint32;
+          description
+            "The Local Administrator sub-field contains a number from a numbering space
+            that is administered by the organization to which the Autonomous System number
+            carried in the Global Administrator sub-field has been assigned by an appropriate authority.";
+      }
+    }
+
+    container route_origin_subtype {
+      config false;
+      description
+        "The Route Origin Community identifies one or more routers that inject a set of routes (that carry this Community)
+        into BGP. It is sent with sub-type as 0x03.";
+
+      leaf global_2byte_as {
+          type uint16;
+          description
+            "The two octet IANA assigned AS value assigned to the Autonomous System.";
+      }
+
+      leaf local_4byte_admin {
+          type uint32;
+          description
+            "The Local Administrator sub-field contains a number from a numbering space
+            that is administered by the organization to which the Autonomous System number
+            carried in the Global Administrator sub-field has been assigned by an appropriate authority.";
+      }
+    }
+  }
+
+  grouping transitive_ipv4_address {
+    description
+      "Structural grouping for Transitive IPv4 Address Specific Extended Community";
+
+    leaf transitive_ipv4_address_type {
+      type enumeration {
+        enum ROUTE_TARGET_SUBTYPE {
+          description
+            "Transitive Two-Octet IPv4 Address Specific Extended Community is route_target_subtype";
+        }
+        enum ROUTE_ORIGIN_SUBTYPE {
+          description
+            "Transitive Two-Octet IPv4 Address Specific Extended Community is route_origin_subtype";
+        }
+      }
+      description
+        "The type of Transitive IPv4 Address Specific Extended Community";
+    }
+    container route_target_subtype {
+      config false;
+      description
+        "The Route Target Community identifies one or more routers that may receive a set of routes (that carry this Community)
+        carried by BGP. It is sent with sub-type as 0x02.";
+
+      leaf global_ipv4_admin {
+          type otg-types:ipv4-address;
+          description
+            "An IPv4 unicast address assigned by one of the Internet registries.";
+      }
+
+      leaf local_2byte_admin {
+          type uint16;
+          description
+            "The Local Administrator sub-field contains a number from a numbering space
+            that is administered by the organization to which the IP address carried in the
+            Global Administrator sub-field has been assigned by an appropriate authority.";
+      }
+    }
+
+    container route_origin_subtype {
+      config false;
+      description
+        "The Route Origin Community identifies one or more routers that inject a set of routes (that carry this Community)
+        into BGP It is sent with sub-type as 0x03.";
+
+      leaf global_ipv4_admin {
+          type otg-types:ipv4-address;
+          description
+            "An IPv4 unicast address assigned by one of the Internet registries.";
+      }
+
+      leaf local_2byte_admin {
+          type uint16;
+          description
+            "The Local Administrator sub-field contains a number from a numbering space
+            that is administered by the organization to which the IP address carried in the
+            Global Administrator sub-field has been assigned by an appropriate authority.";
+      }
+    }
+  }
+
+  grouping transitive_4octet_as {
+    description
+      "Structural grouping for Transitive Four-Octet AS-Specific Extended Community";
+
+    leaf transitive_4octet_as_type {
+      type enumeration {
+        enum ROUTE_TARGET_SUBTYPE {
+          description
+            "Transitive Four-Octet AS-Specific Extended Community is route_target_subtype";
+        }
+        enum ROUTE_ORIGIN_SUBTYPE {
+          description
+            "Transitive Four-Octet AS-Specific Extended Community is route_origin_subtype";
+        }
+      }
+      description
+        "The type of Transitive Four-Octet AS-Specific Extended Community";
+    }
+
+    container route_target_subtype {
+      config false;
+      description
+        "The Route Target Community identifies one or more routers that may receive a set of routes (that carry this Community)
+        carried by BGP. It is sent with sub-type as 0x02.";
+
+      leaf global_4byte_as {
+          type uint32;
+          description
+            "The four octet IANA assigned AS value assigned to the Autonomous System.";
+      }
+
+      leaf local_2byte_admin {
+          type uint16;
+          description
+            "The Local Administrator sub-field contains a number from a numbering space that is
+            administered by the organization to which the Autonomous System number carried in the
+            Global Administrator sub-field has been assigned by an appropriate authority.";
+      }
+    }
+
+    container route_origin_subtype {
+      config false;
+      description
+        "The Route Origin Community identifies one or more routers that inject a set of routes (that carry this Community)
+        into BGP. It is sent with sub-type as 0x03.";
+
+      leaf global_4byte_as {
+          type uint32;
+          description
+            "The four octet IANA assigned AS value assigned to the Autonomous System.";
+      }
+
+      leaf local_2byte_admin {
+          type uint16;
+          description
+            "The Local Administrator sub-field contains a number from a numbering space that is
+            administered by the organization to which the Autonomous System number carried in the
+            Global Administrator sub-field has been assigned by an appropriate authority.";
+      }
+    }
+  }
+
+  grouping transitive_opaque {
+    description
+      "Structural grouping for Transitive Opaque Extended Community";
+
+    leaf transitive_opaque_type {
+      type enumeration {
+        enum COLOR_SUBTYPE {
+          description
+            "Transitive Opaque Extended Community is color_subtype";
+        }
+        enum ENCAPSULATION_SUBTYPE {
+          description
+            "Transitive Opaque Extended Community is encapsulation_subtype";
+        }
+      }
+      description
+        "The type of Transitive Opaque Extended Community";
+    }
+
+    container color_subtype {
+      config false;
+      description
+        "The Color Community contains locally administrator defined 'color' value which is used in conjunction with
+        Encapsulation attribute to decide whether a data packet can be transmitted on a certain tunnel or not.
+        It is defined in RFC9012 and sent with sub-type as 0x0b.";
+
+      leaf flags {
+          type uint16;
+          description
+            "Two octet flag values.";
+      }
+
+      leaf color {
+          type uint32;
+          description
+            "he color value is user defined and configured locally and used to determine whether
+            a data packet can be transmitted on a certain tunnel or not in conjunction with the
+            Encapsulation attribute. It is defined in RFC9012.";
+      }
+    }
+
+    container encapsulation_subtype {
+      config false;
+      description
+        "This identifies the type of tunneling technology being signalled.
+        It is defined in RFC9012 and sent with sub-type as 0x0c.";
+
+      leaf reserved {
+          type uint32;
+          description
+            "Four bytes of reserved values. Normally set to 0 on transmit and ignored on receive.";
+      }
+
+      leaf tunnel_type {
+          type uint16;
+          description
+            "Identifies the type of tunneling technology being signalled.
+            Initially defined in RFC5512 and extended in RFC9012.";
+      }
+    }
+  }
+
+  grouping non_transitive_2octet_as {
+    description
+      "Structural grouping for Non-Transitive Two-Octet AS-Specific Extended Community";
+
+    leaf non_transitive_2octet_as_type {
+      type enumeration {
+        enum LINK_BANDWIDTH_SUBTYPE {
+          description
+            "Non-Transitive Two-Octet AS-Specific Extended Community is link_bandwidth_subtype";
+        }
+      }
+      description
+        "The type of Non-Transitive Two-Octet AS-Specific Extended Community";
+    }
+
+    container link_bandwidth_subtype {
+      config false;
+      description
+        "TBD: xxx";
+
+      leaf global_2byte_as {
+          type uint16;
+          description
+            "The value of the Global Administrator subfield should represent the Autonomous System
+            of the router that attaches the Link Bandwidth Community.";
+      }
+
+      leaf bandwidth {
+          type otg-types:ieeefloat32;
+          description
+            "Bandwidth of the link in bytes per second. ( 1 Kbps is 1000 bytes per second and 1 Mbps is 1000 Kbps per second )";
+      }
+    }
+  }
+
+  grouping bgp-extended-community-structured {
+    description
+      "Structural grouping for Extended Community (structured)";
+
+    leaf bgp-extended-community-structured_type {
+      type enumeration {
+        enum TRANSITIVE_2OCTET_AS_TYPE {
+          description
+            "Extended Community type is transitive_2octet_as_type";
+        }
+        enum TRANSITIVE_IPV4_ADDRESS_TYPE {
+          description
+            "Extended Community type is transitive_ipv4_address_type";
+        }
+        enum TRANSITIVE_4OCTET_AS_TYPE {
+          description
+            "Extended Community type is transitive_4octet_as_type";
+        }
+        enum TRANSITIVE_OPAQUE_TYPE {
+          description
+            "Extended Community type is transitive_opaque_type";
+        }
+        enum NON_TRANSITIVE_2OCTET_AS_TYPE {
+          description
+            "Extended Community type is non_transitive_2octet_as_type";
+        }
+      }
+      description
+        "The type of Extended Community";
+    }
+
+    container transitive_2octet_as_type {
+      config false;
+      description
+        "The Transitive Two-Octet AS-Specific Extended Community is sent as type 0x00";
+      uses transitive_2octet_as;
+    }
+
+    container transitive_ipv4_address_type {
+      config false;
+      description
+        "The Transitive IPv4 Address Specific Extended Community is sent as type 0x01";
+      uses transitive_ipv4_address;
+    }
+
+    container transitive_4octet_as_type {
+      config false;
+      description
+        "The Transitive Four-Octet AS-Specific Extended Community is sent as type 0x02";
+      uses transitive_4octet_as;
+    }
+
+    container transitive_opaque_type {
+      config false;
+      description
+        "The Transitive Opaque Extended Community is sent as type 0x03";
+      uses transitive_opaque;
+    }
+
+    container non_transitive_2octet_as_type {
+      config false;
+      description
+        "The Non-Transitive Two-Octet AS-Specific Extended Community is sent as type 0x40";
+      uses non_transitive_2octet_as;
+    }
+  }
+
+  grouping bgp-extended-community-state {
+    description
+      "the information present in one received Extended Community attribute";
+    leaf raw {
+      type otg-types:hex-string;
+      description
+        "The raw byte contents of the 8 bytes received in the Extended Community as 16 hex characters.";
+    }
+
+    container structured {
+      config false;
+      description
+        "The structured representation of the 8 bytes received in the Extended Community";
+      uses bgp-extended-community-structured;
     }
   }
 
@@ -562,6 +934,12 @@ module open-traffic-generator-bgp {
             description
               "Unkeyed list of optional community attributes present in the UPDATE message.";
               uses bgp-community-state;
+          }
+
+          list extended-community {
+            description
+              "Unkeyed list of optional extended community attributes present in the UPDATE message.";
+              uses bgp-extended-community-state;
           }
 
           leaf local-preference {

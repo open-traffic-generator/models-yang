@@ -15,7 +15,7 @@ get_go() {
 get_go_deps() {
     echo "\nDowloading go dependencies ...\n"
     # for generating Go client stubs from openapi.yaml
-    GO111MODULE=on go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+    # GO111MODULE=on go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 }
 
 install_deps() {
@@ -24,7 +24,7 @@ install_deps() {
     && apt-get -y install curl git python-is-python3 python3-pip \
     && get_go \
     && python -m pip install --prefer-binary -r requirements.txt \
-    && get_go_deps 
+    && get_go_deps
 }
 
 gen_artifacts() {
