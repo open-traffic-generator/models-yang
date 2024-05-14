@@ -181,6 +181,11 @@ module open-traffic-generator-dhcpv4server {
             description
               "The Circuit ID option found in the last request message";
           }
+          leaf remote-id {
+            type string;
+            description
+              "The Remote ID option found in the last request message";
+          }
         }
       }
     }

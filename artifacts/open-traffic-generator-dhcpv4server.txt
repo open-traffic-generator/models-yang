@@ -24,3 +24,4 @@ module: open-traffic-generator-dhcpv4server
                        +--ro rebind_time?      uint32
                        +--ro client-id?        string
                        +--ro circuit-id?       string
+                       +--ro remote-id?        string
