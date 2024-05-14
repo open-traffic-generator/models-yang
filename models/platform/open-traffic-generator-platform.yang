@@ -1,0 +1,87 @@
+module open-traffic-generator-platform {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/platform";
+  prefix "otg-platform";
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines data related to open traffic generator (OTG) components";
+
+  revision 2024-04-22 {
+    description
+      "Initial revision";
+    reference "0.1.0";
+  }
+
+  grouping platform-top {
+    description
+      "Top-level structural grouping for components if an Open Traffic Generator compliant implementation.";
+
+    container components {
+      description
+        "Components which are part of an Open Traffic Generator compliant implementation.";
+
+      list component {
+        key "name";
+
+        config false;
+
+        description
+          "An individual component of an OTG compliant implementation.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to an component's name, acting as a key of
+            the components list.";
+        }
+
+        container state {
+          description
+            "Operational state of an individual component.";
+          uses component-state;
+        }
+      }
+    }
+  }
+
+  grouping component-state {
+    description
+      "Operational state of an OTG component.";
+
+    leaf name {
+      type enumeration {
+        enum keng-controller {
+          description
+            "The keng-controller component of the OTG implementation.";
+        }
+
+      }
+      description
+        "The name of the OTG component ";
+    }
+
+    leaf software-version {
+      type string;
+      description
+        "Software version information of an OTG component";
+    }
+
+    leaf sdk-version {
+      type string;
+      description
+        "snappi/gosnappi version information of an OTG component";
+    }
+  }
+
+  uses platform-top;
+}

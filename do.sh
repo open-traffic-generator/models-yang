@@ -1,9 +1,9 @@
 #!/bin/sh
 
-GO_VERSION=1.18
-
 # Avoid warnings for non-interactive apt-get install
 export DEBIAN_FRONTEND=noninteractive
+
+GO_VERSION=1.19
 
 get_go() {
     echo "\nInstalling Go ...\n"
