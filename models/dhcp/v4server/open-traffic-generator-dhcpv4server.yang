@@ -36,7 +36,7 @@ module open-traffic-generator-dhcpv4server {
       description
         "DHCPv4 Servers telemetry collected by the OTG device.";
 
-      list servers {
+      list dhcpv4-server {
         key "name";
         config false;
         description
@@ -82,7 +82,7 @@ module open-traffic-generator-dhcpv4server {
         "This sub-module describes a YANG model for
          the Host allocated status of a DHCPv4 Server";
 
-      uses dhcpv4-leases-states;
+     uses dhcpv4-leases-states;
     }
   }
 
