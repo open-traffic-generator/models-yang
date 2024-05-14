@@ -1,6 +1,6 @@
 module: open-traffic-generator-dhcpv4server
   +--rw dhcpv4-servers
-     +--ro servers* [name]
+     +--ro dhcpv4-server* [name]
         +--ro name     -> ../state/name
         +--ro state
            +--ro name?       string
