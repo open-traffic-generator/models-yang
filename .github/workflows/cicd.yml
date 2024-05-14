@@ -61,4 +61,3 @@ jobs:
             else
               echo "No changed auto generated content"
           fi
-git
