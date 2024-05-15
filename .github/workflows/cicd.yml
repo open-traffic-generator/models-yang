@@ -10,9 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.10]
 
     steps:
       - name: Checkout Repository
@@ -20,10 +17,10 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Set up Python
+      - name: Set up Python 3.10
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.10"
 
       - name: Install dependencies
         run: |
