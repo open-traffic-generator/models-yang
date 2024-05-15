@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04 AS dev
 ENV ROOT_PATH=/home/otg/models-yang
 ENV GOPATH=/home/go
 ENV PATH=${PATH}:/usr/local/go/bin:${GOPATH}/bin
