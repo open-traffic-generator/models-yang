@@ -53,6 +53,8 @@ jobs:
           git add -f artifacts/open-traffic-generator-lacp.txt
           git add -f artifacts/open-traffic-generator-rsvp.txt
           git add -f artifacts/open-traffic-generator-lldp.txt
+          git add -f artifacts/open-traffic-generator-dhcpv4client.txt
+          git add -f artifacts/open-traffic-generator-dhcpv4server.txt
           git add -f artifacts/open-traffic-generator-platform.txt
           if git status --porcelain | grep .
             then
