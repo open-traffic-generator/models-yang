@@ -94,11 +94,6 @@ module open-traffic-generator-dhcpv6server {
       description
         "Number of DHCPSOLICIT messages received.";
     }
-    leaf solicits-ignored {
-      type otg-types:counter64;
-      description
-        "Number of DHCPSOLICIT messages ignored.";
-    }
     leaf advertisements-sent {
       type otg-types:counter64;
       description
@@ -108,6 +103,16 @@ module open-traffic-generator-dhcpv6server {
       type otg-types:counter64;
       description
         "Number of DHCPREQUEST messages received.";
+    }
+    leaf replies-sent {
+      type otg-types:counter64;
+      description
+        "Number of DHCP Reply messages sent.";
+    }
+    leaf solicits-ignored {
+      type otg-types:counter64;
+      description
+        "Number of DHCPSOLICIT messages ignored.";
     }
     leaf requests-naked {
       type otg-types:counter64;
@@ -128,11 +133,6 @@ module open-traffic-generator-dhcpv6server {
       type otg-types:counter64;
       description
         "Number of DHCP Rebind messages received.";
-    }
-    leaf replies-sent {
-      type otg-types:counter64;
-      description
-        "Number of DHCP Reply messages sent.";
     }
     leaf releases-received {
       type otg-types:counter64;
@@ -196,17 +196,17 @@ module open-traffic-generator-dhcpv6server {
             description
               "The time in seconds, IP address lease will expire";
           }
-          leaf preferred_time {
+          leaf preferred-time {
             type uint32;
             description
               "The time in seconds, elapsed time since address has been renewed.";
           }
-          leaf renew_time {
+          leaf renew-time {
             type uint32;
             description
               "Time in seconds until the DHCPv4 client starts renewing the lease.";
           }
-          leaf rebind_time {
+          leaf rebind-time {
             type uint32;
             description
               "Time in seconds until the DHCPv4 client starts rebinding.";

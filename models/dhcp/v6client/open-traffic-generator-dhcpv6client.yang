@@ -102,25 +102,25 @@ module open-traffic-generator-dhcpv6client {
       description
         "Number of DHCP Advertise messages received.";
     }
-    leaf advertisements-ignored {
-      type otg-types:counter64;
-      description
-        "Number of DHCP Advertise messages ignored.";
-    }
     leaf requests-sent {
       type otg-types:counter64;
       description
         "Number of DHCPREQUEST messages sent.";
     }
-    leaf requests-naked {
-      type otg-types:counter64;
-      description
-        "Number of DHCPNAK messages received.";
-    }
     leaf replies-received {
       type otg-types:counter64;
       description
         "Number of DHCPOFFER messages received.";
+    }
+    leaf advertisements-ignored {
+      type otg-types:counter64;
+      description
+        "Number of DHCP Advertise messages ignored.";
+    }
+    leaf naks-received {
+      type otg-types:counter64;
+      description
+        "Number of DHCPNACK messages received.";
     }
     leaf information-requests-sent {
       type otg-types:counter64;
@@ -150,7 +150,7 @@ module open-traffic-generator-dhcpv6client {
     leaf rapid-commit-solicits-sent {
       type otg-types:counter64;
       description
-        "Number of rapid commit DHCPSOLICIT messages sent.";
+        "Number of rapid-commit DHCPSOLICIT messages sent.";
     }
     leaf rapid-commit-replies-received {
       type otg-types:counter64;
@@ -174,22 +174,22 @@ module open-traffic-generator-dhcpv6client {
         "The length of the prefix";
     }
 
-    leaf gateway_address {
+    leaf gateway-address {
       type otg-types:ipv6-address;
       description
         "The Gateway address associated with the DHCP Client session.";
     }
-    leaf lease_time {
+    leaf lease-time {
       type uint32;
       description
         "The duration of the IP address lease, in seconds.";
     }
-    leaf renew_time {
+    leaf renew-time {
       type uint32;
       description
         "Time in seconds until the DHCPv6 client starts renewing the lease.";
     }
-    leaf rebind_time {
+    leaf rebind-time {
       type uint32;
       description
         "Time in seconds until the DHCPv6 client starts rebinding.";
