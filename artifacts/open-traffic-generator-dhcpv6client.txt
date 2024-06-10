@@ -1,0 +1,27 @@
+module: open-traffic-generator-dhcpv6client
+  +--rw dhcpv6-clients
+     +--ro dhcpv6-client* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?        string
+           +--ro counters
+           |  +--ro solicits-sent?                   otg-types:counter64
+           |  +--ro advertisements-received?         otg-types:counter64
+           |  +--ro advertisements-ignored?          otg-types:counter64
+           |  +--ro requests-sent?                   otg-types:counter64
+           |  +--ro requests-naked?                  otg-types:counter64
+           |  +--ro replies-received?                otg-types:counter64
+           |  +--ro information-requests-sent?       otg-types:counter64
+           |  +--ro renews-sent?                     otg-types:counter64
+           |  +--ro rebinds-sent?                    otg-types:counter64
+           |  +--ro releases-sent?                   otg-types:counter64
+           |  +--ro reconfigures-received?           otg-types:counter64
+           |  +--ro rapid-commit-solicits-sent?      otg-types:counter64
+           |  +--ro rapid-commit-replies-received?   otg-types:counter64
+           +--ro interface
+              +--ro address?           otg-types:ipv6-address
+              +--ro prefix-length?     uint32
+              +--ro gateway_address?   otg-types:ipv6-address
+              +--ro lease_time?        uint32
+              +--ro renew_time?        uint32
+              +--ro rebind_time?       uint32
