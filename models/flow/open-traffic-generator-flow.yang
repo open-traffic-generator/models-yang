@@ -150,13 +150,17 @@ module open-traffic-generator-flow {
     }
 
     leaf first-timestamp {
-      type otg-types:timeticks64;
+      type decimal64 {
+        fraction-digits 2;
+      }
       description
         "The received timestamp for the first incoming packet, measured in nanoseconds. Timestamp will be reset every time a flow is started.";
     }
 
     leaf last-timestamp {
-      type otg-types:timeticks64;
+      type decimal64 {
+        fraction-digits 2;
+      }
       description
         "The received timestamp for the last incoming packet, measured in nanoseconds. Timestamp will be reset every time a flow is started.";
     }

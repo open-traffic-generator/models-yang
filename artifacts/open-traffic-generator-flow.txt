@@ -13,8 +13,8 @@ module: open-traffic-generator-flow
         |  +--ro minimum-latency?   otg-types:timeticks64
         |  +--ro maximum-latency?   otg-types:timeticks64
         |  +--ro average-latency?   otg-types:timeticks64
-        |  +--ro first-timestamp?   otg-types:timeticks64
-        |  +--ro last-timestamp?    otg-types:timeticks64
+        |  +--ro first-timestamp?   decimal64
+        |  +--ro last-timestamp?    decimal64
         |  +--ro counters
         |     +--ro in-octets?    otg-types:counter64
         |     +--ro in-pkts?      otg-types:counter64
