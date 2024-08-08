@@ -148,6 +148,22 @@ module open-traffic-generator-flow {
         "The average latency value, measured in nanoseconds. The latency value is dependent
         on the configured type of latency measurement mode.";
     }
+
+    leaf first-timestamp {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      description
+        "The received timestamp for the first incoming packet, measured in nanoseconds. Timestamp will be reset every time a flow is started.";
+    }
+
+    leaf last-timestamp {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      description
+        "The received timestamp for the last incoming packet, measured in nanoseconds. Timestamp will be reset every time a flow is started.";
+    }
   }
 
   grouping flow-counters {
