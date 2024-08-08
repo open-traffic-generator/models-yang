@@ -114,10 +114,10 @@ module open-traffic-generator-dhcpv6server {
       description
         "Number of DHCPSOLICIT messages ignored.";
     }
-    leaf requests-naked {
+    leaf naks-sent {
       type otg-types:counter64;
       description
-        "Number of DHCPREQUEST messages naked.";
+        "Number of naks sent for DHCPREQUEST messages.";
     }
     leaf confirms-received {
       type otg-types:counter64;
@@ -215,11 +215,6 @@ module open-traffic-generator-dhcpv6server {
             type string;
             description
               "The ID of the DHCPv6 client holding this lease.";
-          }
-          leaf circuit-id {
-            type string;
-            description
-              "The Circuit ID option found in the last request message";
           }
           leaf remote-id {
             type string;
