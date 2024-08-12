@@ -117,10 +117,10 @@ module open-traffic-generator-dhcpv6client {
       description
         "Number of DHCP Advertise messages ignored.";
     }
-    leaf naks-received {
+    leaf nacks-received {
       type otg-types:counter64;
       description
-        "Number of DHCPNACK messages received.";
+        "Number of DHCP NACK messages received.";
     }
     leaf information-requests-sent {
       type otg-types:counter64;

@@ -10,7 +10,7 @@ module: open-traffic-generator-dhcpv6client
            |  +--ro requests-sent?                   otg-types:counter64
            |  +--ro replies-received?                otg-types:counter64
            |  +--ro advertisements-ignored?          otg-types:counter64
-           |  +--ro naks-received?                   otg-types:counter64
+           |  +--ro nacks-received?                  otg-types:counter64
            |  +--ro information-requests-sent?       otg-types:counter64
            |  +--ro renews-sent?                     otg-types:counter64
            |  +--ro rebinds-sent?                    otg-types:counter64

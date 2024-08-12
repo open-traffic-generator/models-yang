@@ -114,10 +114,10 @@ module open-traffic-generator-dhcpv6server {
       description
         "Number of DHCPSOLICIT messages ignored.";
     }
-    leaf naks-sent {
+    leaf nacks-sent {
       type otg-types:counter64;
       description
-        "Number of naks sent for DHCPREQUEST messages.";
+        "Number of nacks sent for DHCPREQUEST messages.";
     }
     leaf confirms-received {
       type otg-types:counter64;
