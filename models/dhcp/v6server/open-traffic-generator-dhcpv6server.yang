@@ -67,7 +67,7 @@ module open-traffic-generator-dhcpv6server {
     leaf name {
       type string;
       description
-        "An arbitary name of the DHCPv6 Server determined by the OTG
+        "An arbitrary name of the DHCPv6 Server determined by the OTG
         configuration.";
     }
     container counters {

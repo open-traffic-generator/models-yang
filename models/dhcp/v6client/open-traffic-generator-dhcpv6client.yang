@@ -71,19 +71,19 @@ module open-traffic-generator-dhcpv6client {
     leaf name {
       type string;
       description
-        "An arbitary name of the DHCPv6 Client determined by the OTG
+        "An arbitrary name of the DHCPv6 Client determined by the OTG
         configuration.";
     }
 
     container counters {
       description
-        "Counters of an indivdual DHCPv6 session.";
+        "Counters of an individual DHCPv6 session.";
 
       uses dhcp6client-counters;
     }
     container interface {
       description
-        "Information about address learned by an indivdual DHCPv6 session.";
+        "Information about address learned by an individual DHCPv6 session.";
 
       uses dhcp6-interface;
     }
@@ -162,6 +162,11 @@ module open-traffic-generator-dhcpv6client {
   grouping dhcp6-interface {
     description
       "This grouping defines learning of IPv6 address information.";
+    leaf iapd-address {
+      type otg-types:ipv6-address;
+      description
+        "The IPv6 IAPD address associated with this DHCP Client session.";
+    }
     leaf address {
       type otg-types:ipv6-address;
       description
