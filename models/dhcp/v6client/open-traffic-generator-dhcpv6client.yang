@@ -167,18 +167,16 @@ module open-traffic-generator-dhcpv6client {
       description
         "The IPv6 IAPD address associated with this DHCP Client session.";
     }
+    leaf iapd-prefix-length {
+      type uint32;
+      description
+        "The prefix length of the IPv6 IAPD address";
+    }
     leaf address {
       type otg-types:ipv6-address;
       description
         "The IPv6 address associated with this DHCP Client session.";
     }
-
-    leaf prefix-length {
-      type uint32;
-      description
-        "The length of the prefix";
-    }
-
     leaf gateway-address {
       type otg-types:ipv6-address;
       description
