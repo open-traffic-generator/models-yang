@@ -19,6 +19,7 @@ module: open-traffic-generator-dhcpv6client
            |  +--ro rapid-commit-solicits-sent?      otg-types:counter64
            |  +--ro rapid-commit-replies-received?   otg-types:counter64
            +--ro interface
+              +--ro iapd-address?      otg-types:ipv6-address
               +--ro address?           otg-types:ipv6-address
               +--ro prefix-length?     uint32
               +--ro gateway-address?   otg-types:ipv6-address
