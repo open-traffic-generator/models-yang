@@ -221,6 +221,11 @@ module open-traffic-generator-dhcpv6server {
             description
               "The Remote ID option found in the last request message";
           }
+          leaf interface-id {
+            type string;
+            description
+              "The Interface ID option found in the last request message";
+          }
         }
       }
     }
