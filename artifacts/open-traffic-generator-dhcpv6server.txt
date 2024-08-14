@@ -32,3 +32,4 @@ module: open-traffic-generator-dhcpv6server
                        +--ro rebind-time?      uint32
                        +--ro client-id?        string
                        +--ro remote-id?        string
+                       +--ro interface-id?     string
