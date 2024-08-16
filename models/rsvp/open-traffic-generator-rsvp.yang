@@ -86,7 +86,7 @@ module open-traffic-generator-rsvp {
     leaf name {
       type string;
       description
-        "An arbitary name of the RSVP-TE router determined by the ATE
+        "An arbitrary name of the RSVP-TE router determined by the ATE
         configuration.";
     }
 

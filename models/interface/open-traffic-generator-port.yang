@@ -67,7 +67,7 @@ module open-traffic-generator-port {
     leaf name {
       type string;
       description
-        "An arbitary name of an OTG port determined by the OTG
+        "An arbitrary name of an OTG port determined by the OTG
         configuration.";
     }
 

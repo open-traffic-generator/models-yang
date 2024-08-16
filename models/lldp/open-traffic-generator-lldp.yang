@@ -101,7 +101,7 @@ module open-traffic-generator-lldp {
     leaf name {
       type string;
       description
-        "An arbitary name of the LLDP interface determined by the ATE
+        "An arbitrary name of the LLDP interface determined by the ATE
         configuration.";
     }
   }

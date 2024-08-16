@@ -80,7 +80,7 @@ submodule open-traffic-generator-discovery-interfaces {
     leaf name {
       type string;
       description
-        "An arbitary name of an OTG interface determined by the OTG
+        "An arbitrary name of an OTG interface determined by the OTG
         configuration.";
     }
   }

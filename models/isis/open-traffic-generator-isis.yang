@@ -68,7 +68,7 @@ module open-traffic-generator-isis {
     leaf name {
       type string;
       description
-        "An arbitary name of the ISIS router determined by the OTG
+        "An arbitrary name of the ISIS router determined by the OTG
         configuration.";
     }
 

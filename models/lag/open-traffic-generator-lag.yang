@@ -67,7 +67,7 @@ module open-traffic-generator-lag {
     leaf name {
       type string;
       description
-        "An arbitary name of an OTG LAG determined by the OTG
+        "An arbitrary name of an OTG LAG determined by the OTG
         configuration.";
     }
 
