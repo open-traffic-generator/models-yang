@@ -3,10 +3,11 @@
 # Avoid warnings for non-interactive apt-get install
 export DEBIAN_FRONTEND=noninteractive
 
-GO_VERSION=1.19
+GO_VERSION=1.22.2
 
 get_go() {
     echo "\nInstalling Go ...\n"
+    rm -rvf /usr/local/go/
     # install golang per https://golang.org/doc/install#tarball
     curl -kL https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz \
         | tar -C /usr/local/ -xzf -

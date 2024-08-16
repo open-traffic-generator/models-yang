@@ -1,0 +1,203 @@
+module open-traffic-generator-dhcpv6client {
+  yang-version "1";
+
+  namespace "http://gitub.com/open-traffic-generator/models-yang/models/dhcp/v6client";
+  prefix "otg-dhcpv6client";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates OTG to dhcpv6client sessions that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2024-05-31 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  grouping dhcpv6clients-top {
+    description
+      "Top-level structural grouping for DHCPv6 Client telemetry
+      entries.";
+    reference
+      "1. https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/open-traffic-generator/models/master/artifacts/openapi.yaml&nocors";
+
+    container dhcpv6-clients {
+      description
+        "DHCPv6 Clients telemetry collected by the OTG device.";
+
+      list dhcpv6-client {
+        key "name";
+
+        config false;
+
+        description
+          "Each DHCPv6 Client is identified by an arbitrary string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the DHCPv6 Client's name, acting as a key of
+            the DHCPv6 Client list.";
+        }
+
+        container state {
+          config false;
+          description
+            "Operational state of an individual DHCPv6 Client.";
+          uses dhcpv6client-state;
+        }
+      }
+    }
+  }
+
+  grouping dhcpv6client-state {
+    description
+      "Operational state of an individual DHCPv6 Client.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitrary name of the DHCPv6 Client determined by the OTG
+        configuration.";
+    }
+
+    container counters {
+      description
+        "Counters of an individual DHCPv6 session.";
+
+      uses dhcp6client-counters;
+    }
+    container interface {
+      description
+        "Information about address learned by an individual DHCPv6 session.";
+
+      uses dhcp6-interface;
+    }
+  }
+
+  grouping dhcp6client-counters {
+    description
+      "Counters of the DHCPv6 Client.";
+    leaf solicits-sent {
+      type otg-types:counter64;
+      description
+        "Number of DHCPSOLICIT messages sent.";
+    }
+    leaf advertisements-received {
+      type otg-types:counter64;
+      description
+        "Number of DHCP Advertise messages received.";
+    }
+    leaf requests-sent {
+      type otg-types:counter64;
+      description
+        "Number of DHCPREQUEST messages sent.";
+    }
+    leaf replies-received {
+      type otg-types:counter64;
+      description
+        "Number of DHCPOFFER messages received.";
+    }
+    leaf advertisements-ignored {
+      type otg-types:counter64;
+      description
+        "Number of DHCP Advertise messages ignored.";
+    }
+    leaf nacks-received {
+      type otg-types:counter64;
+      description
+        "Number of DHCP NACK messages received.";
+    }
+    leaf information-requests-sent {
+      type otg-types:counter64;
+      description
+        "Number of DHCP Information messages sent.";
+    }
+    leaf renews-sent {
+      type otg-types:counter64;
+      description
+        "Number of DHCPR Renew messages sent.";
+    }
+    leaf rebinds-sent {
+      type otg-types:counter64;
+      description
+        "Number of DHCPR Rebind messages sent.";
+    }
+    leaf releases-sent {
+      type otg-types:counter64;
+      description
+        "Number of DHCPRELEASE messages sent.";
+    }
+    leaf reconfigures-received {
+      type otg-types:counter64;
+      description
+        "Number of DHCP Reconfigure messages received.";
+    }
+    leaf rapid-commit-solicits-sent {
+      type otg-types:counter64;
+      description
+        "Number of rapid-commit DHCPSOLICIT messages sent.";
+    }
+    leaf rapid-commit-replies-received {
+      type otg-types:counter64;
+      description
+        "Number of rapid-commit DHCP Reply messages received.";
+    }
+  }
+
+  grouping dhcp6-interface {
+    description
+      "This grouping defines learning of IPv6 address information.";
+    leaf iapd-address {
+      type otg-types:ipv6-address;
+      description
+        "The IPv6 IAPD address associated with this DHCP Client session.";
+    }
+    leaf iapd-prefix-length {
+      type uint32;
+      description
+        "The prefix length of the IPv6 IAPD address";
+    }
+    leaf address {
+      type otg-types:ipv6-address;
+      description
+        "The IPv6 address associated with this DHCP Client session.";
+    }
+    leaf gateway-address {
+      type otg-types:ipv6-address;
+      description
+        "The Gateway address associated with the DHCP Client session.";
+    }
+    leaf lease-time {
+      type uint32;
+      description
+        "The duration of the IP address lease, in seconds.";
+    }
+    leaf renew-time {
+      type uint32;
+      description
+        "Time in seconds until the DHCPv6 client starts renewing the lease.";
+    }
+    leaf rebind-time {
+      type uint32;
+      description
+        "Time in seconds until the DHCPv6 client starts rebinding.";
+    }
+  }
+
+  uses dhcpv6clients-top;
+}

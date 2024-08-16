@@ -168,7 +168,7 @@ module open-traffic-generator-lacp {
     leaf name {
       type string;
       description
-        "An arbitary name of the LACP peer determined by the ATE
+        "An arbitrary name of the LACP peer determined by the ATE
         configuration.";
     }
     leaf activity {

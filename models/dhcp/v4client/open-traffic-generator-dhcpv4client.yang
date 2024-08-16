@@ -1,7 +1,7 @@
 module open-traffic-generator-dhcpv4client {
   yang-version "1";
 
-  namespace "http://gitub.com/open-traffic-generator/models-yang/models/dhcp/vclient";
+  namespace "http://gitub.com/open-traffic-generator/models-yang/models/dhcp/v4client";
   prefix "otg-dhcpv4client";
 
   import open-traffic-generator-types {
@@ -71,7 +71,7 @@ module open-traffic-generator-dhcpv4client {
     leaf name {
       type string;
       description
-        "An arbitary name of the DHCPv4 Client determined by the OTG
+        "An arbitrary name of the DHCPv4 Client determined by the OTG
         configuration.";
     }
 

@@ -1,0 +1,35 @@
+module: open-traffic-generator-dhcpv6server
+  +--rw dhcpv6-servers
+     +--ro dhcpv6-server* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?       string
+           +--ro counters
+           |  +--ro solicits-received?               otg-types:counter64
+           |  +--ro advertisements-sent?             otg-types:counter64
+           |  +--ro requests-received?               otg-types:counter64
+           |  +--ro replies-sent?                    otg-types:counter64
+           |  +--ro solicits-ignored?                otg-types:counter64
+           |  +--ro nacks-sent?                      otg-types:counter64
+           |  +--ro confirms-received?               otg-types:counter64
+           |  +--ro renewals-received?               otg-types:counter64
+           |  +--ro rebinds-received?                otg-types:counter64
+           |  +--ro releases-received?               otg-types:counter64
+           |  +--ro declines-received?               otg-types:counter64
+           |  +--ro information-requests-received?   otg-types:counter64
+           |  +--ro relay-forwards-received?         otg-types:counter64
+           |  +--ro relay-replies-sent?              otg-types:counter64
+           |  +--ro reconfigures-sent?               otg-types:counter64
+           +--ro leases
+              +--ro leases-states
+                 +--ro hosts* [address]
+                    +--ro address    -> ../state/address
+                    +--ro state
+                       +--ro address?          otg-types:ipv6-address
+                       +--ro valid-time?       uint32
+                       +--ro preferred-time?   uint32
+                       +--ro renew-time?       uint32
+                       +--ro rebind-time?      uint32
+                       +--ro client-id?        string
+                       +--ro remote-id?        string
+                       +--ro interface-id?     string
