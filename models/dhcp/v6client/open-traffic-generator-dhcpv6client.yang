@@ -162,26 +162,51 @@ module open-traffic-generator-dhcpv6client {
   grouping dhcp6-interface {
     description
       "This grouping defines learning of IPv6 address information.";
-    leaf iapd-address {
-      type otg-types:ipv6-address;
+
+    container iapd-addresses {
       description
-        "The IPv6 IAPD address associated with this DHCP Client session.";
+        "Discovered IPv6 IAPD addresses associated with this DHCP Client session";
+
+      list iapd-address  {
+
+        description
+          "A list of IPv6 IAPD addresses and prefix lengths.";
+
+        leaf address {
+          type otg-types:ipv6-address;
+          description
+            "The IPv6 IAPD address associated with this DHCP Client session.";
+        }
+        leaf prefix-length {
+          type uint32;
+          description
+            "The prefix length of the IPv6 IAPD address";
+        }
+      }
     }
-    leaf iapd-prefix-length {
-      type uint32;
+
+    container ia-addresses {
       description
-        "The prefix length of the IPv6 IAPD address";
+        "Discovered IPv6 addresses and gateways associated with this DHCP Client session";
+
+      list ia-address  {
+
+        description
+          "A list of IPv6 addresses and gateways.";
+
+        leaf address {
+          type otg-types:ipv6-address;
+          description
+            "The IPv6 address associated with this DHCP Client session.";
+        }
+        leaf gateway {
+          type otg-types:ipv6-address;
+          description
+            "The Gateway address associated with the DHCP Client session.";
+        }
+      }
     }
-    leaf address {
-      type otg-types:ipv6-address;
-      description
-        "The IPv6 address associated with this DHCP Client session.";
-    }
-    leaf gateway-address {
-      type otg-types:ipv6-address;
-      description
-        "The Gateway address associated with the DHCP Client session.";
-    }
+
     leaf lease-time {
       type uint32;
       description
