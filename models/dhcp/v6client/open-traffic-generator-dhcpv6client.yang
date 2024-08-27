@@ -167,7 +167,7 @@ module open-traffic-generator-dhcpv6client {
       description
         "Discovered IPv6 IAPD addresses associated with this DHCP Client session";
 
-      list iapd-addresses  {
+      list iapd-address  {
 
         description
           "A list of IPv6 IAPD addresses and prefix lengths.";
@@ -185,11 +185,11 @@ module open-traffic-generator-dhcpv6client {
       }
     }
 
-    container addresses {
+    container ia-addresses {
       description
         "Discovered IPv6 addresses and gateways associated with this DHCP Client session";
 
-      list addresses  {
+      list ia-address  {
 
         description
           "A list of IPv6 addresses and gateways.";
@@ -199,7 +199,7 @@ module open-traffic-generator-dhcpv6client {
           description
             "The IPv6 address associated with this DHCP Client session.";
         }
-        leaf gateway-address {
+        leaf gateway {
           type otg-types:ipv6-address;
           description
             "The Gateway address associated with the DHCP Client session.";
