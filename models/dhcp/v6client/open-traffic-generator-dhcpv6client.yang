@@ -182,6 +182,11 @@ module open-traffic-generator-dhcpv6client {
           description
             "The prefix length of the IPv6 IAPD address";
         }
+        leaf lease-time {
+          type uint32;
+          description
+            "The duration of the IP address lease, in seconds.";
+        }
       }
     }
 
@@ -204,23 +209,12 @@ module open-traffic-generator-dhcpv6client {
           description
             "The Gateway address associated with the DHCP Client session.";
         }
+        leaf lease-time {
+          type uint32;
+          description
+            "The duration of the IP address lease, in seconds.";
+        }
       }
-    }
-
-    leaf lease-time {
-      type uint32;
-      description
-        "The duration of the IP address lease, in seconds.";
-    }
-    leaf renew-time {
-      type uint32;
-      description
-        "Time in seconds until the DHCPv6 client starts renewing the lease.";
-    }
-    leaf rebind-time {
-      type uint32;
-      description
-        "Time in seconds until the DHCPv6 client starts rebinding.";
     }
   }
 
