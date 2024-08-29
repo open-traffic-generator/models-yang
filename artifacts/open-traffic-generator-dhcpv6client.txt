@@ -23,10 +23,9 @@ module: open-traffic-generator-dhcpv6client
               |  +--ro iapd-address* []
               |     +--ro address?         otg-types:ipv6-address
               |     +--ro prefix-length?   uint32
+              |     +--ro lease-time?      uint32
               +--ro ia-addresses
-              |  +--ro ia-address* []
-              |     +--ro address?   otg-types:ipv6-address
-              |     +--ro gateway?   otg-types:ipv6-address
-              +--ro lease-time?       uint32
-              +--ro renew-time?       uint32
-              +--ro rebind-time?      uint32
+                 +--ro ia-address* []
+                    +--ro address?      otg-types:ipv6-address
+                    +--ro gateway?      otg-types:ipv6-address
+                    +--ro lease-time?   uint32
