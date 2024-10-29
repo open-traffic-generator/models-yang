@@ -1,0 +1,583 @@
+module open-traffic-generator-ospfv2 {
+  yang-version "1";
+
+  namespace "http://gitub.com/open-traffic-generator/models-yang/models/ospfv2";
+  prefix "otg-ospfv2";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to OSPFv2 sessions that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2022-01-21 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  grouping ospfv2-top {
+    description
+      "Top-level structural grouping for OSPFv2 router telemetry
+      entries.";
+
+    container ospfv2-routers {
+      description
+        "OSPFv2 router telemetry collected by the OTG device.";
+
+      list ospfv2-router {
+        key "name";
+
+        config false;
+
+        description
+          "Each OSPFv2 router is identified by an arbitrary string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the OSPFv2 router's name, acting as a key of
+            the OSPFv2 router list.";
+        }
+
+        container state {
+          description
+            "Operational state of an individual OSPFv2 router.";
+
+          uses ospfv2-state;
+        }
+      }
+    }
+  }
+
+  grouping ospfv2-state {
+    description
+      "Operational state of an individual OSPFv2 router.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitrary name of the OSPFv2 router determined by
+        the OTG configuration.";
+    }
+
+    container counters {
+      description
+        "Counters of an individual OSPFv2 router.";
+
+      uses ospfv2-counters;
+    }
+
+    container link-state-database {
+      description
+        "This sub-module describes a YANG model for the OSPF Link State
+        Database (LSDB).";
+
+      uses lsa-states;
+    }
+  }
+
+  grouping lsa-states {
+    description
+      "This grouping defines OSPFv2 LSA state information.";
+
+    reference
+      "1. https://github.com/openconfig/public/blob/master/release/models/ospf/openconfig-ospfv2-lsdb.yang
+       2. https://github.com/openconfig/public/tree/master/release/models/ospf";
+
+    container lsa-states {
+      description
+        "Container of OSPFv2 LSA state information.";
+
+      list router-lsas {
+        key "link-state-id";
+        description
+          "Contents of the router LSA.";
+
+        leaf link-state-id {
+          type leafref {
+            path "../state/link-state-id";
+          }
+          description
+            "Reference to the Link State ID of the neighbor.";
+        }
+
+        container state {
+          description
+            "State parameters of router LSA.";
+
+          uses ospfv2-lsdb-lsa-state;
+        }
+
+        container links {
+          description
+            "This container describes OSPFv2 links.";
+
+          list link {
+            key "link-id";
+            description
+              "OSPFv2 link attributes.";
+
+            leaf link-id {
+              type leafref {
+                path "../state/link-id";
+              }
+              description
+                "Reference to the link identifier.";
+            }
+
+            uses ospfv2-lsdb-link-state;
+          }
+        }
+      }
+
+      list network-lsas {
+        key "link-state-id";
+        description
+          "Contents of the network LSA.";
+
+        leaf link-state-id {
+          type leafref {
+            path "../state/link-state-id";
+          }
+          description
+            "Reference to the Link State ID of the neighbor.";
+        }
+
+        container state {
+          description
+            "State parameters of network LSA.";
+
+          uses ospfv2-lsdb-lsa-state;
+        }
+
+        leaf network-mask {
+          type otg-types:ipv4-address;
+          description
+            "The IPv4 address mask for the network.";
+        }
+
+        leaf-list neighbor-router-ids {
+          type otg-types:ipv4-address;
+          description
+            "A list of the router ID of the routers that are attached to
+            the network described by the Network LSA.";
+        }
+      }
+
+      list network-summary-lsas {
+        key "link-state-id";
+        description
+          "Contents of the network summary LSA.";
+
+        leaf link-state-id {
+          type leafref {
+            path "../state/link-state-id";
+          }
+          description
+            "Reference to the Link State ID of the neighbor.";
+        }
+
+        container state {
+          description
+            "State parameters of network summary LSA.";
+
+          uses ospfv2-lsdb-lsa-state;
+        }
+
+        leaf network-mask {
+          type otg-types:ipv4-address;
+          description
+            "The IPv4 address mask for the network.";
+        }
+
+        leaf metric {
+          type uint32;
+          description
+            "The cost of the summary route TOS level 0 and all
+            unspecified levels.";
+        }
+      }
+
+      list summary-as-lsas {
+        key "link-state-id";
+        description
+          "Contents of the Autonomous System Boundary Router (ASBR)
+          summary LSA.";
+
+        leaf link-state-id {
+          type leafref {
+            path "../state/link-state-id";
+          }
+          description
+            "Reference to the Link State ID of the neighbor.";
+        }
+
+        container state {
+          description
+            "State parameters of summary as LSA.";
+
+          uses ospfv2-lsdb-lsa-state;
+        }
+
+        leaf network-mask {
+          type otg-types:ipv4-address;
+          description
+            "The IPv4 address mask for the network.";
+        }
+
+        leaf metric {
+          type uint32;
+          description
+            "The cost of the summary route TOS level 0 and all
+            unspecified levels.";
+        }
+      }
+
+      list external-as-lsas {
+        key "link-state-id";
+        description
+          "Contents of the AS External LSA.";
+
+        leaf link-state-id {
+          type leafref {
+            path "../state/link-state-id";
+          }
+          description
+            "Reference to the Link State ID of the neighbor.";
+        }
+
+        container state {
+          description
+            "State parameters of external as LSA.";
+
+          uses ospfv2-lsdb-lsa-state;
+        }
+
+        leaf network-mask {
+          type otg-types:ipv4-address;
+          description
+            "The IPv4 address mask for the network.";
+        }
+
+        leaf metric {
+          type uint32;
+          description
+            "The cost of the summary route TOS level 0 and all
+            unspecified levels.";
+        }
+
+        leaf metric-type {
+          type uint32;
+          description
+            "The type of metric included within the AS External LSA.";
+        }
+      }
+
+      list nssa-lsas {
+        key "link-state-id";
+        description
+          "Contents of the NSSA LSA.";
+
+        leaf link-state-id {
+          type leafref {
+            path "../state/link-state-id";
+          }
+          description
+            "Reference to the Link State ID of the neighbor.";
+        }
+
+        container state {
+          description
+            "State parameters of nssa LSA.";
+
+          uses ospfv2-lsdb-lsa-state;
+        }
+
+        leaf network-mask {
+          type otg-types:ipv4-address;
+          description
+            "The IPv4 address mask for the network.";
+        }
+
+        leaf metric {
+          type uint32;
+          description
+            "The cost of the summary route TOS level 0 and all
+            unspecified levels.";
+        }
+
+        leaf metric-type {
+          type uint32;
+          description
+            "The type of metric included within the AS External LSA.";
+        }
+
+        leaf forwarding-address {
+          type otg-types:ipv4-address;
+          description
+            "IPv4 Forwarding address.";
+        }
+      }
+
+      list opaque-lsas {
+        key "link-state-id";
+        description
+          "Contents of the Opaque LSA.";
+
+        leaf link-state-id {
+          type leafref {
+            path "../state/link-state-id";
+          }
+          description
+            "Reference to the Link State ID of the neighbor.";
+        }
+
+        container state {
+          description
+            "State parameters of opaque LSA.";
+
+          uses ospfv2-lsdb-lsa-state;
+        }
+
+        leaf type {
+          type enumeration {
+            enum LOCAL {
+              description
+                "OSPFv2 link scope Opaque LSA - Type 9.";
+            }
+            enum AREA {
+              description
+                "OSPFv2 area scope Opaque LSA - Type 10.";
+            }
+            enum DOMAIN {
+              description
+                "OSPFv2 as scope Opaque LSA - Type 11.";
+            }
+          }
+          description
+            "The data associated with the link type.
+            The value is dependent upon the subtype of the LSA.";
+        }
+      }
+    }
+  }
+
+  grouping ospfv2-counters {
+    description
+      "Level counters of the OSPFv2 router.";
+
+    leaf sessions-up {
+      type otg-types:counter64;
+      description
+        "The total number of sessions that are fully up.";
+    }
+
+    leaf sessions-down {
+      type otg-types:counter64;
+      description
+        "The total number of sessions that are down.";
+    }
+
+    leaf sessions-flap {
+      type otg-types:counter64;
+      description
+        "The total number of sessions flap.";
+    }
+
+    leaf out-hellos {
+      type otg-types:counter64;
+      description
+        "The total number of HELLO messages sent.";
+    }
+
+    leaf in-hellos {
+      type otg-types:counter64;
+      description
+        "The total number of HELLO messages received.";
+    }
+
+    leaf out-dbds {
+      type otg-types:counter64;
+      description
+        "The total number of DBD messages sent.";
+    }
+
+    leaf in-dbds {
+      type otg-types:counter64;
+      description
+        "The total number of DBD messages received.";
+    }
+
+    leaf out-ls-requests {
+      type otg-types:counter64;
+      description
+        "The total number of LS Request messages sent.";
+    }
+
+    leaf in-ls-requests {
+      type otg-types:counter64;
+      description
+        "The total number of LS Request messages received.";
+    }
+
+    leaf out-ls-updates {
+      type otg-types:counter64;
+      description
+        "The total number of LS Update messages sent.";
+    }
+
+    leaf in-ls-updates {
+      type otg-types:counter64;
+      description
+        "The total number of LS Update messages received.";
+    }
+
+    leaf out-ls-acks {
+      type otg-types:counter64;
+      description
+        "The total number of LS Ack messages sent.";
+    }
+
+    leaf in-ls-acks {
+      type otg-types:counter64;
+      description
+        "The total number of LS Ack messages received.";
+    }
+
+    leaf out-lsas {
+      type otg-types:counter64;
+      description
+        "The total number of link state protocol data units (LSAs)
+        sent.";
+    }
+
+    leaf in-lsas {
+      type otg-types:counter64;
+      description
+        "The total number of link state protocol data units (LSAs)
+        received.";
+    }
+
+    leaf out-lsa-acks {
+      type otg-types:counter64;
+      description
+        "The total number of LSA Ack messages sent.";
+    }
+
+    leaf in-lsa-acks {
+      type otg-types:counter64;
+      description
+        "The total number of LSA Ack messages received.";
+    }
+  }
+
+  grouping ospfv2-lsdb-lsa-state {
+    description
+      "Generic parameters of an OSPFv2 LSA.";
+
+    leaf link-state-id {
+      type otg-types:ipv4-address;
+      description
+        "The Link State ID for the specified LSA type.";
+    }
+
+    leaf advertising-router {
+      type otg-types:ipv4-address;
+      description
+        "The router ID of the router that originated the LSA.";
+    }
+
+    leaf sequence-number {
+      type uint32;
+      description
+        "Sequence number to detect old and duplicate LSAs.
+         The greater the sequence number the more recent the LSA.";
+    }
+
+    leaf age {
+      type uint32;
+      description
+        "The time since the LSA's generation in seconds.";
+    }
+
+    leaf option-bits {
+      type uint32;
+      description
+        "The optional bits.";
+    }
+  }
+
+  grouping ospfv2-lsdb-link-state {
+    description
+      "Generic attributes used to identify link within OSPFv2.";
+
+    container state {
+      description
+        "State parameters of OSPFv2 link.";
+
+      leaf link-type {
+        type enumeration {
+          enum POINT_TO_POINT {
+            description
+              "The LSA represents a point-to-point connection to another
+              router.";
+          }
+          enum TRANSIT {
+            description
+              "The LSA represents a connection to a transit network.";
+          }
+          enum STUB {
+            description
+              "The LSA represents a connection to a stub network.";
+          }
+          enum VIRTUAL {
+            description
+              "The LSA represents a virtual link connection.";
+          }
+        }
+        description
+          "The data associated with the link type.
+          The value is dependent upon the subtype of the LSA.";
+      }
+
+      leaf link-id {
+        type otg-types:ipv4-address;
+        description
+           "The identifier for the link specified. The value of the link
+           identifier is dependent upon the type of the LSA.";
+      }
+
+      leaf link-data {
+        type otg-types:ipv4-address;
+        description
+           "The data associated with the link type. The value is
+            dependent upon the subtype of the LSA. When the connection is
+            to a stub network it represents the mask; for p2p connections
+            that are unnumbered it represents the ifIndex value of the
+            router's interface; for all other connections it represents
+            the local system's IP address.";
+      }
+
+      leaf metric {
+        type uint32;
+        description
+          "The cost of utilising the link specified independent of TOS.";
+      }
+    }
+  }
+
+  uses ospfv2-top;
+}
