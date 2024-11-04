@@ -40,14 +40,13 @@ module: open-traffic-generator-ospfv2
                  |     +--ro sequence-number?      uint32
                  |     +--ro age?                  uint16
                  |     +--ro option-bits?          uint32
-                 |     +--ro links
-                 |        +--ro link* [link-id]
-                 |           +--ro link-id    -> ../state/link-id
-                 |           +--ro state
-                 |              +--ro type?        enumeration
-                 |              +--ro link-id?     otg-types:ipv4-address
-                 |              +--ro link-data?   otg-types:ipv4-address
-                 |              +--ro metric?      uint16
+                 |     +--ro link* [link-id]
+                 |        +--ro link-id    -> ../state/link-id
+                 |        +--ro state
+                 |           +--ro type?        enumeration
+                 |           +--ro link-id?     otg-types:ipv4-address
+                 |           +--ro link-data?   otg-types:ipv4-address
+                 |           +--ro metric?      uint16
                  +--ro network-lsa* [link-state-id]
                  |  +--ro link-state-id    -> ../state/link-state-id
                  |  +--ro state

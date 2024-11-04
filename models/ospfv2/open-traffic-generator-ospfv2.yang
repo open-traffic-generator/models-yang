@@ -120,25 +120,20 @@ module open-traffic-generator-ospfv2 {
 
           uses ospfv2-lsdb-lsa-state;
 
-          container links {
+          list link {
+            key "link-id";
             description
-              "This container describes OSPFv2 links.";
+              "OSPFv2 link attributes.";
 
-            list link {
-              key "link-id";
-              description
-                "OSPFv2 link attributes.";
-
-              leaf link-id {
-                type leafref {
-                  path "../state/link-id";
-                }
-                description
-                  "Reference to the link identifier.";
+            leaf link-id {
+              type leafref {
+                path "../state/link-id";
               }
-
-              uses ospfv2-lsdb-link-state;
+              description
+                "Reference to the link identifier.";
             }
+
+            uses ospfv2-lsdb-link-state;
           }
         }
       }
