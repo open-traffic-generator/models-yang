@@ -101,7 +101,7 @@ module open-traffic-generator-ospfv2 {
       description
         "Container of OSPFv2 LSA state information.";
 
-      list router-lsas {
+      list router-lsa {
         key "link-state-id";
         description
           "Contents of the router LSA.";
@@ -119,31 +119,31 @@ module open-traffic-generator-ospfv2 {
             "State parameters of router LSA.";
 
           uses ospfv2-lsdb-lsa-state;
-        }
 
-        container links {
-          description
-            "This container describes OSPFv2 links.";
-
-          list link {
-            key "link-id";
+          container links {
             description
-              "OSPFv2 link attributes.";
+              "This container describes OSPFv2 links.";
 
-            leaf link-id {
-              type leafref {
-                path "../state/link-id";
-              }
+            list link {
+              key "link-id";
               description
-                "Reference to the link identifier.";
-            }
+                "OSPFv2 link attributes.";
 
-            uses ospfv2-lsdb-link-state;
+              leaf link-id {
+                type leafref {
+                  path "../state/link-id";
+                }
+                description
+                  "Reference to the link identifier.";
+              }
+
+              uses ospfv2-lsdb-link-state;
+            }
           }
         }
       }
 
-      list network-lsas {
+      list network-lsa {
         key "link-state-id";
         description
           "Contents of the network LSA.";
@@ -161,23 +161,23 @@ module open-traffic-generator-ospfv2 {
             "State parameters of network LSA.";
 
           uses ospfv2-lsdb-lsa-state;
-        }
 
-        leaf network-mask {
-          type otg-types:ipv4-address;
-          description
-            "The IPv4 address mask for the network.";
-        }
+          leaf network-mask {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address mask for the network.";
+          }
 
-        leaf-list neighbor-router-ids {
-          type otg-types:ipv4-address;
-          description
-            "A list of the router ID of the routers that are attached to
-            the network described by the Network LSA.";
+          leaf-list attached-router {
+            type otg-types:ipv4-address;
+            description
+              "A list of the router ID of the routers that are attached to
+              the network described by the Network LSA.";
+          }
         }
       }
 
-      list network-summary-lsas {
+      list network-summary-lsa {
         key "link-state-id";
         description
           "Contents of the network summary LSA.";
@@ -195,23 +195,23 @@ module open-traffic-generator-ospfv2 {
             "State parameters of network summary LSA.";
 
           uses ospfv2-lsdb-lsa-state;
-        }
 
-        leaf network-mask {
-          type otg-types:ipv4-address;
-          description
-            "The IPv4 address mask for the network.";
-        }
+          leaf network-mask {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address mask for the network.";
+          }
 
-        leaf metric {
-          type uint32;
-          description
-            "The cost of the summary route TOS level 0 and all
-            unspecified levels.";
+          leaf metric {
+            type uint16;
+            description
+              "The cost of the summary route TOS level 0 and all
+              unspecified levels.";
+          }
         }
       }
 
-      list summary-as-lsas {
+      list summary-as-lsa {
         key "link-state-id";
         description
           "Contents of the Autonomous System Boundary Router (ASBR)
@@ -230,23 +230,23 @@ module open-traffic-generator-ospfv2 {
             "State parameters of summary as LSA.";
 
           uses ospfv2-lsdb-lsa-state;
-        }
 
-        leaf network-mask {
-          type otg-types:ipv4-address;
-          description
-            "The IPv4 address mask for the network.";
-        }
+          leaf network-mask {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address mask for the network.";
+          }
 
-        leaf metric {
-          type uint32;
-          description
-            "The cost of the summary route TOS level 0 and all
-            unspecified levels.";
+          leaf metric {
+            type uint16;
+            description
+              "The cost of the summary route TOS level 0 and all
+              unspecified levels.";
+          }
         }
       }
 
-      list external-as-lsas {
+      list external-as-lsa {
         key "link-state-id";
         description
           "Contents of the AS External LSA.";
@@ -264,29 +264,29 @@ module open-traffic-generator-ospfv2 {
             "State parameters of external as LSA.";
 
           uses ospfv2-lsdb-lsa-state;
-        }
 
-        leaf network-mask {
-          type otg-types:ipv4-address;
-          description
-            "The IPv4 address mask for the network.";
-        }
+          leaf network-mask {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address mask for the network.";
+          }
 
-        leaf metric {
-          type uint32;
-          description
-            "The cost of the summary route TOS level 0 and all
-            unspecified levels.";
-        }
+          leaf metric {
+            type uint16;
+            description
+              "The cost of the summary route TOS level 0 and all
+              unspecified levels.";
+          }
 
-        leaf metric-type {
-          type uint32;
-          description
-            "The type of metric included within the AS External LSA.";
+          leaf metric-type {
+            type uint32;
+            description
+              "The type of metric included within the AS External LSA.";
+          }
         }
       }
 
-      list nssa-lsas {
+      list nssa-lsa {
         key "link-state-id";
         description
           "Contents of the NSSA LSA.";
@@ -304,35 +304,35 @@ module open-traffic-generator-ospfv2 {
             "State parameters of nssa LSA.";
 
           uses ospfv2-lsdb-lsa-state;
-        }
 
-        leaf network-mask {
-          type otg-types:ipv4-address;
-          description
-            "The IPv4 address mask for the network.";
-        }
+          leaf network-mask {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address mask for the network.";
+          }
 
-        leaf metric {
-          type uint32;
-          description
-            "The cost of the summary route TOS level 0 and all
-            unspecified levels.";
-        }
+          leaf metric {
+            type uint16;
+            description
+              "The cost of the summary route TOS level 0 and all
+              unspecified levels.";
+          }
 
-        leaf metric-type {
-          type uint32;
-          description
-            "The type of metric included within the AS External LSA.";
-        }
+          leaf metric-type {
+            type uint32;
+            description
+              "The type of metric included within the AS External LSA.";
+          }
 
-        leaf forwarding-address {
-          type otg-types:ipv4-address;
-          description
-            "IPv4 Forwarding address.";
+          leaf forwarding-address {
+            type otg-types:ipv4-address;
+            description
+              "IPv4 Forwarding address.";
+          }
         }
       }
 
-      list opaque-lsas {
+      list opaque-lsa {
         key "link-state-id";
         description
           "Contents of the Opaque LSA.";
@@ -350,26 +350,26 @@ module open-traffic-generator-ospfv2 {
             "State parameters of opaque LSA.";
 
           uses ospfv2-lsdb-lsa-state;
-        }
 
-        leaf type {
-          type enumeration {
-            enum LOCAL {
-              description
-                "OSPFv2 link scope Opaque LSA - Type 9.";
+          leaf type {
+            type enumeration {
+              enum LOCAL {
+                description
+                  "OSPFv2 link scope Opaque LSA - Type 9.";
+              }
+              enum AREA {
+                description
+                  "OSPFv2 area scope Opaque LSA - Type 10.";
+              }
+              enum DOMAIN {
+                description
+                  "OSPFv2 as scope Opaque LSA - Type 11.";
+              }
             }
-            enum AREA {
-              description
-                "OSPFv2 area scope Opaque LSA - Type 10.";
-            }
-            enum DOMAIN {
-              description
-                "OSPFv2 as scope Opaque LSA - Type 11.";
-            }
+            description
+              "The data associated with the link type.
+              The value is dependent upon the subtype of the LSA.";
           }
-          description
-            "The data associated with the link type.
-            The value is dependent upon the subtype of the LSA.";
         }
       }
     }
@@ -482,6 +482,54 @@ module open-traffic-generator-ospfv2 {
       description
         "The total number of LSA Ack messages received.";
     }
+
+    leaf out-router-lsas {
+      type otg-types:counter64;
+      description
+        "The total number of OSPFv2 Router (Type 1) LSAs sent.";
+    }
+
+    leaf in-router-lsas {
+      type otg-types:counter64;
+      description
+        "The total number of OSPFv2 Router (Type 1) LSAs received.";
+    }
+
+    leaf out-summary-lsas {
+      type otg-types:counter64;
+      description
+        "The total number of OSPFv2 Summary IP (Type 3) LSAs sent.";
+    }
+
+    leaf in-summary-lsas {
+      type otg-types:counter64;
+      description
+        "The total number of OSPFv2 Summary IP (Type 3) LSAs received.";
+    }
+
+    leaf out-external-lsas {
+      type otg-types:counter64;
+      description
+        "The total number of OSPFv2 External (Type 5) LSAs sent.";
+    }
+
+    leaf in-external-lsas {
+      type otg-types:counter64;
+      description
+        "The total number of OSPFv2 External (Type 5) LSAs received.";
+    }
+
+    leaf out-nssa-lsas {
+      type otg-types:counter64;
+      description
+        "The total number of OSPFv2 NSSA (Type 7) LSAs sent.";
+    }
+
+    leaf in-nssa-lsas {
+      type otg-types:counter64;
+      description
+        "The total number of OSPFv2 NSSA (Type 7) LSAs received.";
+    }
   }
 
   grouping ospfv2-lsdb-lsa-state {
@@ -508,7 +556,7 @@ module open-traffic-generator-ospfv2 {
     }
 
     leaf age {
-      type uint32;
+      type uint16;
       description
         "The time since the LSA's generation in seconds.";
     }
@@ -528,7 +576,7 @@ module open-traffic-generator-ospfv2 {
       description
         "State parameters of OSPFv2 link.";
 
-      leaf link-type {
+      leaf type {
         type enumeration {
           enum POINT_TO_POINT {
             description
@@ -572,7 +620,7 @@ module open-traffic-generator-ospfv2 {
       }
 
       leaf metric {
-        type uint32;
+        type uint16;
         description
           "The cost of utilising the link specified independent of TOS.";
       }
