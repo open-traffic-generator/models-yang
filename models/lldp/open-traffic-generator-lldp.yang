@@ -386,7 +386,7 @@ module open-traffic-generator-lldp {
            }
 
            leaf oui-subtype {
-             type string;
+             type uint32;
              description
               "The organizationally defined subtype field shall contain a unique subtype value assigned by the 
                defining organization.";

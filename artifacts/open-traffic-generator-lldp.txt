@@ -36,7 +36,7 @@ module: open-traffic-generator-lldp
                     |  +--ro state
                     |     +--ro custom-type?   uint32
                     |     +--ro oui?           string
-                    |     +--ro oui-subtype?   string
+                    |     +--ro oui-subtype?   uint32
                     +--ro capabilities* [name]
                        +--ro name     -> ../state/name
                        +--ro state
