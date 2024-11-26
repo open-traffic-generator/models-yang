@@ -1,0 +1,111 @@
+module: open-traffic-generator-ospfv2
+  +--rw ospfv2-routers
+     +--ro ospfv2-router* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?                  string
+           +--ro counters
+           |  +--ro sessions-up?         otg-types:counter64
+           |  +--ro sessions-down?       otg-types:counter64
+           |  +--ro sessions-flap?       otg-types:counter64
+           |  +--ro out-hellos?          otg-types:counter64
+           |  +--ro in-hellos?           otg-types:counter64
+           |  +--ro out-dbds?            otg-types:counter64
+           |  +--ro in-dbds?             otg-types:counter64
+           |  +--ro out-ls-requests?     otg-types:counter64
+           |  +--ro in-ls-requests?      otg-types:counter64
+           |  +--ro out-ls-updates?      otg-types:counter64
+           |  +--ro in-ls-updates?       otg-types:counter64
+           |  +--ro out-ls-acks?         otg-types:counter64
+           |  +--ro in-ls-acks?          otg-types:counter64
+           |  +--ro out-lsas?            otg-types:counter64
+           |  +--ro in-lsas?             otg-types:counter64
+           |  +--ro out-lsa-acks?        otg-types:counter64
+           |  +--ro in-lsa-acks?         otg-types:counter64
+           |  +--ro out-router-lsas?     otg-types:counter64
+           |  +--ro in-router-lsas?      otg-types:counter64
+           |  +--ro out-summary-lsas?    otg-types:counter64
+           |  +--ro in-summary-lsas?     otg-types:counter64
+           |  +--ro out-external-lsas?   otg-types:counter64
+           |  +--ro in-external-lsas?    otg-types:counter64
+           |  +--ro out-nssa-lsas?       otg-types:counter64
+           |  +--ro in-nssa-lsas?        otg-types:counter64
+           +--ro link-state-database
+              +--ro lsa-states
+                 +--ro router-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro option-bits?          uint32
+                 |     +--ro link* [id]
+                 |        +--ro id       -> ../state/id
+                 |        +--ro state
+                 |           +--ro type?     enumeration
+                 |           +--ro id?       otg-types:ipv4-address
+                 |           +--ro data?     otg-types:ipv4-address
+                 |           +--ro metric?   uint16
+                 +--ro network-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro option-bits?          uint32
+                 |     +--ro network-mask?         otg-types:ipv4-address
+                 |     +--ro attached-router*      otg-types:ipv4-address
+                 +--ro network-summary-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro option-bits?          uint32
+                 |     +--ro network-mask?         otg-types:ipv4-address
+                 |     +--ro metric?               uint16
+                 +--ro summary-as-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro option-bits?          uint32
+                 |     +--ro network-mask?         otg-types:ipv4-address
+                 |     +--ro metric?               uint16
+                 +--ro external-as-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro option-bits?          uint32
+                 |     +--ro network-mask?         otg-types:ipv4-address
+                 |     +--ro metric?               uint16
+                 |     +--ro metric-type?          uint32
+                 +--ro nssa-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro option-bits?          uint32
+                 |     +--ro network-mask?         otg-types:ipv4-address
+                 |     +--ro metric?               uint16
+                 |     +--ro metric-type?          uint32
+                 |     +--ro forwarding-address?   otg-types:ipv4-address
+                 +--ro opaque-lsa* [link-state-id]
+                    +--ro link-state-id    -> ../state/link-state-id
+                    +--ro state
+                       +--ro link-state-id?        otg-types:ipv4-address
+                       +--ro advertising-router?   otg-types:ipv4-address
+                       +--ro sequence-number?      uint32
+                       +--ro age?                  uint16
+                       +--ro option-bits?          uint32
+                       +--ro type?                 enumeration

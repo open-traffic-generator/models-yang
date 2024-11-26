@@ -58,6 +58,7 @@ jobs:
           git add -f artifacts/open-traffic-generator-dhcpv6client.txt
           git add -f artifacts/open-traffic-generator-dhcpv6server.txt
           git add -f artifacts/open-traffic-generator-platform.txt
+          git add -f artifacts/open-traffic-generator-ospfv2.txt
           if git status --porcelain | grep .
             then
               git commit -m "Update auto generated content"
