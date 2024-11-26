@@ -121,13 +121,13 @@ module open-traffic-generator-ospfv2 {
           uses ospfv2-lsdb-lsa-state;
 
           list link {
-            key "link-id";
+            key "id";
             description
               "OSPFv2 link attributes.";
 
-            leaf link-id {
+            leaf id {
               type leafref {
-                path "../state/link-id";
+                path "../state/id";
               }
               description
                 "Reference to the link identifier.";
@@ -596,14 +596,14 @@ module open-traffic-generator-ospfv2 {
           The value is dependent upon the subtype of the LSA.";
       }
 
-      leaf link-id {
+      leaf id {
         type otg-types:ipv4-address;
         description
            "The identifier for the link specified. The value of the link
            identifier is dependent upon the type of the LSA.";
       }
 
-      leaf link-data {
+      leaf data {
         type otg-types:ipv4-address;
         description
            "The data associated with the link type. The value is
