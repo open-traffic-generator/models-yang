@@ -103,12 +103,14 @@ module open-traffic-generator-port {
         bits per second.";
     }
 
-    leaf last-link-state-change-timestamp {
-      type decimal64 {
-        fraction-digits 2;
-      }
+    leaf last-change {
+      type otg-types:timeticks64;
       description
-        "The timestamp for the last link state change event, measured in nanoseconds.";
+        "The timestamp indicates the absolute time of the last 
+        link state change of the test port (e.g., up-to-down transition).
+
+        The value is the timestamp in nanoseconds relative to
+        the Unix Epoch (Jan 1, 1970 00:00:00 UTC).";
     }
 
     container counters {
