@@ -614,7 +614,6 @@ grouping is-reachability-neighbor-adjacency-sids {
       description
         "State parameters of an IPv4 extended prefix.";
       uses ipv4-prefix-extended-params-state;
-      uses isis-lsdb-prefix-state;
     }
   }
 
@@ -657,6 +656,7 @@ grouping is-reachability-neighbor-adjacency-sids {
         "The up/down bit. Set if a prefix is advertised from a
         higher level to a lower level";
     }
+    uses isis-lsdb-prefix-state;
     uses isis-lsdb-prefix-sid-state;
   }
 
