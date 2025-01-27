@@ -55,7 +55,13 @@ module: open-traffic-generator-isis
                        |     +--ro neighbor* [system-id]
                        |        +--ro system-id    -> ../state/system-id
                        |        +--ro state
-                       |           +--ro system-id    otg-types:hex-string
+                       |           +--ro system-id        otg-types:hex-string
+                       |           +--ro adjacency-sid* [sid]
+                       |              +--ro sid      -> ../state/sid
+                       |              +--ro state
+                       |                 +--ro sid?      uint32
+                       |                 +--ro flags*    enumeration
+                       |                 +--ro weight?   uint8
                        +--ro ipv4-internal-reachability
                        |  +--ro prefixes
                        |     +--ro prefix* [prefix]
@@ -91,17 +97,50 @@ module: open-traffic-generator-isis
                        |           +--ro prefix-length?         uint32
                        |           +--ro metric?                uint32
                        |           +--ro redistribution-type?   enumeration
+                       |           +--ro prefix-sid* [sid]
+                       |           |  +--ro sid      -> ../state/sid
+                       |           |  +--ro state
+                       |           |     +--ro sid?         uint32
+                       |           |     +--ro flags*       enumeration
+                       |           |     +--ro algorithm?   uint8
                        |           +--ro prefix-attributes
                        |              +--ro flags*   enumeration
                        +--ro ipv6-reachability
-                          +--ro prefixes
-                             +--ro prefix* [prefix]
-                                +--ro prefix    -> ../state/prefix
-                                +--ro state
-                                   +--ro prefix?                otg-types:ipv6-address
-                                   +--ro prefix-length?         uint32
-                                   +--ro redistribution-type?   enumeration
-                                   +--ro origin-type?           enumeration
-                                   +--ro metric?                uint32
-                                   +--ro prefix-attributes
-                                      +--ro flags*   enumeration
+                       |  +--ro prefixes
+                       |     +--ro prefix* [prefix]
+                       |        +--ro prefix    -> ../state/prefix
+                       |        +--ro state
+                       |           +--ro prefix?                otg-types:ipv6-address
+                       |           +--ro prefix-length?         uint32
+                       |           +--ro redistribution-type?   enumeration
+                       |           +--ro origin-type?           enumeration
+                       |           +--ro metric?                uint32
+                       |           +--ro prefix-sid* [sid]
+                       |           |  +--ro sid      -> ../state/sid
+                       |           |  +--ro state
+                       |           |     +--ro sid?         uint32
+                       |           |     +--ro flags*       enumeration
+                       |           |     +--ro algorithm?   uint8
+                       |           +--ro prefix-attributes
+                       |              +--ro flags*   enumeration
+                       +--ro router-capabilities
+                          +--ro capability* []
+                             +--ro state
+                                +--ro router-id?                    otg-types:ipv4-address
+                                +--ro flags*                        enumeration
+                                +--ro algorithms*                   uint32
+                                +--ro segment-routing-capability
+                                |  +--ro state
+                                |     +--ro flags*             enumeration
+                                |     +--ro srgb-descriptor* [range]
+                                |        +--ro range    -> ../state/range
+                                |        +--ro state
+                                |           +--ro range?            uint32
+                                |           +--ro starting-level?   uint32
+                                +--ro sr-local-block-ranges
+                                   +--ro state
+                                      +--ro srlbs-descriptor* [range]
+                                         +--ro range    -> ../state/range
+                                         +--ro state
+                                            +--ro range?            uint32
+                                            +--ro starting-level?   uint32
