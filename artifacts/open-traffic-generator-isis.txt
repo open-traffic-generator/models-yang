@@ -97,14 +97,14 @@ module: open-traffic-generator-isis
                        |           +--ro prefix-length?         uint32
                        |           +--ro metric?                uint32
                        |           +--ro redistribution-type?   enumeration
-                       |           +--ro prefix-sid* [sid]
-                       |           |  +--ro sid      -> ../state/sid
-                       |           |  +--ro state
-                       |           |     +--ro sid?         uint32
-                       |           |     +--ro flags*       enumeration
-                       |           |     +--ro algorithm?   uint8
                        |           +--ro prefix-attributes
-                       |              +--ro flags*   enumeration
+                       |           |  +--ro flags*   enumeration
+                       |           +--ro prefix-sid* [sid]
+                       |              +--ro sid      -> ../state/sid
+                       |              +--ro state
+                       |                 +--ro sid?         uint32
+                       |                 +--ro flags*       enumeration
+                       |                 +--ro algorithm?   uint8
                        +--ro ipv6-reachability
                        |  +--ro prefixes
                        |     +--ro prefix* [prefix]
@@ -124,8 +124,10 @@ module: open-traffic-generator-isis
                        |           +--ro prefix-attributes
                        |              +--ro flags*   enumeration
                        +--ro router-capabilities
-                          +--ro capability* []
+                          +--ro capability* [instance-number]
+                             +--ro instance-number    -> ../state/instance-number
                              +--ro state
+                                +--ro instance-number?              uint32
                                 +--ro router-id?                    otg-types:ipv4-address
                                 +--ro flags*                        enumeration
                                 +--ro algorithms*                   uint32
