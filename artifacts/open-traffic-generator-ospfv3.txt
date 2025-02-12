@@ -1,0 +1,123 @@
+module: open-traffic-generator-ospfv3
+  +--rw ospfv3-routers
+     +--ro ospfv3-router* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?                  string
+           +--ro counters
+           |  +--ro sessions-up?                  otg-types:counter64
+           |  +--ro sessions-down?                otg-types:counter64
+           |  +--ro sessions-flap?                otg-types:counter64
+           |  +--ro out-hellos?                   otg-types:counter64
+           |  +--ro in-hellos?                    otg-types:counter64
+           |  +--ro out-dbds?                     otg-types:counter64
+           |  +--ro in-dbds?                      otg-types:counter64
+           |  +--ro out-ls-requests?              otg-types:counter64
+           |  +--ro in-ls-requests?               otg-types:counter64
+           |  +--ro out-ls-updates?               otg-types:counter64
+           |  +--ro in-ls-updates?                otg-types:counter64
+           |  +--ro out-ls-acks?                  otg-types:counter64
+           |  +--ro in-ls-acks?                   otg-types:counter64
+           |  +--ro out-lsas?                     otg-types:counter64
+           |  +--ro in-lsas?                      otg-types:counter64
+           |  +--ro out-router-lsas?              otg-types:counter64
+           |  +--ro in-router-lsas?               otg-types:counter64
+           |  +--ro out-network-lsas?             otg-types:counter64
+           |  +--ro in-network-lsas?              otg-types:counter64
+           |  +--ro out-inter-area-prefix-lsas?   otg-types:counter64
+           |  +--ro in-inter-area-prefix-lsas?    otg-types:counter64
+           |  +--ro out-inter-area-router-lsas?   otg-types:counter64
+           |  +--ro in-inter-area-router-lsas?    otg-types:counter64
+           |  +--ro out-external-lsas?            otg-types:counter64
+           |  +--ro in-external-lsas?             otg-types:counter64
+           |  +--ro out-nssa-lsas?                otg-types:counter64
+           |  +--ro in-nssa-lsas?                 otg-types:counter64
+           |  +--ro out-link-lsas?                otg-types:counter64
+           |  +--ro in-link-lsas?                 otg-types:counter64
+           |  +--ro out-intra-area-prefix-lsas?   otg-types:counter64
+           |  +--ro in-intra-area-prefix-lsas?    otg-types:counter64
+           +--ro link-state-database
+              +--ro lsa-states
+                 +--ro router-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro neighbor-router?      otg-types:ipv4-address
+                 |     +--ro link* []
+                 |        +--ro type?     enumeration
+                 |        +--ro metric?   uint16
+                 +--ro network-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro attached-router*      otg-types:ipv4-address
+                 +--ro inter-area-prefix-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro prefix-length?        uint32
+                 |     +--ro metric?               uint16
+                 |     +--ro address-prefix?       otg-types:ipv6-address
+                 +--ro inter-area-router-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro metric?               uint16
+                 |     +--ro destination_router?   otg-types:ipv4-address
+                 +--ro external-as-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro address-prefix?       otg-types:ipv6-address
+                 |     +--ro prefix-length?        uint32
+                 |     +--ro metric?               uint16
+                 |     +--ro referenced-ls-type?   uint32
+                 |     +--ro forwarding-address?   otg-types:ipv6-address
+                 |     +--ro route-tag?            otg-types:ipv4-address
+                 +--ro nssa-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro address-prefix?       otg-types:ipv6-address
+                 |     +--ro prefix-length?        uint32
+                 |     +--ro metric?               uint16
+                 |     +--ro forwarding-address?   otg-types:ipv6-address
+                 |     +--ro route-tag?            otg-types:ipv4-address
+                 +--ro link-lsa* [link-state-id]
+                 |  +--ro link-state-id    -> ../state/link-state-id
+                 |  +--ro state
+                 |     +--ro link-state-id?        otg-types:ipv4-address
+                 |     +--ro advertising-router?   otg-types:ipv4-address
+                 |     +--ro sequence-number?      uint32
+                 |     +--ro age?                  uint16
+                 |     +--ro address-prefix?       otg-types:ipv6-address
+                 |     +--ro prefix-length?        uint32
+                 |     +--ro link-local-address?   otg-types:ipv6-address
+                 +--ro intra-area-prefix-lsa* [link-state-id]
+                    +--ro link-state-id    -> ../state/link-state-id
+                    +--ro state
+                       +--ro link-state-id?        otg-types:ipv4-address
+                       +--ro advertising-router?   otg-types:ipv4-address
+                       +--ro sequence-number?      uint32
+                       +--ro age?                  uint16
+                       +--ro address-prefix?       otg-types:ipv6-address
+                       +--ro prefix-length?        uint32
+                       +--ro metric?               uint16
