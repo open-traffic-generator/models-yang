@@ -296,6 +296,49 @@ module open-traffic-generator-isis {
                   description
                     "Reference to the system ID of the neighbor.";
                 }
+                container state {
+                  description
+                    "State parameters of IS standard neighbor.";
+
+                  leaf system-id {
+                    type otg-types:hex-string;
+                    mandatory true;
+                    description
+                      "System-ID of IS neighbor, e.g. '640100010000'.";
+                  }
+                }
+              }
+            }
+          }
+
+          container extended-is-reachability {
+            description
+              "This container defines list of ISIS extended reachability
+              neighbors and attributes.
+              This container describes list of Extended-IS-Reachability as defined in TLV 22.
+              When there are multiple occurences of Extended-IS-Reachability TLVs
+              in a LSP, the data in the TLVs are combined and stored in the 'neighbors' list.";
+
+            reference
+              "RFC5305: IS-IS Extensions for Traffic Engineering. TLV
+              22.";
+
+            container neighbors {
+              description
+                "This container describes IS neighbors.";
+
+              list neighbor {
+                key "system-id";
+                description
+                  "IS reachability neighbor attributes.";
+
+                leaf system-id {
+                  type leafref {
+                    path "../state/system-id";
+                  }
+                  description
+                    "Reference to the system ID of the neighbor.";
+                }
 
                 uses isis-lsdb-neighbor;
               }
@@ -371,20 +414,6 @@ module open-traffic-generator-isis {
             }
           }
 
-          container extended-is-reachability {
-            description
-              "This container defines list of ISIS extended reachability
-              neighbors and attributes.
-              This container describes list of Extended-IS-Reachability as defined in TLV 22.
-              When there are multiple occurences of Extended-IS-Reachability TLVs
-              in a LSP, the data in the TLVs are combined and stored in the 'neighbors' list.";
-
-            reference
-              "RFC5305: IS-IS Extensions for Traffic Engineering. TLV
-              22.";
-
-            uses isis-lsdb-common-extisreach-neighbors;
-          }
 
           container extended-ipv4-reachability {
             description
@@ -491,7 +520,7 @@ grouping is-reachability-neighbor-adjacency-sids {
     "This grouping defines the adjacency SIDs container when the
           sub-TLV type is 31.";
     list adjacency-sid {
-      key "sid";
+      key "sid-instance";
 
       description
         "Adjacency Segment-IDs List. An IGP-Adjacency Segment is
@@ -499,25 +528,28 @@ grouping is-reachability-neighbor-adjacency-sids {
         a set of unidirectional adjacencies. By default, an IGP-
         Adjacency Segment is local to the node which advertises
         it.";
-
-      leaf sid {
+      leaf sid-instance {
         type leafref {
-          path "../state/sid";
+          path "../state/sid-instance";
         }
         description
-          "Reference to the value of the Adjacency-SID.";
+          "Reference to the value of the prefix SID. There may be array of prefix SIDs.
+          https://datatracker.ietf.org/doc/html/rfc8667#name-adjacency-segment-identifie";
       }
 
       container state {
         description
-          "State parameters of Adjacency-SID.";
-
-        leaf sid {
+          "State parameters of Adjacency-SID";
+        leaf sid-instance {
           type uint32;
           description
-            "Adjacency-SID value.";
+            "A unique instance number for the instance for the Prefix-SID that may contain array of SIDs.";
         }
-
+        leaf-list sids {
+          type uint32;
+          description
+            "Reference to the values of one or more Adjacency-SIDs.";
+        }
         leaf-list flags {
           type enumeration {
             enum ADDRESS_FAMILY {
@@ -724,29 +756,36 @@ grouping is-reachability-neighbor-adjacency-sids {
     description
       "This grouping defines ISIS Prefix SID.";
     list prefix-sid {
-      key "sid";
+      key "sid-instance";
       description
         "Prefix Segment-ID list. IGP-Prefix Segment is an IGP segment
         attached to an IGP prefix. An IGP-Prefix Segment is global
         (unless explicitly advertised otherwise) within the SR/IGP
         domain.";
 
-      leaf sid {
+      leaf sid-instance {
         type leafref {
-          path "../state/sid";
+          path "../state/sid-instance";
         }
         description
-          "Reference to the value of the prefix SID.";
+          "Reference to the value of the prefix SID. There may be array of prefix SIDs.
+          https://datatracker.ietf.org/doc/html/rfc8667#name-prefix-segment-identifier-p";
       }
 
       container state {
         description
           "State parameters for Prefix-SID.";
-        leaf sid {
+        leaf sid-instance {
           type uint32;
           description
-            "IGP Prefix-SID value.";
+            "A unique instance number for the instance for the Prefix-SID that may contain array of SIDs.";
         }
+        leaf-list sids {
+          type uint32;
+          description
+            "IGP one more SID values.";
+        }
+
         leaf-list flags {
           type enumeration {
             enum READVERTISEMENT {
