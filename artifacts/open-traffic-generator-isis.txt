@@ -66,7 +66,7 @@ module: open-traffic-generator-isis
                        |              +--ro sid-instance    -> ../state/sid-instance
                        |              +--ro state
                        |                 +--ro sid-instance?     uint32
-                       |                 +--ro adjacency-type?   uint32
+                       |                 +--ro adjacency-type?   enumeration
                        |                 +--ro sids*             uint32
                        |                 +--ro flags*            enumeration
                        |                 +--ro weight?           uint8
