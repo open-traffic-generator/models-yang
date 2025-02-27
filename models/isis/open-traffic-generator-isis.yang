@@ -545,6 +545,11 @@ grouping is-reachability-neighbor-adjacency-sids {
           description
             "A unique instance number for the instance for the Prefix-SID that may contain array of SIDs.";
         }
+        leaf sid-type {
+          type uint32;
+          description
+            "Adjacency-SID type: Adjacency SIDs(31) or LAN adjacency SID (32)";
+        }
         leaf-list sids {
           type uint32;
           description
