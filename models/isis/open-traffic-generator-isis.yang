@@ -545,8 +545,18 @@ grouping is-reachability-neighbor-adjacency-sids {
           description
             "A unique instance number for the instance for the Prefix-SID that may contain array of SIDs.";
         }
+
         leaf adjacency-type {
-          type uint32;
+          type enumeration {
+            enum ADJ-SID {
+              description
+                "Adjacency Segment Identifier (Adj-SID) Sub-TLV";
+            }
+            enum LAN-ADJ-SID  {
+              description
+                "LAN Adjacency Segment Identifier (LAN-Adj-SID) Sub-TLV";
+            }
+          }
           description
             "Adjacency-SID type: Adjacency SIDs(31) or LAN adjacency SID (32)";
         }
