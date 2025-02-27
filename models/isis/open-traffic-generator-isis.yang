@@ -1205,12 +1205,6 @@ grouping is-reachability-neighbor-adjacency-sids {
                       processing SR MPLS encapsulated IPv6
                       packets on all interfaces.";
                 }
-                enum IPV6_SR {
-                    description
-                      "When set, the router is capable of
-                      processing the IPv6 Segment Routing Header
-                      on all interfaces.";
-                }
               }
               description
                 "Segment Routing Capability Flags.";
