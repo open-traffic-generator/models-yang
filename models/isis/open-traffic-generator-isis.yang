@@ -296,6 +296,49 @@ module open-traffic-generator-isis {
                   description
                     "Reference to the system ID of the neighbor.";
                 }
+                container state {
+                  description
+                    "State parameters of IS standard neighbor.";
+
+                  leaf system-id {
+                    type otg-types:hex-string;
+                    mandatory true;
+                    description
+                      "System-ID of IS neighbor, e.g. '640100010000'.";
+                  }
+                }
+              }
+            }
+          }
+
+          container extended-is-reachability {
+            description
+              "This container defines list of ISIS extended reachability
+              neighbors and attributes.
+              This container describes list of Extended-IS-Reachability as defined in TLV 22.
+              When there are multiple occurences of Extended-IS-Reachability TLVs
+              in a LSP, the data in the TLVs are combined and stored in the 'neighbors' list.";
+
+            reference
+              "RFC5305: IS-IS Extensions for Traffic Engineering. TLV
+              22.";
+
+            container neighbors {
+              description
+                "This container describes IS neighbors.";
+
+              list neighbor {
+                key "system-id";
+                description
+                  "IS reachability neighbor attributes.";
+
+                leaf system-id {
+                  type leafref {
+                    path "../state/system-id";
+                  }
+                  description
+                    "Reference to the system ID of the neighbor.";
+                }
 
                 uses isis-lsdb-neighbor;
               }
@@ -371,20 +414,6 @@ module open-traffic-generator-isis {
             }
           }
 
-          container extended-is-reachability {
-            description
-              "This container defines list of ISIS extended reachability
-              neighbors and attributes.
-              This container describes list of Extended-IS-Reachability as defined in TLV 22.
-              When there are multiple occurences of Extended-IS-Reachability TLVs
-              in a LSP, the data in the TLVs are combined and stored in the 'neighbors' list.";
-
-            reference
-              "RFC5305: IS-IS Extensions for Traffic Engineering. TLV
-              22.";
-
-            uses isis-lsdb-common-extisreach-neighbors;
-          }
 
           container extended-ipv4-reachability {
             description
@@ -454,6 +483,15 @@ module open-traffic-generator-isis {
               }
             }
           }
+          container router-capabilities {
+            description
+              "This list describes IS Router capabilities.";
+            reference
+              "RFC4971: Intermediate System to Intermediate System
+              (IS-IS) Extensions for Advertising Router Information.
+              TLV 242.";
+            uses isis-lsdb-router-capabilities-state;
+          }
         }
       }
     }
@@ -473,7 +511,113 @@ module open-traffic-generator-isis {
         description
           "System-ID of IS neighbor, e.g. '640100010000'.";
       }
+      uses is-reachability-neighbor-adjacency-sids;
     }
+  }
+
+grouping is-reachability-neighbor-adjacency-sids {
+  description
+    "This grouping defines the adjacency SIDs container when the
+          sub-TLV type is 31.";
+    list adjacency-sid {
+      key "sid-instance";
+
+      description
+        "Adjacency Segment-IDs List. An IGP-Adjacency Segment is
+        an IGP segment attached to a unidirectional adjacency or
+        a set of unidirectional adjacencies. By default, an IGP-
+        Adjacency Segment is local to the node which advertises
+        it.";
+      leaf sid-instance {
+        type leafref {
+          path "../state/sid-instance";
+        }
+        description
+          "Reference to the value of the prefix SID. There may be array of prefix SIDs.
+          https://datatracker.ietf.org/doc/html/rfc8667#name-adjacency-segment-identifie";
+      }
+
+      container state {
+        description
+          "State parameters of Adjacency-SID";
+        leaf sid-instance {
+          type uint32;
+          description
+            "A unique instance number for the instance for the Prefix-SID that may contain array of SIDs.";
+        }
+
+        leaf adjacency-type {
+          type enumeration {
+            enum ADJ-SID {
+              description
+                "Adjacency Segment Identifier (Adj-SID) Sub-TLV";
+            }
+            enum LAN-ADJ-SID  {
+              description
+                "LAN Adjacency Segment Identifier (LAN-Adj-SID) Sub-TLV";
+            }
+          }
+          description
+            "Adjacency-SID type: Adjacency SIDs(31) or LAN adjacency SID (32)";
+        }
+        leaf-list sids {
+          type uint32;
+          description
+            "Reference to the values of one or more Adjacency-SIDs.";
+        }
+        leaf-list flags {
+          type enumeration {
+            enum ADDRESS_FAMILY {
+              description
+                "Address-family flag. When unset, the Adj-SID
+                refers to an adjacency with outgoing IPv4
+                encapsulation. If set then the Adj-SID refers to
+                an adjacency with outgoing IPv6 encapsulation.";
+            }
+            enum BACKUP {
+              description
+                "Backup flag. When set, the Adj-SID refers to an
+                adjacency being protected (e.g.: using IPFRR or
+                MPLS-FRR).";
+            }
+            enum VALUE {
+              description
+                "Value flag. When set, the SID carries a value
+                (instead of an index). By default the flag is
+                SET.";
+            }
+            enum LOCAL {
+              description
+                "Local flag. When set, the value/index carried
+                by the SID has local significance. By default
+                the flag is SET.";
+            }
+            enum SET {
+              description
+                "Set flag. When set, the S-Flag indicates that
+                the Adj-SID refers to a set of adjacencies.";
+            }
+            enum PERSISTENT {
+              description
+                "Persistent Flag. When set, the P-Flag indicates that the Adj-SID is persistently allocated, i.e.,
+                the Adj-SID value remains consistent across router restart and/or interface flap.";
+            }
+          }
+          description
+            "Flags associated with Adj-Segment-ID.";
+        }
+
+        leaf weight {
+          type uint8;
+          description
+            "Value that represents the weight of the Adj-SID for
+            the purpose of load balancing.";
+        }
+      }
+    }
+    reference
+      "draft-ietf-isis-segment-routing-extensions. sub-TLV 31:
+      TLV 22, 222, 223, 141. ";
   }
 
   grouping isis-lsdb-common-metric-specification {
@@ -513,6 +657,59 @@ module open-traffic-generator-isis {
         }
       }
     }
+  }
+  grouping ipv4-prefix-extended-state {
+    description
+      "This grouping defines attributes of an IPv4 extended prefix.";
+
+    container state {
+      description
+        "State parameters of an IPv4 extended prefix.";
+      uses ipv4-prefix-extended-params-state;
+    }
+  }
+
+   grouping ipv4-prefix-extended-params-state {
+    description
+      "State parameters that relate to an IPv4 prefix";
+
+    leaf prefix {
+      type otg-types:ipv4-address;
+      description
+        "IPv4 prefix contained within extended reachability TLVs.";
+    }
+
+    leaf prefix-length {
+      type uint32;
+      description
+        "The length of the IPv4 prefix.";
+    }
+
+    leaf metric {
+      type uint32;
+      description
+        "ISIS wide metric.";
+    }
+
+    leaf redistribution-type {
+      type enumeration {
+        enum UP {
+          description
+            "Up (0)-used when a prefix is initially advertised within the ISIS L3 hierarchy,
+            and for all other prefixes in L1 and L2 LSPs. (default).";
+        }
+        enum DOWN {
+          description
+            "Down (1)-used when an L1/L2 router advertises L2 prefixes in L1 LSPs.
+            The prefixes are being advertised from a higher level (L2) down to a lower level (L1).";
+        }
+      }
+      description
+        "The up/down bit. Set if a prefix is advertised from a
+        higher level to a lower level";
+    }
+    uses isis-lsdb-prefix-state;
+    uses isis-lsdb-prefix-sid-state;
   }
 
   grouping ipv4-prefix-attributes-state {
@@ -571,6 +768,97 @@ module open-traffic-generator-isis {
         type uint8;
         description
           "ISIS default metric value.";
+      }
+    }
+  }
+
+  grouping isis-lsdb-prefix-sid-state {
+    description
+      "This grouping defines ISIS Prefix SID.";
+    list prefix-sid {
+      key "sid-instance";
+      description
+        "Prefix Segment-ID list. IGP-Prefix Segment is an IGP segment
+        attached to an IGP prefix. An IGP-Prefix Segment is global
+        (unless explicitly advertised otherwise) within the SR/IGP
+        domain.";
+
+      leaf sid-instance {
+        type leafref {
+          path "../state/sid-instance";
+        }
+        description
+          "Reference to the value of the prefix SID. There may be array of prefix SIDs.
+          https://datatracker.ietf.org/doc/html/rfc8667#name-prefix-segment-identifier-p";
+      }
+
+      container state {
+        description
+          "State parameters for Prefix-SID.";
+        leaf sid-instance {
+          type uint32;
+          description
+            "A unique instance number for the instance for the Prefix-SID that may contain array of SIDs.";
+        }
+        leaf-list sids {
+          type uint32;
+          description
+            "IGP one more SID values.";
+        }
+
+        leaf-list flags {
+          type enumeration {
+            enum READVERTISEMENT {
+              description
+                "Readvertisment flag. When set, the prefix to which
+                this Prefix-SID is attached, has been propagated by
+                the router either from another level or from
+                redistribution.";
+            }
+            enum NODE {
+              description
+                "Node flag. When set, the Prefix-SID refers to the
+                router identified by the prefix. Typically, the
+                N-Flag is set on Prefix-SIDs attached to a router
+                loopback address.";
+            }
+            enum NO_PHP {
+              description
+                "Penultimate-Hop-Popping flag. When set, then the
+                penultimate hop MUST NOT pop the Prefix-SID before
+                delivering the packet to the node that advertised
+                the Prefix-SID.";
+            }
+            enum EXPLICIT_NULL {
+              description
+                "Explicit-Null flag. When set, any upstream neighbor
+                of the Prefix-SID originator MUST replace the
+                Prefix-SID with a Prefix-SID having an Explicit-NULL
+                value (0 for IPv4 and 2 for IPv6) before forwarding
+                the packet.";
+            }
+            enum VALUE {
+              description
+                "Value flag. When set, the Prefix-SID carries a
+                value (instead of an index). By default the flag is
+                UNSET.";
+            }
+            enum LOCAL {
+              description
+                "Local flag. When set, the value/index carried by
+                the Prefix-SID has local significance. By default
+                the flag is UNSET.";
+            }
+          }
+          description
+            "Flags associated with Prefix Segment-ID.";
+        }
+
+        leaf algorithm {
+          type uint8;
+          description
+            "Prefix-SID algorithm to be used for path computation.";
+        }
       }
     }
   }
@@ -731,59 +1019,6 @@ module open-traffic-generator-isis {
     }
   }
 
-  grouping ipv4-prefix-extended-state {
-    description
-      "This grouping defines attributes of an IPv4 extended prefix.";
-
-    container state {
-      description
-        "State parameters of an IPv4 extended prefix.";
-      uses ipv4-prefix-extended-params-state;
-    }
-  }
-
-  grouping ipv4-prefix-extended-params-state {
-    description
-      "State parameters that relate to an IPv4 prefix";
-
-    leaf prefix {
-      type otg-types:ipv4-address;
-      description
-        "IPv4 prefix contained within extended reachability TLVs.";
-    }
-
-    leaf prefix-length {
-      type uint32;
-      description
-        "The length of the IPv4 prefix.";
-    }
-
-    leaf metric {
-      type uint32;
-      description
-        "ISIS wide metric.";
-    }
-
-    leaf redistribution-type {
-      type enumeration {
-        enum UP {
-          description
-            "Up (0)-used when a prefix is initially advertised within the ISIS L3 hierarchy,
-            and for all other prefixes in L1 and L2 LSPs. (default).";
-        }
-        enum DOWN {
-          description
-            "Down (1)-used when an L1/L2 router advertises L2 prefixes in L1 LSPs.
-            The prefixes are being advertised from a higher level (L2) down to a lower level (L1).";
-        }
-      }
-      description
-        "The up/down bit. Set if a prefix is advertised from a
-        higher level to a lower level";
-    }
-    uses isis-lsdb-prefix-state;
-  }
-
   grouping ipv6-prefix-extended-state {
     description
       "State parameters relating to an IPv6 prefix.";
@@ -793,6 +1028,7 @@ module open-traffic-generator-isis {
         "State parameters of IPv6 prefix attributes";
 
       uses ipv6-prefix-extended-params-state;
+      uses isis-lsdb-prefix-state;
     }
   }
 
@@ -850,7 +1086,7 @@ module open-traffic-generator-isis {
       description
         "ISIS wide metric value.";
     }
-    uses isis-lsdb-prefix-state;
+    uses isis-lsdb-prefix-sid-state;
   }
 
   grouping isis-lsdb-prefix-state {
@@ -890,6 +1126,177 @@ module open-traffic-generator-isis {
         reference
           "RFC7794: IS-IS Prefix Attributes for Extended IPv4 and
           IPv6 Reachability. sub-TLV 4.";
+      }
+    }
+  }
+
+  grouping isis-lsdb-router-capabilities-state {
+    description
+      "Only include the router capability TLV when the TLV is
+      type 242.";
+    list capability {
+      key "instance-number";
+      description
+        "This list describes IS Router capabilities.";
+      leaf instance-number {
+        type leafref {
+          path "../state/instance-number";
+        }
+        description
+          "Reference to the instance number of the router
+          capability TLV.";
+      }
+      container state {
+        description
+          "State parameters of TLV 242.";
+        leaf instance-number {
+          type uint32;
+          description
+            "A unique instance number for the instance of the
+            router capabilities TLV. The instance number should
+            be autogenerated by the producer of the data and may
+            be renumbered if the entire LSP contents are
+            replaced in subsequent advertisements.";
+        }
+
+        leaf router-id {
+          type otg-types:ipv4-address;
+          description
+            "IPv4 router-id.";
+        }
+        leaf-list flags {
+          type enumeration {
+            enum FLOOD {
+              description
+                "When the S bit is set(1), the IS - IS Router
+                CAPABILITY TLV MUST be flooded across the entire
+                routing domain. When the S bit is not set(0),
+                the TLV MUST NOT be leaked between levels . This
+                bit MUST NOT be altered during the TLV
+                leaking.";
+            }
+            enum DOWN {
+              description
+                  "When the IS-IS Router CAPABILITY TLV is leaked
+                  from level - 2 to level-1, the Down bit MUST be
+                  set. Otherwise, this bit MUST be clear. IS - IS
+                  Router capability TLVs with the Down bit set
+                  MUST NOT be leaked from level - 1 to level-2.
+                  This is to prevent TLV looping.";
+              }
+            }
+            description
+              "Router capability flags.";
+        }
+        leaf-list algorithms {
+          type uint32;
+          description
+            "The Segment Routing algorithm that is
+            described by the TLV.";
+        }
+        container segment-routing-capability {
+          description
+            "This container defines SR Capability sub-TLV 2.";
+          container state {
+            description
+              "State parameters of IS SR Router Capability";
+
+            leaf-list flags {
+              type enumeration {
+                enum IPV4_MPLS {
+                  description
+                    "When set, the router is capable of
+                    processing SR MPLS encapsulated IPv4
+                    packets on all interfaces.";
+                }
+                enum IPV6_MPLS {
+                    description
+                      "When set, the router is capable of
+                      processing SR MPLS encapsulated IPv6
+                      packets on all interfaces.";
+                }
+              }
+              description
+                "Segment Routing Capability Flags.";
+            }
+            list srgb-descriptor {
+              key "range";
+              description
+                "Descriptor entry within the SR capabilty
+                sub-TLV";
+
+              leaf range {
+                type leafref {
+                  path "../state/range";
+                }
+                description
+                  "Reference to unique SRGB Descriptor.";
+              }
+
+              container state {
+                description
+                  "State parameters of the SR range";
+
+                  leaf range {
+                    type uint32;
+                    description
+                      "Number of SRGB elements. The range
+                      value MUST be greater than 0.";
+                  }
+
+                  leaf starting-level {
+                    type uint32;
+                    description
+                      "The first value of the SRGB when
+                      expressed as an MPLS label.";
+                  }
+              }
+            }
+          }
+        }
+        container sr-local-block-ranges {
+          description
+            "This container defines SR Local Block (SRLB) sub-TLV contains the range of labels the
+             node has reserved for Local SIDs";
+          container state {
+            description
+              "State parameters of IS SR Local Block (SRLB)";
+            list srlbs-descriptor {
+              key "range";
+              description
+                "Descriptor entry within the SR capabilty
+                sub-TLV";
+
+              leaf range {
+                type leafref {
+                  path "../state/range";
+                }
+                description
+                  "Reference to unique SRLB Descriptor.";
+              }
+
+              container state {
+                description
+                  "State parameters of the SRLB range";
+
+                  leaf range {
+                    type uint32;
+                    description
+                      "Number of SRLB elements. The range
+                      value MUST be greater than 0.";
+                  }
+
+                  leaf starting-level {
+                    type uint32;
+                    description
+                      "The first value of the SRLB when
+                      expressed as an MPLS label.";
+                  }
+              }
+            }
+          }
+        }
+
       }
     }
   }
