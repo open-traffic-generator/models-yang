@@ -188,7 +188,7 @@ module open-traffic-generator-ospfv3 {
           }
 
           leaf metric {
-            type uint16;
+            type uint32;
             description
               "The cost of the summary route TOS level 0 and all
               unspecified levels.";
@@ -222,7 +222,7 @@ module open-traffic-generator-ospfv3 {
           uses ospfv3-lsdb-lsa-state;
 
           leaf metric {
-            type uint16;
+            type uint32;
             description
               "The cost of the summary route TOS level 0 and all
               unspecified levels.";
@@ -268,7 +268,7 @@ module open-traffic-generator-ospfv3 {
           }
 
           leaf metric {
-            type uint16;
+            type uint32;
             description
               "The cost of the summary route TOS level 0 and all
               unspecified levels.";
@@ -326,7 +326,7 @@ module open-traffic-generator-ospfv3 {
           }
 
           leaf metric {
-            type uint16;
+            type uint32;
             description
               "The cost of the summary route TOS level 0 and all
               unspecified levels.";
@@ -417,7 +417,7 @@ module open-traffic-generator-ospfv3 {
           }
 
           leaf metric {
-            type uint16;
+            type uint32;
             description
               "The cost of the summary route TOS level 0 and all
               unspecified levels.";
@@ -512,15 +512,13 @@ module open-traffic-generator-ospfv3 {
     leaf out-lsas {
       type otg-types:counter64;
       description
-        "The total number of link state protocol data units (LSAs)
-        sent.";
+        "The total number of link state protocol data units (LSAs) sent.";
     }
 
     leaf in-lsas {
       type otg-types:counter64;
       description
-        "The total number of link state protocol data units (LSAs)
-        received.";
+        "The total number of link state protocol data units (LSAs) received.";
     }
 
     leaf out-router-lsas {

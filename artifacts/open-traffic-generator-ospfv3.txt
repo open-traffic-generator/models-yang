@@ -65,7 +65,7 @@ module: open-traffic-generator-ospfv3
                  |     +--ro sequence-number?      uint32
                  |     +--ro age?                  uint16
                  |     +--ro prefix-length?        uint32
-                 |     +--ro metric?               uint16
+                 |     +--ro metric?               uint32
                  |     +--ro address-prefix?       otg-types:ipv6-address
                  +--ro inter-area-router-lsa* [link-state-id]
                  |  +--ro link-state-id    -> ../state/link-state-id
@@ -74,7 +74,7 @@ module: open-traffic-generator-ospfv3
                  |     +--ro advertising-router?   otg-types:ipv4-address
                  |     +--ro sequence-number?      uint32
                  |     +--ro age?                  uint16
-                 |     +--ro metric?               uint16
+                 |     +--ro metric?               uint32
                  |     +--ro destination_router?   otg-types:ipv4-address
                  +--ro external-as-lsa* [link-state-id]
                  |  +--ro link-state-id    -> ../state/link-state-id
@@ -85,7 +85,7 @@ module: open-traffic-generator-ospfv3
                  |     +--ro age?                  uint16
                  |     +--ro address-prefix?       otg-types:ipv6-address
                  |     +--ro prefix-length?        uint32
-                 |     +--ro metric?               uint16
+                 |     +--ro metric?               uint32
                  |     +--ro referenced-ls-type?   uint32
                  |     +--ro forwarding-address?   otg-types:ipv6-address
                  |     +--ro route-tag?            otg-types:ipv4-address
@@ -98,7 +98,7 @@ module: open-traffic-generator-ospfv3
                  |     +--ro age?                  uint16
                  |     +--ro address-prefix?       otg-types:ipv6-address
                  |     +--ro prefix-length?        uint32
-                 |     +--ro metric?               uint16
+                 |     +--ro metric?               uint32
                  |     +--ro forwarding-address?   otg-types:ipv6-address
                  |     +--ro route-tag?            otg-types:ipv4-address
                  +--ro link-lsa* [link-state-id]
@@ -120,4 +120,4 @@ module: open-traffic-generator-ospfv3
                        +--ro age?                  uint16
                        +--ro address-prefix?       otg-types:ipv6-address
                        +--ro prefix-length?        uint32
-                       +--ro metric?               uint16
+                       +--ro metric?               uint32
