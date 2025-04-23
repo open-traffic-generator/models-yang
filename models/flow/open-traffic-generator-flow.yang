@@ -128,6 +128,20 @@ module open-traffic-generator-flow {
         received.";
     }
 
+    leaf out-l1-rate {
+      type otg-types:ieeefloat32;
+      description
+        "The rate, measured in bits per second, at which the flow is being
+        transmitted from the Layer 1.";
+    }
+
+    leaf in-l1-rate {
+      type otg-types:ieeefloat32;
+      description
+        "The rate, measured in bits per second, at which the flow is being
+        received in the Layer 1.";
+    }
+
     leaf minimum-latency {
       type otg-types:timeticks64;
       description
