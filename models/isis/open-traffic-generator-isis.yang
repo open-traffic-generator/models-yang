@@ -1510,12 +1510,12 @@ module open-traffic-generator-isis {
         leaf local-last-restarting-attempt-inprogress {
           type boolean;
           description
-            "The last Graceful Restart status is in progress";
+            "The Graceful Restart status is in progress";
         }
         leaf local-last-restarting-attempt-unavailable {
           type boolean;
           description
-            "The last Graceful Restart status is not initiated.";
+            "Graceful Restart status was not initiated.";
         }
 
       }
@@ -1537,12 +1537,12 @@ module open-traffic-generator-isis {
         leaf neigh-last-restarting-attempt-inprogress {
           type boolean;
           description
-            "The last Graceful Restart status is in progress";
+            "The Graceful Restart status is in progress";
         }
         leaf neigh-last-restarting-attempt-unavailable {
           type boolean;
           description
-            "The last Graceful Restart status is not initiated.";
+            "The Graceful Restart status was not initiated.";
         }
       }
     }
@@ -1619,7 +1619,7 @@ module open-traffic-generator-isis {
         "Container for Last Restarting Attempt that was succeeded.";
       container state {
         description
-          "State Information of failed restart";
+          "State Information of a failed restart";
          leaf reason {
           type string;
           description
