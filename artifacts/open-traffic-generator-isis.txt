@@ -20,133 +20,186 @@ module: open-traffic-generator-isis
            |  |  +--ro out-lsp?            otg-types:counter64
            |  |  +--ro in-lsp?             otg-types:counter64
            |  +--ro level2
-           |     +--ro sessions-up?        otg-types:counter64
-           |     +--ro sessions-flap?      otg-types:counter64
-           |     +--ro database-size?      otg-types:counter64
-           |     +--ro out-bcast-hellos?   otg-types:counter64
-           |     +--ro in-bcast-hellos?    otg-types:counter64
-           |     +--ro out-p2p-hellos?     otg-types:counter64
-           |     +--ro in-p2p-hellos?      otg-types:counter64
-           |     +--ro out-psnp?           otg-types:counter64
-           |     +--ro in-psnp?            otg-types:counter64
-           |     +--ro out-csnp?           otg-types:counter64
-           |     +--ro in-csnp?            otg-types:counter64
-           |     +--ro out-lsp?            otg-types:counter64
-           |     +--ro in-lsp?             otg-types:counter64
+           |  |  +--ro sessions-up?        otg-types:counter64
+           |  |  +--ro sessions-flap?      otg-types:counter64
+           |  |  +--ro database-size?      otg-types:counter64
+           |  |  +--ro out-bcast-hellos?   otg-types:counter64
+           |  |  +--ro in-bcast-hellos?    otg-types:counter64
+           |  |  +--ro out-p2p-hellos?     otg-types:counter64
+           |  |  +--ro in-p2p-hellos?      otg-types:counter64
+           |  |  +--ro out-psnp?           otg-types:counter64
+           |  |  +--ro in-psnp?            otg-types:counter64
+           |  |  +--ro out-csnp?           otg-types:counter64
+           |  |  +--ro in-csnp?            otg-types:counter64
+           |  |  +--ro out-lsp?            otg-types:counter64
+           |  |  +--ro in-lsp?             otg-types:counter64
+           |  +--ro gr-initiated?            otg-types:counter64
+           |  +--ro gr-succeeded?            otg-types:counter64
+           |  +--ro neighbor-gr-initiated?   otg-types:counter64
+           |  +--ro neighbor-gr-succeeded?   otg-types:counter64
            +--ro link-state-database
-              +--ro lsp-states
-                 +--ro lsps* [lsp-id pdu-type]
-                    +--ro lsp-id      -> ../state/lsp-id
-                    +--ro pdu-type    -> ../state/pdu-type
+           |  +--ro lsp-states
+           |     +--ro lsps* [lsp-id pdu-type]
+           |        +--ro lsp-id      -> ../state/lsp-id
+           |        +--ro pdu-type    -> ../state/pdu-type
+           |        +--ro state
+           |        |  +--ro lsp-id                otg-types:hex-string
+           |        |  +--ro pdu-type              enumeration
+           |        |  +--ro remaining-lifetime    uint16
+           |        |  +--ro sequence-number?      uint32
+           |        |  +--ro pdu-length            uint16
+           |        |  +--ro flags*                enumeration
+           |        |  +--ro is-type               uint8
+           |        +--ro tlvs
+           |           +--ro hostnames
+           |           |  +--ro state
+           |           |     +--ro hostname*   string
+           |           +--ro is-reachability
+           |           |  +--ro neighbors
+           |           |     +--ro neighbor* [system-id]
+           |           |        +--ro system-id    -> ../state/system-id
+           |           |        +--ro state
+           |           |           +--ro system-id    otg-types:hex-string
+           |           +--ro extended-is-reachability
+           |           |  +--ro neighbors
+           |           |     +--ro neighbor* [system-id]
+           |           |        +--ro system-id    -> ../state/system-id
+           |           |        +--ro state
+           |           |           +--ro system-id        otg-types:hex-string
+           |           |           +--ro adjacency-sid* [sid-instance]
+           |           |              +--ro sid-instance    -> ../state/sid-instance
+           |           |              +--ro state
+           |           |                 +--ro sid-instance?     uint32
+           |           |                 +--ro adjacency-type?   enumeration
+           |           |                 +--ro sids*             uint32
+           |           |                 +--ro flags*            enumeration
+           |           |                 +--ro weight?           uint8
+           |           +--ro ipv4-internal-reachability
+           |           |  +--ro prefixes
+           |           |     +--ro prefix* [prefix]
+           |           |        +--ro prefix    -> ../state/prefix
+           |           |        +--ro state
+           |           |           +--ro prefix?                otg-types:ipv4-address
+           |           |           +--ro prefix-length?         uint32
+           |           |           +--ro redistribution-type?   enumeration
+           |           |           +--ro origin-type?           enumeration
+           |           |           +--ro default-metric?        uint8
+           |           +--ro ipv4-external-reachability
+           |           |  +--ro prefixes
+           |           |     +--ro prefix* [prefix]
+           |           |        +--ro prefix    -> ../state/prefix
+           |           |        +--ro state
+           |           |           +--ro prefix?                otg-types:ipv4-address
+           |           |           +--ro prefix-length?         uint32
+           |           |           +--ro redistribution-type?   enumeration
+           |           |           +--ro origin-type?           enumeration
+           |           |           +--ro default-metric?        uint8
+           |           +--ro extended-ipv4-reachability
+           |           |  +--ro prefixes
+           |           |     +--ro prefix* [prefix]
+           |           |        +--ro prefix    -> ../state/prefix
+           |           |        +--ro state
+           |           |           +--ro prefix?                otg-types:ipv4-address
+           |           |           +--ro prefix-length?         uint32
+           |           |           +--ro metric?                uint32
+           |           |           +--ro redistribution-type?   enumeration
+           |           |           +--ro prefix-attributes
+           |           |           |  +--ro flags*   enumeration
+           |           |           +--ro prefix-sid* [sid-instance]
+           |           |              +--ro sid-instance    -> ../state/sid-instance
+           |           |              +--ro state
+           |           |                 +--ro sid-instance?   uint32
+           |           |                 +--ro sids*           uint32
+           |           |                 +--ro flags*          enumeration
+           |           |                 +--ro algorithm?      uint8
+           |           +--ro ipv6-reachability
+           |           |  +--ro prefixes
+           |           |     +--ro prefix* [prefix]
+           |           |        +--ro prefix    -> ../state/prefix
+           |           |        +--ro state
+           |           |           +--ro prefix?                otg-types:ipv6-address
+           |           |           +--ro prefix-length?         uint32
+           |           |           +--ro redistribution-type?   enumeration
+           |           |           +--ro origin-type?           enumeration
+           |           |           +--ro metric?                uint32
+           |           |           +--ro prefix-sid* [sid-instance]
+           |           |           |  +--ro sid-instance    -> ../state/sid-instance
+           |           |           |  +--ro state
+           |           |           |     +--ro sid-instance?   uint32
+           |           |           |     +--ro sids*           uint32
+           |           |           |     +--ro flags*          enumeration
+           |           |           |     +--ro algorithm?      uint8
+           |           |           +--ro prefix-attributes
+           |           |              +--ro flags*   enumeration
+           |           +--ro router-capabilities
+           |              +--ro capability* [instance-number]
+           |                 +--ro instance-number    -> ../state/instance-number
+           |                 +--ro state
+           |                    +--ro instance-number?              uint32
+           |                    +--ro router-id?                    otg-types:ipv4-address
+           |                    +--ro flags*                        enumeration
+           |                    +--ro algorithms*                   uint32
+           |                    +--ro segment-routing-capability
+           |                    |  +--ro state
+           |                    |     +--ro flags*             enumeration
+           |                    |     +--ro srgb-descriptor* [range]
+           |                    |        +--ro range    -> ../state/range
+           |                    |        +--ro state
+           |                    |           +--ro range?            uint32
+           |                    |           +--ro starting-level?   uint32
+           |                    +--ro sr-local-block-ranges
+           |                       +--ro state
+           |                          +--ro srlbs-descriptor* [range]
+           |                             +--ro range    -> ../state/range
+           |                             +--ro state
+           |                                +--ro range?            uint32
+           |                                +--ro starting-level?   uint32
+           +--ro adjacencies
+              +--ro state
+                 +--ro adjacencies* [neighbor-system-id interface-name]
+                    +--ro neighbor-system-id    -> ../state/neighbor-system-id
+                    +--ro interface-name        -> ../state/interface-name
                     +--ro state
-                    |  +--ro lsp-id                otg-types:hex-string
-                    |  +--ro pdu-type              enumeration
-                    |  +--ro remaining-lifetime    uint16
-                    |  +--ro sequence-number?      uint32
-                    |  +--ro pdu-length            uint16
-                    |  +--ro flags*                enumeration
-                    |  +--ro is-type               uint8
-                    +--ro tlvs
-                       +--ro hostnames
+                       +--ro neighbor-system-id    otg-types:hex-string
+                       +--ro interface-name        string
+                       +--ro local-state
                        |  +--ro state
-                       |     +--ro hostname*   string
-                       +--ro is-reachability
-                       |  +--ro neighbors
-                       |     +--ro neighbor* [system-id]
-                       |        +--ro system-id    -> ../state/system-id
+                       |     +--ro level-type?                enumeration
+                       |     +--ro hold_timer?                uint32
+                       |     +--ro local-restarting-status
                        |        +--ro state
-                       |           +--ro system-id    otg-types:hex-string
-                       +--ro extended-is-reachability
-                       |  +--ro neighbors
-                       |     +--ro neighbor* [system-id]
-                       |        +--ro system-id    -> ../state/system-id
-                       |        +--ro state
-                       |           +--ro system-id        otg-types:hex-string
-                       |           +--ro adjacency-sid* [sid-instance]
-                       |              +--ro sid-instance    -> ../state/sid-instance
+                       |           +--ro state?                                  enumeration
+                       |           +--ro local-last-restarting-attempt-status
                        |              +--ro state
-                       |                 +--ro sid-instance?     uint32
-                       |                 +--ro adjacency-type?   enumeration
-                       |                 +--ro sids*             uint32
-                       |                 +--ro flags*            enumeration
-                       |                 +--ro weight?           uint8
-                       +--ro ipv4-internal-reachability
-                       |  +--ro prefixes
-                       |     +--ro prefix* [prefix]
-                       |        +--ro prefix    -> ../state/prefix
-                       |        +--ro state
-                       |           +--ro prefix?                otg-types:ipv4-address
-                       |           +--ro prefix-length?         uint32
-                       |           +--ro redistribution-type?   enumeration
-                       |           +--ro origin-type?           enumeration
-                       |           +--ro default-metric?        uint8
-                       +--ro ipv4-external-reachability
-                       |  +--ro prefixes
-                       |     +--ro prefix* [prefix]
-                       |        +--ro prefix    -> ../state/prefix
-                       |        +--ro state
-                       |           +--ro prefix?                otg-types:ipv4-address
-                       |           +--ro prefix-length?         uint32
-                       |           +--ro redistribution-type?   enumeration
-                       |           +--ro origin-type?           enumeration
-                       |           +--ro default-metric?        uint8
-                       +--ro extended-ipv4-reachability
-                       |  +--ro prefixes
-                       |     +--ro prefix* [prefix]
-                       |        +--ro prefix    -> ../state/prefix
-                       |        +--ro state
-                       |           +--ro prefix?                otg-types:ipv4-address
-                       |           +--ro prefix-length?         uint32
-                       |           +--ro metric?                uint32
-                       |           +--ro redistribution-type?   enumeration
-                       |           +--ro prefix-attributes
-                       |           |  +--ro flags*   enumeration
-                       |           +--ro prefix-sid* [sid-instance]
-                       |              +--ro sid-instance    -> ../state/sid-instance
-                       |              +--ro state
-                       |                 +--ro sid-instance?   uint32
-                       |                 +--ro sids*           uint32
-                       |                 +--ro flags*          enumeration
-                       |                 +--ro algorithm?      uint8
-                       +--ro ipv6-reachability
-                       |  +--ro prefixes
-                       |     +--ro prefix* [prefix]
-                       |        +--ro prefix    -> ../state/prefix
-                       |        +--ro state
-                       |           +--ro prefix?                otg-types:ipv6-address
-                       |           +--ro prefix-length?         uint32
-                       |           +--ro redistribution-type?   enumeration
-                       |           +--ro origin-type?           enumeration
-                       |           +--ro metric?                uint32
-                       |           +--ro prefix-sid* [sid-instance]
-                       |           |  +--ro sid-instance    -> ../state/sid-instance
-                       |           |  +--ro state
-                       |           |     +--ro sid-instance?   uint32
-                       |           |     +--ro sids*           uint32
-                       |           |     +--ro flags*          enumeration
-                       |           |     +--ro algorithm?      uint8
-                       |           +--ro prefix-attributes
-                       |              +--ro flags*   enumeration
-                       +--ro router-capabilities
-                          +--ro capability* [instance-number]
-                             +--ro instance-number    -> ../state/instance-number
-                             +--ro state
-                                +--ro instance-number?              uint32
-                                +--ro router-id?                    otg-types:ipv4-address
-                                +--ro flags*                        enumeration
-                                +--ro algorithms*                   uint32
-                                +--ro segment-routing-capability
-                                |  +--ro state
-                                |     +--ro flags*             enumeration
-                                |     +--ro srgb-descriptor* [range]
-                                |        +--ro range    -> ../state/range
-                                |        +--ro state
-                                |           +--ro range?            uint32
-                                |           +--ro starting-level?   uint32
-                                +--ro sr-local-block-ranges
+                       |                 +--ro local-last-restarting-attempt-succeeded
+                       |                 |  +--ro state
+                       |                 |     +--ro local-lsdb-syncup-time?          uint32
+                       |                 |     +--ro local-adjacency-bring-up-time?   uint32
+                       |                 +--ro local-last-restarting-attempt-failed
+                       |                 |  +--ro state
+                       |                 |     +--ro reason?   string
+                       |                 +--ro local-last-restarting-attempt-inprogress?    boolean
+                       |                 +--ro local-last-restarting-attempt-unavailable?   boolean
+                       +--ro neighbor-state
+                          +--ro state
+                             +--ro level-type?                enumeration
+                             +--ro hold_timer?                uint32
+                             +--ro neigh-restarting-status
+                             |  +--ro state
+                             |     +--ro state?                                  enumeration
+                             |     +--ro neigh-last-restarting-attempt-status
+                             |        +--ro state
+                             |           +--ro neigh-last-restarting-attempt-succeeded
+                             |           |  +--ro state
+                             |           |     +--ro neigh-adjacency-bring-up-time?   uint32
+                             |           +--ro neigh-last-restarting-attempt-failed
+                             |           |  +--ro state
+                             |           |     +--ro reason?   string
+                             |           +--ro neigh-last-restarting-attempt-inprogress?    boolean
+                             |           +--ro neigh-last-restarting-attempt-unavailable?   boolean
+                             +--ro tlvs
+                                +--ro restart_tlv
                                    +--ro state
-                                      +--ro srlbs-descriptor* [range]
-                                         +--ro range    -> ../state/range
-                                         +--ro state
-                                            +--ro range?            uint32
-                                            +--ro starting-level?   uint32
+                                      +--ro flags*                    enumeration
+                                      +--ro remaining-time?           uint32
+                                      +--ro restarting-neighbor-id?   otg-types:hex-string
