@@ -1412,10 +1412,58 @@ module open-traffic-generator-isis {
             "Hold timer being sent in the IIH PDU.";
         }
         uses iih-neigh-restarting-status;
+        container tlvs {
+          description
+            "This contains the list of TLVs present in a IIH PDU received from a neighbor IS-IS router.";
+          container restart_tlv {
+            description
+              "Container of Restart TLV in IIH PDU. Reference: https://datatracker.ietf.org/doc/html/rfc8706#name-restart-tlv.";
+            container state {
+              description
+                "State parameters of ISIS TLV 137.";
+              leaf-list flags {
+                type enumeration {
+                  enum RR_BIT {
+                    description
+                      "Restart Request bit.";
+                  }
+                  enum RA_BIT {
+                    description
+                      "Restart Acknowledgement.";
+                  }
+                  enum SA_BIT {
+                    description
+                      "Suppress Adjacency Advertisement.";
+                  }
+                  enum PR_BIT {
+                    description
+                      "Restart Planned.";
+                  }
+                  enum PA_BIT {
+                    description
+                      "Planned Pestart Acknowledgement.";
+                  }
+                }
+                description
+                  "Flags associated with Restarting TLV";
+              }
+
+              leaf remaining-time {
+                type uint32;
+                description
+                  "Remaining Holding Time (in seconds).";
+              }
+              leaf restarting-neighbor-id {
+                type otg-types:hex-string;
+                description
+                  "Restarting Neighbor's System ID in hex format without '0x' at the beginning. e.g. '640000000001'.";
+              }
+            }
+          }
+        }
       }
     }
   }
-
 
 
    grouping iih-local-restarting-status {
