@@ -1411,7 +1411,21 @@ module open-traffic-generator-isis {
       container state {
         description
           "State parameters of IIH Adjacency.";
-        uses iih-level-type;
+        leaf level-type {
+          type enumeration {
+            enum LEVEL_1 {
+              description "This enum describes ISIS level 1 IIH.";
+            }
+            enum LEVEL_2 {
+              description "This enum describes ISIS level 2 IIH.";
+            }
+            enum LEVEL_1_2 {
+              description "This enum describes ISIS level 1-2 IIH.";
+            }
+          }
+          description
+            "IIH Level type.";
+        }
         leaf hold_timer {
           type uint32;
           description
@@ -1431,7 +1445,21 @@ module open-traffic-generator-isis {
       container state {
         description
           "State parameters of IIH Neighbor Adjacency.";
-        uses iih-level-type;
+         leaf level-type {
+          type enumeration {
+            enum LEVEL_1 {
+              description "This enum describes ISIS level 1 IIH.";
+            }
+            enum LEVEL_2 {
+              description "This enum describes ISIS level 2 IIH.";
+            }
+            enum LEVEL_1_2 {
+              description "This enum describes ISIS level 1-2 IIH.";
+            }
+          }
+          description
+            "IIH Level type.";
+        }
         leaf hold_timer {
           type uint32;
           description
