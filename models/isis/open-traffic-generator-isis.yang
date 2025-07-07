@@ -86,11 +86,6 @@ module open-traffic-generator-isis {
 
       uses lsp-states;
     }
-    container adjacencies {
-      description
-        "This sub-module describes a YANG model for the IS-IS IIH information exchanged by the IS-IS routers.";
-      uses adjacency-states;
-    }
   }
 
   grouping isis-level-counters {
