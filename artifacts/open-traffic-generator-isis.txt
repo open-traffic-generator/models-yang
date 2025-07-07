@@ -160,14 +160,13 @@ module: open-traffic-generator-isis
                        +--ro interface-name        string
                        +--ro local-state
                        |  +--ro state
-                       |     +--ro level-type*                enumeration
+                       |     +--ro level-type?                enumeration
                        |     +--ro hold_timer?                uint32
                        |     +--ro local-restarting-status
                        |        +--ro state
+                       |           +--ro state?                                  enumeration
                        |           +--ro local-last-restarting-attempt-status
                        |              +--ro state
-                       |                 +--ro restaring-state
-                       |                 |  +--ro choice*   enumeration
                        |                 +--ro local-last-restarting-attempt-succeeded
                        |                 |  +--ro state
                        |                 |     +--ro local-lsdb-syncup-time?          uint32
@@ -179,14 +178,13 @@ module: open-traffic-generator-isis
                        |                 +--ro local-last-restarting-attempt-unavailable?   boolean
                        +--ro neighbor-state
                           +--ro state
-                             +--ro level-type*                enumeration
+                             +--ro level-type?                enumeration
                              +--ro hold_timer?                uint32
                              +--ro neigh-restarting-status
                                 +--ro state
+                                   +--ro state?                                  enumeration
                                    +--ro neigh-last-restarting-attempt-status
                                       +--ro state
-                                         +--ro restaring-state
-                                         |  +--ro choice*   enumeration
                                          +--ro neigh-last-restarting-attempt-succeeded
                                          |  +--ro state
                                          |     +--ro neigh-adjacency-bring-up-time?   uint32
