@@ -1359,7 +1359,7 @@ module open-traffic-generator-isis {
   grouping iih-level-type {
     description
       "IIH Level type";
-    leaf-list level-type {
+    leaf level-type {
       type enumeration {
         enum LEVEL_1 {
           description "This enum describes ISIS level 1 IIH.";
@@ -1373,30 +1373,6 @@ module open-traffic-generator-isis {
       }
       description
         "IIH Level type.";
-    }
-  }
-
-   grouping iih-restaring-state {
-    description
-      "IIH Restarting State";
-    container restaring-state {
-      description
-        "Container of IIH Restarting State";
-      leaf-list state {
-        type enumeration {
-          enum RUNNING {
-            description "Running state when Restarting Tlv is not present or Restarting Tlv has been sent with SA or RR bits unset.";
-          }
-          enum STARTING {
-            description "Starting state when Restarting Tlv has been sent with SA bit set.";
-          }
-          enum RESTARTING {
-            description "Restarting state when Restarting Tlv has been sent with RR bits set.";
-          }
-        }
-        description
-          "IIH Restarting State";
-      }
     }
   }
 
@@ -1440,22 +1416,10 @@ module open-traffic-generator-isis {
     }
   }
 
-  grouping iih-neigh-restarting-status {
-     description
-      "This contains the Restarting/Starting/Running state of a neighbor router.";
-    container neigh-restarting-status {
-      description
-        "Container for Restarting Status.";
-      container state {
-        description
-          "State for Restarting Status.";
-        uses iih-neigh-last-restarting-attempt-status;
-      }
-    }
-  }
+
 
    grouping iih-local-restarting-status {
-     description
+    description
       "This contains the Restarting/Starting/Running state of this router.";
     container local-restarting-status {
       description
@@ -1463,38 +1427,60 @@ module open-traffic-generator-isis {
       container state {
         description
           "State for Restarting Status.";
+        leaf state {
+          type enumeration {
+            enum SUCCEEDED {
+              description "Choice is set if the last Graceful Status is successful.";
+            }
+            enum FAILED {
+              description "The last Graceful Status is unsuccessful.";
+            }
+            enum INPROGRESS {
+              description "The last Graceful Restart status is in progress.";
+            }
+            enum UNAVAILABLE {
+              description "The last Graceful Restart status is not initiated.";
+            }
+          }
+          description
+            "Restart Status of this Router.";
+        }
         uses iih-local-last-restarting-attempt-status;
       }
     }
   }
 
-  grouping iih-restaring-attempt-status-enum {
+  grouping iih-neigh-restarting-status {
     description
-      "IIH Restarting Attempt Choice";
-    container restaring-state {
+      "This contains the Restarting/Starting/Running state of a neighbor router.";
+    container neigh-restarting-status {
       description
-        "Container of IIH Restarting Attempt Choice";
-      leaf-list choice {
-        type enumeration {
-          enum SUCCEEDED {
-            description "Choice is set if the last Graceful Status is successful.";
-          }
-          enum FAILED {
-            description "The last Graceful Status is unsuccessful.";
-          }
-          enum INPROGRESS {
-            description "The last Graceful Restart status is in progress.";
-          }
-           enum UNAVAILABLE {
-            description "The last Graceful Restart status is not initiated.";
-          }
-        }
+        "Container for Restarting Status.";
+      container state {
         description
-          "IIH Restarting Attempt Status";
+          "State for Restarting Status.";
+        leaf state {
+          type enumeration {
+            enum SUCCEEDED {
+              description "Choice is set if the last Graceful Status is successful.";
+            }
+            enum FAILED {
+              description "The last Graceful Status is unsuccessful.";
+            }
+            enum INPROGRESS {
+              description "The last Graceful Restart status is in progress.";
+            }
+            enum UNAVAILABLE {
+              description "The last Graceful Restart status is not initiated.";
+            }
+          }
+          description
+            "Restart Status of this Router.";
+        }
+        uses iih-neigh-last-restarting-attempt-status;
       }
     }
   }
-
   grouping iih-local-last-restarting-attempt-status {
      description
       "This object contains the status of the last attempted Graceful Restart status of this router.";
@@ -1504,7 +1490,6 @@ module open-traffic-generator-isis {
       container state {
         description
           "State of Restarting Attempt Status.";
-        uses iih-restaring-attempt-status-enum;
         uses iih-local-last-restarting-attempt-succeeded;
         uses iih-local-last-restarting-attempt-failed;
         leaf local-last-restarting-attempt-inprogress {
@@ -1517,7 +1502,6 @@ module open-traffic-generator-isis {
           description
             "Graceful Restart status was not initiated.";
         }
-
       }
     }
   }
@@ -1531,7 +1515,6 @@ module open-traffic-generator-isis {
       container state {
         description
           "State of Restarting Attempt Status.";
-        uses iih-restaring-attempt-status-enum;
         uses iih-neigh-last-restarting-attempt-succeeded;
         uses iih-neigh-last-restarting-attempt-failed;
         leaf neigh-last-restarting-attempt-inprogress {
@@ -1547,7 +1530,6 @@ module open-traffic-generator-isis {
       }
     }
   }
-
 
   grouping iih-local-last-restarting-attempt-succeeded {
      description
