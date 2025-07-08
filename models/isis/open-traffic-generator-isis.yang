@@ -1588,18 +1588,30 @@ module open-traffic-generator-isis {
       container state {
         description
           "State of Restarting Attempt Status.";
+        leaf local-last-restarting-attempt-status-type {
+          type enumeration {
+            enum SUCCEEDED {
+              description
+                "Choice is set if the last Graceful Status is successful.";
+            }
+            enum FAILED {
+              description
+                "The last Graceful Status is unsuccessful.";
+            }
+            enum INPROGRESS {
+              description
+                "The last Graceful Restart status is in progress.";
+            }
+            enum UNAVAILABLE {
+              description
+                "The last Graceful Restart status is not initiated.";
+            }
+          }
+          description
+            "The result type of Restarting Attempt Status";
+        }
         uses iih-local-last-restarting-attempt-succeeded;
         uses iih-local-last-restarting-attempt-failed;
-        leaf local-last-restarting-attempt-inprogress {
-          type boolean;
-          description
-            "The Graceful Restart status is in progress";
-        }
-        leaf local-last-restarting-attempt-unavailable {
-          type boolean;
-          description
-            "Graceful Restart status was not initiated.";
-        }
       }
     }
   }
@@ -1613,18 +1625,30 @@ module open-traffic-generator-isis {
       container state {
         description
           "State of Restarting Attempt Status.";
+        leaf neigh-last-restarting-attempt-status-type {
+          type enumeration {
+            enum SUCCEEDED {
+              description
+                "Type is set if the last Graceful Status of this neighbor is successful.";
+            }
+            enum FAILED {
+              description
+                "The last Graceful Status of this neighbor is unsuccessful.";
+            }
+            enum INPROGRESS {
+              description
+                "The last Graceful Restart status of this neighbor is in progress.";
+            }
+            enum UNAVAILABLE {
+              description
+                "The last Graceful Restart status of this neighbor is not initiated.";
+            }
+          }
+          description
+            "The result type of Restarting Attempt Status of this neighbor";
+        }
         uses iih-neigh-last-restarting-attempt-succeeded;
         uses iih-neigh-last-restarting-attempt-failed;
-        leaf neigh-last-restarting-attempt-inprogress {
-          type boolean;
-          description
-            "The Graceful Restart status is in progress";
-        }
-        leaf neigh-last-restarting-attempt-unavailable {
-          type boolean;
-          description
-            "The Graceful Restart status was not initiated.";
-        }
       }
     }
   }
