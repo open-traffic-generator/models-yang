@@ -171,15 +171,14 @@ module: open-traffic-generator-isis
                        |           +--ro state?                                  enumeration
                        |           +--ro local-last-restarting-attempt-status
                        |              +--ro state
+                       |                 +--ro local-last-restarting-attempt-status-type?   enumeration
                        |                 +--ro local-last-restarting-attempt-succeeded
                        |                 |  +--ro state
                        |                 |     +--ro local-lsdb-syncup-time?          uint32
                        |                 |     +--ro local-adjacency-bring-up-time?   uint32
                        |                 +--ro local-last-restarting-attempt-failed
-                       |                 |  +--ro state
-                       |                 |     +--ro reason?   string
-                       |                 +--ro local-last-restarting-attempt-inprogress?    boolean
-                       |                 +--ro local-last-restarting-attempt-unavailable?   boolean
+                       |                    +--ro state
+                       |                       +--ro reason?   string
                        +--ro neighbor-state
                           +--ro state
                              +--ro level-type?                enumeration
@@ -189,14 +188,13 @@ module: open-traffic-generator-isis
                              |     +--ro state?                                  enumeration
                              |     +--ro neigh-last-restarting-attempt-status
                              |        +--ro state
+                             |           +--ro neigh-last-restarting-attempt-status-type?   enumeration
                              |           +--ro neigh-last-restarting-attempt-succeeded
                              |           |  +--ro state
                              |           |     +--ro neigh-adjacency-bring-up-time?   uint32
                              |           +--ro neigh-last-restarting-attempt-failed
-                             |           |  +--ro state
-                             |           |     +--ro reason?   string
-                             |           +--ro neigh-last-restarting-attempt-inprogress?    boolean
-                             |           +--ro neigh-last-restarting-attempt-unavailable?   boolean
+                             |              +--ro state
+                             |                 +--ro reason?   string
                              +--ro tlvs
                                 +--ro restart_tlv
                                    +--ro state
