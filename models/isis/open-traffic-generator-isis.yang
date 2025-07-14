@@ -1636,7 +1636,7 @@ module open-traffic-generator-isis {
       "This container contains details about the successful status of the last Graceful Restart initiated by this router.";
     container local-last-restarting-attempt-succeeded {
       description
-        "Container for Last Restarting Attempt that was succeeded.";
+        "Container for for additional information related to the last Graceful Restart attempt initiated by the local ISIS Router if it succeeded.";
       container state {
         description
           "State of Restarting Attempt Status.";
@@ -1649,7 +1649,7 @@ module open-traffic-generator-isis {
         leaf local-adjacency-bring-up-time {
           type uint32;
           description
-            "The time (in seconds) is is measured from when the Restart TLV with RR bit set is sent
+            "The time (in seconds) is measured from when the Restart TLV with RR bit set is sent
              in an IIH PDU upto the time when Restart TLV is sent with RR bit unset.";
         }
       }
