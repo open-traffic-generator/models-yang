@@ -88,7 +88,7 @@ module open-traffic-generator-isis {
     }
     container adjacencies {
       description
-        "This sub-module describes a YANG model for the IS-IS IIH information exchanged btween the IS-IS routers.";
+        "This sub-module describes a YANG model for the IS-IS IIH information exchanged between the IS-IS routers.";
       uses adjacency-states;
     }
   }
@@ -1338,7 +1338,7 @@ module open-traffic-generator-isis {
     container state {
       description
         "Container of ISIS IIH state information.";
-      list adjacencies {
+      list adjacency {
         key "neighbor-system-id interface-name";
         description
           "System ID of a neighbor and Interface name on which neighbor is established.";
