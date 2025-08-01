@@ -156,7 +156,7 @@ module: open-traffic-generator-isis
            |                                +--ro starting-level?   uint32
            +--ro adjacencies
               +--ro state
-                 +--ro adjacencies* [neighbor-system-id interface-name]
+                 +--ro adjacency* [neighbor-system-id interface-name]
                     +--ro neighbor-system-id    -> ../state/neighbor-system-id
                     +--ro interface-name        -> ../state/interface-name
                     +--ro state
