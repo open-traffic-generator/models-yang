@@ -1,0 +1,155 @@
+module open-traffic-generator-bmp-server {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/bmp-server";
+  prefix "otg-bmp-server";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to bmp-server sessions that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2025-10-27 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  grouping bmp-server-top {
+    description
+      "Top-level structural grouping for bmp-server session telemetry
+      entries.";
+
+    container bmp-servers {
+      description
+        "bmp-server session telemetry collected by the ATE device.";
+
+      list bmp-server {
+        key "name";
+
+        config false;
+
+        description
+          "Each bmp-server is identified by an arbitrary string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the bmp-server's name, acting as a key of the
+            bmp-server list.";
+        }
+
+        container state {
+          config false;
+
+          description
+            "Operational state of an individual bmp-server.";
+
+          uses bmp-server-state;
+
+          container counters {
+            description
+              "Counters of an individual bmp-server.";
+
+            uses bmp-server-counters;
+          }
+        }
+      }
+    }
+  }
+
+  grouping bmp-server-state {
+    description
+      "Operational state of the individual bmp-server.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitrary name of the bmp-server determined by the ATE
+        configuration.";
+    }
+
+    leaf session-state {
+      type enumeration {
+          enum UP {
+            description
+              "The session goes to 'UP' state when a BMP monitored client router sends a Initiation message to the BMP Server";
+          }
+          enum DOWN {
+            description
+              "The session goes to 'DOWN' state when a BMP monitored client router sends a Termination message to the BMP Server or the TCP connection is lost";
+          }
+        }
+        description
+          "Operational state of the bmp-server";
+    }
+  }
+
+  grouping bmp-server-counters {
+    description
+      "Counters of an individual bmp-server session.";
+
+    leaf flaps {
+      type otg-types:counter64;
+      description
+        "The total number of times the BMP session with the BMP client went from 'UP' to 'DOWN' state.";
+    }
+
+    leaf route-monitoring-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Route Monitoring Messages received from the BMP client from the time the BMP session last went to 'UP' state.";
+    }
+
+    leaf statistics-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Route Statistics Messages received from the BMP client from the time the BMP session last went to 'UP' state.";
+    }
+
+    leaf peer-down-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Peer Down Messages received from the BMP client from the time the BMP session last went to 'UP' state.";
+    }
+
+    leaf peer-up-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Peer Up Messages received from the BMP client from the time the BMP session last went to 'UP' state.";
+    }
+
+    leaf initiation-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Initiation Messages received from the BMP client.";
+    }
+
+    leaf route-mirroring-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Route Mirroring Messages received from the BMP client from the time the BMP session last went to 'UP' state.";
+    }
+
+    leaf termination-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Termination Messages received from the BMP client.";
+    }
+  }
+
+  uses bmp-server-top;
+}

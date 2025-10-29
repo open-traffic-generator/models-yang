@@ -60,6 +60,7 @@ jobs:
           git add -f artifacts/open-traffic-generator-platform.txt
           git add -f artifacts/open-traffic-generator-ospfv2.txt
           git add -f artifacts/open-traffic-generator-ospfv3.txt
+          git add -f artifacts/open-traffic-generator-bmp-server.txt
           if git status --porcelain | grep .
             then
               git commit -m "Update auto generated content"
