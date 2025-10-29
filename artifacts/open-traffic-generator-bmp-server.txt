@@ -1,0 +1,16 @@
+module: open-traffic-generator-bmp-server
+  +--rw bmp-servers
+     +--ro bmp-server* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?            string
+           +--ro session-state?   enumeration
+           +--ro counters
+              +--ro flaps?                                otg-types:counter64
+              +--ro route-monitoring-messages-received?   otg-types:counter64
+              +--ro statistics-messages-received?         otg-types:counter64
+              +--ro peer-down-messages-received?          otg-types:counter64
+              +--ro peer-up-messages-received?            otg-types:counter64
+              +--ro initiation-messages-received?         otg-types:counter64
+              +--ro route-mirroring-messages-received?    otg-types:counter64
+              +--ro termination-messages-received?        otg-types:counter64
