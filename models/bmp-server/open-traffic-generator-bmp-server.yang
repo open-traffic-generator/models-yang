@@ -150,7 +150,7 @@ module open-traffic-generator-bmp-server {
         "The total number of BMP Termination Messages received from the BMP client from the time the BMP server was started.";
     }
 
-    leaf previous-policy-ipv4-unicast-routes-received {
+    leaf pre-policy-ipv4-unicast-routes-received {
       type otg-types:counter64;
       description
         "The total number of IPv4 Unicast prefixes received within BMP Monitor messages with L flag unset (indicating absence of application on in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
@@ -162,7 +162,7 @@ module open-traffic-generator-bmp-server {
         "The total number of IPv4 Unicast prefixes received within BMP Monitor messages with L flag set (indicating application of in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
     }
 
-    leaf previous-policy-ipv6-unicast-routes-received {
+    leaf pre-policy-ipv6-unicast-routes-received {
       type otg-types:counter64;
       description
         "The total number of IPv6 Unicast prefixes received within BMP Monitor messages with L flag unset (indicating absence of application on in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
