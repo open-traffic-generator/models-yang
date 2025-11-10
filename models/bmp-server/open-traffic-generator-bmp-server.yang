@@ -111,43 +111,67 @@ module open-traffic-generator-bmp-server {
     leaf route-monitoring-messages-received {
       type otg-types:counter64;
       description
-        "The total number of BMP Route Monitoring Messages received from the BMP client from the time the BMP session last went to 'UP' state.";
+        "The total number of BMP Route Monitoring Messages received from the BMP client from the time the BMP server was started.";
     }
 
     leaf statistics-messages-received {
       type otg-types:counter64;
       description
-        "The total number of BMP Route Statistics Messages received from the BMP client from the time the BMP session last went to 'UP' state.";
+        "The total number of BMP Route Statistics Messages received from the BMP client from the time the BMP server was started.";
     }
 
     leaf peer-down-messages-received {
       type otg-types:counter64;
       description
-        "The total number of BMP Peer Down Messages received from the BMP client from the time the BMP session last went to 'UP' state.";
+        "The total number of BMP Peer 'DOWN' Messages received from the BMP client from the time the BMP server was started.";
     }
 
     leaf peer-up-messages-received {
       type otg-types:counter64;
       description
-        "The total number of BMP Peer Up Messages received from the BMP client from the time the BMP session last went to 'UP' state.";
+        "The total number of BMP Peer 'UP' Messages received from the BMP client from the time the BMP server was started.";
     }
 
     leaf initiation-messages-received {
       type otg-types:counter64;
       description
-        "The total number of BMP Initiation Messages received from the BMP client.";
+        "The total number of BMP Initiation Messages received from the BMP client from the time the BMP server was started.";
     }
 
     leaf route-mirroring-messages-received {
       type otg-types:counter64;
       description
-        "The total number of BMP Route Mirroring Messages received from the BMP client from the time the BMP session last went to 'UP' state.";
+        "The total number of BMP Route Mirroring Messages received from the BMP client from the time the BMP server was started.";
     }
 
     leaf termination-messages-received {
       type otg-types:counter64;
       description
-        "The total number of BMP Termination Messages received from the BMP client.";
+        "The total number of BMP Termination Messages received from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf previous-policy-ipv4-unicast-routes-received {
+      type otg-types:counter64;
+      description
+        "The total number of IPv4 Unicast prefixes received within BMP Monitor messages with L flag unset (indicating absence of application on in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf post-policy-ipv4-unicast-routes-received {
+      type otg-types:counter64;
+      description
+        "The total number of IPv4 Unicast prefixes received within BMP Monitor messages with L flag set (indicating application of in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf previous-policy-ipv6-unicast-routes-received {
+      type otg-types:counter64;
+      description
+        "The total number of IPv6 Unicast prefixes received within BMP Monitor messages with L flag unset (indicating absence of application on in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf post-policy-ipv6-unicast-routes-received {
+      type otg-types:counter64;
+      description
+        "The total number of IPv6 Unicast prefixes received within BMP Monitor messages with L flag set (indicating application of in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
     }
   }
 
