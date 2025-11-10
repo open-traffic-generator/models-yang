@@ -6,15 +6,15 @@ module: open-traffic-generator-bmp-server
            +--ro name?            string
            +--ro session-state?   enumeration
            +--ro counters
-              +--ro flaps?                                          otg-types:counter64
-              +--ro route-monitoring-messages-received?             otg-types:counter64
-              +--ro statistics-messages-received?                   otg-types:counter64
-              +--ro peer-down-messages-received?                    otg-types:counter64
-              +--ro peer-up-messages-received?                      otg-types:counter64
-              +--ro initiation-messages-received?                   otg-types:counter64
-              +--ro route-mirroring-messages-received?              otg-types:counter64
-              +--ro termination-messages-received?                  otg-types:counter64
-              +--ro previous-policy-ipv4-unicast-routes-received?   otg-types:counter64
-              +--ro post-policy-ipv4-unicast-routes-received?       otg-types:counter64
-              +--ro previous-policy-ipv6-unicast-routes-received?   otg-types:counter64
-              +--ro post-policy-ipv6-unicast-routes-received?       otg-types:counter64
+              +--ro flaps?                                      otg-types:counter64
+              +--ro route-monitoring-messages-received?         otg-types:counter64
+              +--ro statistics-messages-received?               otg-types:counter64
+              +--ro peer-down-messages-received?                otg-types:counter64
+              +--ro peer-up-messages-received?                  otg-types:counter64
+              +--ro initiation-messages-received?               otg-types:counter64
+              +--ro route-mirroring-messages-received?          otg-types:counter64
+              +--ro termination-messages-received?              otg-types:counter64
+              +--ro pre-policy-ipv4-unicast-routes-received?    otg-types:counter64
+              +--ro post-policy-ipv4-unicast-routes-received?   otg-types:counter64
+              +--ro pre-policy-ipv6-unicast-routes-received?    otg-types:counter64
+              +--ro post-policy-ipv6-unicast-routes-received?   otg-types:counter64
