@@ -3,8 +3,8 @@ module: open-traffic-generator-bmp-server
      +--ro bmp-server* [name]
         +--ro name     -> ../state/name
         +--ro state
-           +--ro name?                   string
-           +--ro session-state?          enumeration
+           +--ro name?                  string
+           +--ro session-state?         enumeration
            +--ro counters
            |  +--ro flaps?                                      otg-types:counter64
            |  +--ro route-monitoring-messages-received?         otg-types:counter64
@@ -18,14 +18,14 @@ module: open-traffic-generator-bmp-server
            |  +--ro post-policy-ipv4-unicast-routes-received?   otg-types:counter64
            |  +--ro pre-policy-ipv6-unicast-routes-received?    otg-types:counter64
            |  +--ro post-policy-ipv6-unicast-routes-received?   otg-types:counter64
-           +--ro peers-state-database
+           +--ro peer-state-database
               +--ro peers
                  +--ro peer* [peer-bgp-id]
                     +--ro peer-bgp-id    -> ../state/peer-bgp-id
                     +--ro state
-                       +--ro session-ip-type?            enumeration
                        +--ro peer-bgp-id?                otg-types:ipv4-address
                        +--ro status?                     enumeration
+                       +--ro session-ip-type?            enumeration
                        +--ro session-ipv4-information
                        |  +--ro local-address?    otg-types:ipv4-address
                        |  +--ro remote-address?   otg-types:ipv4-address
@@ -40,8 +40,8 @@ module: open-traffic-generator-bmp-server
                        |  +--ro as-path-invalidated-updates?         otg-types:counter32
                        |  +--ro originator-id-invalidated-updates?   otg-types:counter32
                        |  +--ro as-confed-invalidated_updates?       otg-types:counter32
-                       |  +--ro adj-rib-routes?                      otg-types:counter32
-                       |  +--ro local-rib-routes?                    otg-types:counter32
+                       |  +--ro adj-rib-routes?                      otg-types:counter64
+                       |  +--ro local-rib-routes?                    otg-types:counter64
                        |  +--ro withdraw-updates-received?           otg-types:counter32
                        |  +--ro withdraw-prefixes-received?          otg-types:counter32
                        |  +--ro duplicate-updates?                   otg-types:counter32
@@ -53,12 +53,12 @@ module: open-traffic-generator-bmp-server
                        |  |     +--ro origin           -> ../state/origin
                        |  |     +--ro path-id          -> ../state/path-id
                        |  |     +--ro state
+                       |  |        +--ro path-id?                    uint32
+                       |  |        +--ro route-state?                enumeration
+                       |  |        +--ro next-hop-type?              enumeration
                        |  |        +--ro address?                    otg-types:ipv4-address
                        |  |        +--ro prefix-length?              uint32
                        |  |        +--ro origin?                     enumeration
-                       |  |        +--ro route-state?                enumeration
-                       |  |        +--ro next-hop-type?              enumeration
-                       |  |        +--ro path-id?                    uint32
                        |  |        +--ro next-hop-ipv4-address?      otg-types:ipv4-address
                        |  |        +--ro next-hop-ipv6-address?      otg-types:ipv6-address
                        |  |        +--ro as-path* []
@@ -118,12 +118,12 @@ module: open-traffic-generator-bmp-server
                        |        +--ro origin           -> ../state/origin
                        |        +--ro path-id          -> ../state/path-id
                        |        +--ro state
+                       |           +--ro path-id?                    uint32
+                       |           +--ro route-state?                enumeration
+                       |           +--ro next-hop-type?              enumeration
                        |           +--ro address?                    otg-types:ipv6-address
                        |           +--ro prefix-length?              uint32
                        |           +--ro origin?                     enumeration
-                       |           +--ro route-state?                enumeration
-                       |           +--ro next-hop-type?              enumeration
-                       |           +--ro path-id?                    uint32
                        |           +--ro next-hop-ipv4-address?      otg-types:ipv4-address
                        |           +--ro next-hop-ipv6-address?      otg-types:ipv6-address
                        |           +--ro as-path* []
@@ -184,12 +184,12 @@ module: open-traffic-generator-bmp-server
                           |     +--ro origin           -> ../state/origin
                           |     +--ro path-id          -> ../state/path-id
                           |     +--ro state
+                          |        +--ro path-id?                    uint32
+                          |        +--ro route-state?                enumeration
+                          |        +--ro next-hop-type?              enumeration
                           |        +--ro address?                    otg-types:ipv4-address
                           |        +--ro prefix-length?              uint32
                           |        +--ro origin?                     enumeration
-                          |        +--ro route-state?                enumeration
-                          |        +--ro next-hop-type?              enumeration
-                          |        +--ro path-id?                    uint32
                           |        +--ro next-hop-ipv4-address?      otg-types:ipv4-address
                           |        +--ro next-hop-ipv6-address?      otg-types:ipv6-address
                           |        +--ro as-path* []
@@ -249,12 +249,12 @@ module: open-traffic-generator-bmp-server
                                 +--ro origin           -> ../state/origin
                                 +--ro path-id          -> ../state/path-id
                                 +--ro state
+                                   +--ro path-id?                    uint32
+                                   +--ro route-state?                enumeration
+                                   +--ro next-hop-type?              enumeration
                                    +--ro address?                    otg-types:ipv6-address
                                    +--ro prefix-length?              uint32
                                    +--ro origin?                     enumeration
-                                   +--ro route-state?                enumeration
-                                   +--ro next-hop-type?              enumeration
-                                   +--ro path-id?                    uint32
                                    +--ro next-hop-ipv4-address?      otg-types:ipv4-address
                                    +--ro next-hop-ipv6-address?      otg-types:ipv6-address
                                    +--ro as-path* []
