@@ -195,7 +195,7 @@ module open-traffic-generator-bmp-server {
       description
         "Container of peers of an individual bmp-server information.";
       list peer {
-        key "peer-bgp-id";
+        key "peer-bgp-id session-ip-type";
         description
           "BGP identifier on which bmp-server peer is established.";
 
@@ -207,6 +207,14 @@ module open-traffic-generator-bmp-server {
             "The BGP Identifier of the peer.";
         }
 
+        leaf session-ip-type {
+          type leafref {
+            path "../state/session-ip-type";
+          }
+          description
+            "Whether the peer is of type BGPv4 or BGPv6.";
+        }
+
         container state {
           description
             "State parameters of bmp-server peer.";
@@ -215,21 +223,6 @@ module open-traffic-generator-bmp-server {
            type otg-types:ipv4-address;
             description
               "The BGP Identifier of the peer.";
-          }
-
-          leaf status {
-            type enumeration {
-              enum UP {
-                description
-                  "BGP session is UP.";
-              }
-              enum DOWN {
-                description
-                  "BGP session is DOWN.";
-              }
-            }
-            description
-              "The current state of the BGP session.";
           }
 
           leaf session-ip-type {
@@ -245,6 +238,21 @@ module open-traffic-generator-bmp-server {
             }
             description
               "Whether the peer is of type BGPv4 or BGPv6.";
+          }
+
+          leaf status {
+            type enumeration {
+              enum UP {
+                description
+                  "BGP session is UP.";
+              }
+              enum DOWN {
+                description
+                  "BGP session is DOWN.";
+              }
+            }
+            description
+              "The current state of the BGP session.";
           }
 
           container session-ipv4-information {
