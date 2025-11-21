@@ -20,12 +20,13 @@ module: open-traffic-generator-bmp-server
            |  +--ro post-policy-ipv6-unicast-routes-received?   otg-types:counter64
            +--ro peer-state-database
               +--ro peers
-                 +--ro peer* [peer-bgp-id]
-                    +--ro peer-bgp-id    -> ../state/peer-bgp-id
+                 +--ro peer* [peer-bgp-id session-ip-type]
+                    +--ro peer-bgp-id        -> ../state/peer-bgp-id
+                    +--ro session-ip-type    -> ../state/session-ip-type
                     +--ro state
                        +--ro peer-bgp-id?                otg-types:ipv4-address
-                       +--ro status?                     enumeration
                        +--ro session-ip-type?            enumeration
+                       +--ro status?                     enumeration
                        +--ro session-ipv4-information
                        |  +--ro local-address?    otg-types:ipv4-address
                        |  +--ro remote-address?   otg-types:ipv4-address
