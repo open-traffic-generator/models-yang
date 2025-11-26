@@ -1,0 +1,310 @@
+module: open-traffic-generator-bmp-server
+  +--rw bmp-servers
+     +--ro bmp-server* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?                  string
+           +--ro session-state?         enumeration
+           +--ro counters
+           |  +--ro flaps?                                      otg-types:counter64
+           |  +--ro route-monitoring-messages-received?         otg-types:counter64
+           |  +--ro statistics-messages-received?               otg-types:counter64
+           |  +--ro peer-down-messages-received?                otg-types:counter64
+           |  +--ro peer-up-messages-received?                  otg-types:counter64
+           |  +--ro initiation-messages-received?               otg-types:counter64
+           |  +--ro route-mirroring-messages-received?          otg-types:counter64
+           |  +--ro termination-messages-received?              otg-types:counter64
+           |  +--ro pre-policy-ipv4-unicast-routes-received?    otg-types:counter64
+           |  +--ro post-policy-ipv4-unicast-routes-received?   otg-types:counter64
+           |  +--ro pre-policy-ipv6-unicast-routes-received?    otg-types:counter64
+           |  +--ro post-policy-ipv6-unicast-routes-received?   otg-types:counter64
+           +--ro peer-state-database
+              +--ro peers
+                 +--ro peer* [peer-bgp-id session-ip-type]
+                    +--ro peer-bgp-id        -> ../state/peer-bgp-id
+                    +--ro session-ip-type    -> ../state/session-ip-type
+                    +--ro state
+                       +--ro peer-bgp-id?                otg-types:ipv4-address
+                       +--ro session-ip-type?            enumeration
+                       +--ro status?                     enumeration
+                       +--ro session-ipv4-information
+                       |  +--ro local-address?    otg-types:ipv4-address
+                       |  +--ro remote-address?   otg-types:ipv4-address
+                       +--ro session-ipv6-information
+                       |  +--ro local-address?    otg-types:ipv6-address
+                       |  +--ro remote-address?   otg-types:ipv6-address
+                       +--ro stats
+                       |  +--ro rejected-prefixes?                   otg-types:counter32
+                       |  +--ro duplicate-prefixes?                  otg-types:counter32
+                       |  +--ro duplicate-withdraws?                 otg-types:counter32
+                       |  +--ro cluster-list-invalidated-updates?    otg-types:counter32
+                       |  +--ro as-path-invalidated-updates?         otg-types:counter32
+                       |  +--ro originator-id-invalidated-updates?   otg-types:counter32
+                       |  +--ro as-confed-invalidated_updates?       otg-types:counter32
+                       |  +--ro adj-rib-routes?                      otg-types:counter64
+                       |  +--ro local-rib-routes?                    otg-types:counter64
+                       |  +--ro withdraw-updates-received?           otg-types:counter32
+                       |  +--ro withdraw-prefixes-received?          otg-types:counter32
+                       |  +--ro duplicate-updates?                   otg-types:counter32
+                       +--ro pre-policy-in-rib
+                       |  +--ro unicast-ipv4-prefixes
+                       |  |  +--ro unicast-ipv4-prefix* [address prefix-length origin path-id]
+                       |  |     +--ro address          -> ../state/address
+                       |  |     +--ro prefix-length    -> ../state/prefix-length
+                       |  |     +--ro origin           -> ../state/origin
+                       |  |     +--ro path-id          -> ../state/path-id
+                       |  |     +--ro state
+                       |  |        +--ro path-id?                    uint32
+                       |  |        +--ro route-state?                enumeration
+                       |  |        +--ro next-hop-type?              enumeration
+                       |  |        +--ro address?                    otg-types:ipv4-address
+                       |  |        +--ro prefix-length?              uint32
+                       |  |        +--ro origin?                     enumeration
+                       |  |        +--ro next-hop-ipv4-address?      otg-types:ipv4-address
+                       |  |        +--ro next-hop-ipv6-address?      otg-types:ipv6-address
+                       |  |        +--ro as-path* []
+                       |  |        |  +--ro segment-type?   enumeration
+                       |  |        |  +--ro as_numbers*     uint32
+                       |  |        +--ro community* []
+                       |  |        |  +--ro community-type?     enumeration
+                       |  |        |  +--ro custom-as-number?   uint16
+                       |  |        |  +--ro custom-as-value?    uint16
+                       |  |        +--ro extended-community* []
+                       |  |        |  +--ro raw?          otg-types:hex-string
+                       |  |        |  +--ro structured
+                       |  |        |     +--ro bgp-extended-community-structured_type?   enumeration
+                       |  |        |     +--ro transitive_2octet_as_type
+                       |  |        |     |  +--ro transitive_2octet_as_type?   enumeration
+                       |  |        |     |  +--ro route_target_subtype
+                       |  |        |     |  |  +--ro global_2byte_as?     uint16
+                       |  |        |     |  |  +--ro local_4byte_admin?   uint32
+                       |  |        |     |  +--ro route_origin_subtype
+                       |  |        |     |     +--ro global_2byte_as?     uint16
+                       |  |        |     |     +--ro local_4byte_admin?   uint32
+                       |  |        |     +--ro transitive_ipv4_address_type
+                       |  |        |     |  +--ro transitive_ipv4_address_type?   enumeration
+                       |  |        |     |  +--ro route_target_subtype
+                       |  |        |     |  |  +--ro global_ipv4_admin?   otg-types:ipv4-address
+                       |  |        |     |  |  +--ro local_2byte_admin?   uint16
+                       |  |        |     |  +--ro route_origin_subtype
+                       |  |        |     |     +--ro global_ipv4_admin?   otg-types:ipv4-address
+                       |  |        |     |     +--ro local_2byte_admin?   uint16
+                       |  |        |     +--ro transitive_4octet_as_type
+                       |  |        |     |  +--ro transitive_4octet_as_type?   enumeration
+                       |  |        |     |  +--ro route_target_subtype
+                       |  |        |     |  |  +--ro global_4byte_as?     uint32
+                       |  |        |     |  |  +--ro local_2byte_admin?   uint16
+                       |  |        |     |  +--ro route_origin_subtype
+                       |  |        |     |     +--ro global_4byte_as?     uint32
+                       |  |        |     |     +--ro local_2byte_admin?   uint16
+                       |  |        |     +--ro transitive_opaque_type
+                       |  |        |     |  +--ro transitive_opaque_type?   enumeration
+                       |  |        |     |  +--ro color_subtype
+                       |  |        |     |  |  +--ro flags?   uint16
+                       |  |        |     |  |  +--ro color?   uint32
+                       |  |        |     |  +--ro encapsulation_subtype
+                       |  |        |     |     +--ro reserved?      uint32
+                       |  |        |     |     +--ro tunnel_type?   uint16
+                       |  |        |     +--ro non_transitive_2octet_as_type
+                       |  |        |        +--ro non_transitive_2octet_as_type?   enumeration
+                       |  |        |        +--ro link_bandwidth_subtype
+                       |  |        |           +--ro global_2byte_as?   uint16
+                       |  |        |           +--ro bandwidth?         otg-types:ieeefloat32
+                       |  |        +--ro local-preference?           uint32
+                       |  |        +--ro multi-exit-discriminator?   uint32
+                       |  +--ro unicast-ipv6-prefixes
+                       |     +--ro unicast-ipv6-prefix* [address prefix-length origin path-id]
+                       |        +--ro address          -> ../state/address
+                       |        +--ro prefix-length    -> ../state/prefix-length
+                       |        +--ro origin           -> ../state/origin
+                       |        +--ro path-id          -> ../state/path-id
+                       |        +--ro state
+                       |           +--ro path-id?                    uint32
+                       |           +--ro route-state?                enumeration
+                       |           +--ro next-hop-type?              enumeration
+                       |           +--ro address?                    otg-types:ipv6-address
+                       |           +--ro prefix-length?              uint32
+                       |           +--ro origin?                     enumeration
+                       |           +--ro next-hop-ipv4-address?      otg-types:ipv4-address
+                       |           +--ro next-hop-ipv6-address?      otg-types:ipv6-address
+                       |           +--ro as-path* []
+                       |           |  +--ro segment-type?   enumeration
+                       |           |  +--ro as_numbers*     uint32
+                       |           +--ro community* []
+                       |           |  +--ro community-type?     enumeration
+                       |           |  +--ro custom-as-number?   uint16
+                       |           |  +--ro custom-as-value?    uint16
+                       |           +--ro extended-community* []
+                       |           |  +--ro raw?          otg-types:hex-string
+                       |           |  +--ro structured
+                       |           |     +--ro bgp-extended-community-structured_type?   enumeration
+                       |           |     +--ro transitive_2octet_as_type
+                       |           |     |  +--ro transitive_2octet_as_type?   enumeration
+                       |           |     |  +--ro route_target_subtype
+                       |           |     |  |  +--ro global_2byte_as?     uint16
+                       |           |     |  |  +--ro local_4byte_admin?   uint32
+                       |           |     |  +--ro route_origin_subtype
+                       |           |     |     +--ro global_2byte_as?     uint16
+                       |           |     |     +--ro local_4byte_admin?   uint32
+                       |           |     +--ro transitive_ipv4_address_type
+                       |           |     |  +--ro transitive_ipv4_address_type?   enumeration
+                       |           |     |  +--ro route_target_subtype
+                       |           |     |  |  +--ro global_ipv4_admin?   otg-types:ipv4-address
+                       |           |     |  |  +--ro local_2byte_admin?   uint16
+                       |           |     |  +--ro route_origin_subtype
+                       |           |     |     +--ro global_ipv4_admin?   otg-types:ipv4-address
+                       |           |     |     +--ro local_2byte_admin?   uint16
+                       |           |     +--ro transitive_4octet_as_type
+                       |           |     |  +--ro transitive_4octet_as_type?   enumeration
+                       |           |     |  +--ro route_target_subtype
+                       |           |     |  |  +--ro global_4byte_as?     uint32
+                       |           |     |  |  +--ro local_2byte_admin?   uint16
+                       |           |     |  +--ro route_origin_subtype
+                       |           |     |     +--ro global_4byte_as?     uint32
+                       |           |     |     +--ro local_2byte_admin?   uint16
+                       |           |     +--ro transitive_opaque_type
+                       |           |     |  +--ro transitive_opaque_type?   enumeration
+                       |           |     |  +--ro color_subtype
+                       |           |     |  |  +--ro flags?   uint16
+                       |           |     |  |  +--ro color?   uint32
+                       |           |     |  +--ro encapsulation_subtype
+                       |           |     |     +--ro reserved?      uint32
+                       |           |     |     +--ro tunnel_type?   uint16
+                       |           |     +--ro non_transitive_2octet_as_type
+                       |           |        +--ro non_transitive_2octet_as_type?   enumeration
+                       |           |        +--ro link_bandwidth_subtype
+                       |           |           +--ro global_2byte_as?   uint16
+                       |           |           +--ro bandwidth?         otg-types:ieeefloat32
+                       |           +--ro local-preference?           uint32
+                       |           +--ro multi-exit-discriminator?   uint32
+                       +--ro post-policy-in-rib
+                          +--ro unicast-ipv4-prefixes
+                          |  +--ro unicast-ipv4-prefix* [address prefix-length origin path-id]
+                          |     +--ro address          -> ../state/address
+                          |     +--ro prefix-length    -> ../state/prefix-length
+                          |     +--ro origin           -> ../state/origin
+                          |     +--ro path-id          -> ../state/path-id
+                          |     +--ro state
+                          |        +--ro path-id?                    uint32
+                          |        +--ro route-state?                enumeration
+                          |        +--ro next-hop-type?              enumeration
+                          |        +--ro address?                    otg-types:ipv4-address
+                          |        +--ro prefix-length?              uint32
+                          |        +--ro origin?                     enumeration
+                          |        +--ro next-hop-ipv4-address?      otg-types:ipv4-address
+                          |        +--ro next-hop-ipv6-address?      otg-types:ipv6-address
+                          |        +--ro as-path* []
+                          |        |  +--ro segment-type?   enumeration
+                          |        |  +--ro as_numbers*     uint32
+                          |        +--ro community* []
+                          |        |  +--ro community-type?     enumeration
+                          |        |  +--ro custom-as-number?   uint16
+                          |        |  +--ro custom-as-value?    uint16
+                          |        +--ro extended-community* []
+                          |        |  +--ro raw?          otg-types:hex-string
+                          |        |  +--ro structured
+                          |        |     +--ro bgp-extended-community-structured_type?   enumeration
+                          |        |     +--ro transitive_2octet_as_type
+                          |        |     |  +--ro transitive_2octet_as_type?   enumeration
+                          |        |     |  +--ro route_target_subtype
+                          |        |     |  |  +--ro global_2byte_as?     uint16
+                          |        |     |  |  +--ro local_4byte_admin?   uint32
+                          |        |     |  +--ro route_origin_subtype
+                          |        |     |     +--ro global_2byte_as?     uint16
+                          |        |     |     +--ro local_4byte_admin?   uint32
+                          |        |     +--ro transitive_ipv4_address_type
+                          |        |     |  +--ro transitive_ipv4_address_type?   enumeration
+                          |        |     |  +--ro route_target_subtype
+                          |        |     |  |  +--ro global_ipv4_admin?   otg-types:ipv4-address
+                          |        |     |  |  +--ro local_2byte_admin?   uint16
+                          |        |     |  +--ro route_origin_subtype
+                          |        |     |     +--ro global_ipv4_admin?   otg-types:ipv4-address
+                          |        |     |     +--ro local_2byte_admin?   uint16
+                          |        |     +--ro transitive_4octet_as_type
+                          |        |     |  +--ro transitive_4octet_as_type?   enumeration
+                          |        |     |  +--ro route_target_subtype
+                          |        |     |  |  +--ro global_4byte_as?     uint32
+                          |        |     |  |  +--ro local_2byte_admin?   uint16
+                          |        |     |  +--ro route_origin_subtype
+                          |        |     |     +--ro global_4byte_as?     uint32
+                          |        |     |     +--ro local_2byte_admin?   uint16
+                          |        |     +--ro transitive_opaque_type
+                          |        |     |  +--ro transitive_opaque_type?   enumeration
+                          |        |     |  +--ro color_subtype
+                          |        |     |  |  +--ro flags?   uint16
+                          |        |     |  |  +--ro color?   uint32
+                          |        |     |  +--ro encapsulation_subtype
+                          |        |     |     +--ro reserved?      uint32
+                          |        |     |     +--ro tunnel_type?   uint16
+                          |        |     +--ro non_transitive_2octet_as_type
+                          |        |        +--ro non_transitive_2octet_as_type?   enumeration
+                          |        |        +--ro link_bandwidth_subtype
+                          |        |           +--ro global_2byte_as?   uint16
+                          |        |           +--ro bandwidth?         otg-types:ieeefloat32
+                          |        +--ro local-preference?           uint32
+                          |        +--ro multi-exit-discriminator?   uint32
+                          +--ro unicast-ipv6-prefixes
+                             +--ro unicast-ipv6-prefix* [address prefix-length origin path-id]
+                                +--ro address          -> ../state/address
+                                +--ro prefix-length    -> ../state/prefix-length
+                                +--ro origin           -> ../state/origin
+                                +--ro path-id          -> ../state/path-id
+                                +--ro state
+                                   +--ro path-id?                    uint32
+                                   +--ro route-state?                enumeration
+                                   +--ro next-hop-type?              enumeration
+                                   +--ro address?                    otg-types:ipv6-address
+                                   +--ro prefix-length?              uint32
+                                   +--ro origin?                     enumeration
+                                   +--ro next-hop-ipv4-address?      otg-types:ipv4-address
+                                   +--ro next-hop-ipv6-address?      otg-types:ipv6-address
+                                   +--ro as-path* []
+                                   |  +--ro segment-type?   enumeration
+                                   |  +--ro as_numbers*     uint32
+                                   +--ro community* []
+                                   |  +--ro community-type?     enumeration
+                                   |  +--ro custom-as-number?   uint16
+                                   |  +--ro custom-as-value?    uint16
+                                   +--ro extended-community* []
+                                   |  +--ro raw?          otg-types:hex-string
+                                   |  +--ro structured
+                                   |     +--ro bgp-extended-community-structured_type?   enumeration
+                                   |     +--ro transitive_2octet_as_type
+                                   |     |  +--ro transitive_2octet_as_type?   enumeration
+                                   |     |  +--ro route_target_subtype
+                                   |     |  |  +--ro global_2byte_as?     uint16
+                                   |     |  |  +--ro local_4byte_admin?   uint32
+                                   |     |  +--ro route_origin_subtype
+                                   |     |     +--ro global_2byte_as?     uint16
+                                   |     |     +--ro local_4byte_admin?   uint32
+                                   |     +--ro transitive_ipv4_address_type
+                                   |     |  +--ro transitive_ipv4_address_type?   enumeration
+                                   |     |  +--ro route_target_subtype
+                                   |     |  |  +--ro global_ipv4_admin?   otg-types:ipv4-address
+                                   |     |  |  +--ro local_2byte_admin?   uint16
+                                   |     |  +--ro route_origin_subtype
+                                   |     |     +--ro global_ipv4_admin?   otg-types:ipv4-address
+                                   |     |     +--ro local_2byte_admin?   uint16
+                                   |     +--ro transitive_4octet_as_type
+                                   |     |  +--ro transitive_4octet_as_type?   enumeration
+                                   |     |  +--ro route_target_subtype
+                                   |     |  |  +--ro global_4byte_as?     uint32
+                                   |     |  |  +--ro local_2byte_admin?   uint16
+                                   |     |  +--ro route_origin_subtype
+                                   |     |     +--ro global_4byte_as?     uint32
+                                   |     |     +--ro local_2byte_admin?   uint16
+                                   |     +--ro transitive_opaque_type
+                                   |     |  +--ro transitive_opaque_type?   enumeration
+                                   |     |  +--ro color_subtype
+                                   |     |  |  +--ro flags?   uint16
+                                   |     |  |  +--ro color?   uint32
+                                   |     |  +--ro encapsulation_subtype
+                                   |     |     +--ro reserved?      uint32
+                                   |     |     +--ro tunnel_type?   uint16
+                                   |     +--ro non_transitive_2octet_as_type
+                                   |        +--ro non_transitive_2octet_as_type?   enumeration
+                                   |        +--ro link_bandwidth_subtype
+                                   |           +--ro global_2byte_as?   uint16
+                                   |           +--ro bandwidth?         otg-types:ieeefloat32
+                                   +--ro local-preference?           uint32
+                                   +--ro multi-exit-discriminator?   uint32

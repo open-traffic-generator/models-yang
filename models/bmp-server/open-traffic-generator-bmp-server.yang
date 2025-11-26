@@ -1,0 +1,779 @@
+module open-traffic-generator-bmp-server {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/bmp-server";
+  prefix "otg-bmp-server";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  import open-traffic-generator-bgp {
+    prefix "otg-bgp";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to bmp-server sessions that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2025-10-27 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  grouping bmp-server-top {
+    description
+      "Top-level structural grouping for bmp-server session telemetry
+      entries.";
+
+    container bmp-servers {
+      description
+        "bmp-server session telemetry collected by the ATE device.";
+
+      list bmp-server {
+        key "name";
+
+        config false;
+
+        description
+          "Each bmp-server is identified by an arbitrary string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the bmp-server's name, acting as a key of the
+            bmp-server list.";
+        }
+
+        container state {
+          config false;
+
+          description
+            "Operational state of an individual bmp-server.";
+
+          uses bmp-server-state;
+
+          container counters {
+            description
+              "Counters of an individual bmp-server.";
+
+            uses bmp-server-counters;
+          }
+
+          container peer-state-database {
+            description
+              "Peers of an individual bmp-server.";
+
+            uses bmp-server-peer-state-database;
+          }
+
+        }
+      }
+    }
+  }
+
+  grouping bmp-server-state {
+    description
+      "Operational state of the individual bmp-server.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitrary name of the bmp-server determined by the ATE
+        configuration.";
+    }
+
+    leaf session-state {
+      type enumeration {
+          enum UP {
+            description
+              "The session goes to 'UP' state when a BMP monitored client router sends a Initiation message to the BMP Server";
+          }
+          enum DOWN {
+            description
+              "The session goes to 'DOWN' state when a BMP monitored client router sends a Termination message to the BMP Server or the TCP connection is lost";
+          }
+        }
+        description
+          "Operational state of the bmp-server";
+    }
+  }
+
+  grouping bmp-server-counters {
+    description
+      "Counters of an individual bmp-server session.";
+
+    leaf flaps {
+      type otg-types:counter64;
+      description
+        "The total number of times the BMP session with the BMP client went from 'UP' to 'DOWN' state.";
+    }
+
+    leaf route-monitoring-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Route Monitoring Messages received from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf statistics-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Route Statistics Messages received from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf peer-down-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Peer 'DOWN' Messages received from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf peer-up-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Peer 'UP' Messages received from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf initiation-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Initiation Messages received from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf route-mirroring-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Route Mirroring Messages received from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf termination-messages-received {
+      type otg-types:counter64;
+      description
+        "The total number of BMP Termination Messages received from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf pre-policy-ipv4-unicast-routes-received {
+      type otg-types:counter64;
+      description
+        "The total number of IPv4 Unicast prefixes received within BMP Monitor messages with L flag unset (indicating absence of application on in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf post-policy-ipv4-unicast-routes-received {
+      type otg-types:counter64;
+      description
+        "The total number of IPv4 Unicast prefixes received within BMP Monitor messages with L flag set (indicating application of in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf pre-policy-ipv6-unicast-routes-received {
+      type otg-types:counter64;
+      description
+        "The total number of IPv6 Unicast prefixes received within BMP Monitor messages with L flag unset (indicating absence of application on in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
+    }
+
+    leaf post-policy-ipv6-unicast-routes-received {
+      type otg-types:counter64;
+      description
+        "The total number of IPv6 Unicast prefixes received within BMP Monitor messages with L flag set (indicating application of in-bound policy on the advertised prefix) from the BMP client from the time the BMP server was started.";
+    }
+  }
+
+
+  grouping bmp-server-peer-state-database {
+    description
+      "This grouping defines information for peers of an individual bmp-server.";
+    container peers {
+      description
+        "Container of peers of an individual bmp-server information.";
+      list peer {
+        key "peer-bgp-id session-ip-type";
+        description
+          "BGP identifier on which bmp-server peer is established.";
+
+        leaf peer-bgp-id {
+          type leafref {
+            path "../state/peer-bgp-id";
+          }
+          description
+            "The BGP Identifier of the peer.";
+        }
+
+        leaf session-ip-type {
+          type leafref {
+            path "../state/session-ip-type";
+          }
+          description
+            "Whether the peer is of type BGPv4 or BGPv6.";
+        }
+
+        container state {
+          description
+            "State parameters of bmp-server peer.";
+
+          leaf peer-bgp-id {
+           type otg-types:ipv4-address;
+            description
+              "The BGP Identifier of the peer.";
+          }
+
+          leaf session-ip-type {
+            type enumeration {
+              enum IPv4 {
+                description
+                  "BGPv4 peer";
+              }
+              enum IPv6 {
+                description
+                  "BGPv6 peer";
+              }
+            }
+            description
+              "Whether the peer is of type BGPv4 or BGPv6.";
+          }
+
+          leaf status {
+            type enumeration {
+              enum UP {
+                description
+                  "BGP session is UP.";
+              }
+              enum DOWN {
+                description
+                  "BGP session is DOWN.";
+              }
+            }
+            description
+              "The current state of the BGP session.";
+          }
+
+          container session-ipv4-information {
+            description
+              "This object is included if session-ip-type is of type ipv4.";
+            uses session-ipv4-information;
+          }
+
+          container session-ipv6-information {
+            description
+              "This object is included if session-ip-type is of type ipv6.";
+            uses session-ipv6-information;
+          }
+
+          container stats {
+            description
+              "The last set of BMP stats sent by the BMP client for this peer as per the message format defined in https://www.rfc-editor.org/rfc/rfc7854.html#section-4.8. It might be absent if no BMP Statistics message have been received yet or peer is still in down state. If the BMP client has sent a subset of the various statistic counters, only those should be set when returning the result.";
+            uses stats;
+          }
+
+          container pre-policy-in-rib {
+            description
+              "The set of routes received from this peer as reported using BMP Route Monitoring messages by the BMP client which are part of the Adj-RIB-In database before inbound policies were applied.";
+            uses pre-policy-in-rib;
+          }
+
+          container post-policy-in-rib {
+            description
+              "The set of routes received from this peer as reported using BMP Route Monitoring messages by the BMP client which are part of the Adj-RIB-In database after inbound policies were applied.";
+            uses post-policy-in-rib;
+          }
+
+        }
+      }
+    }
+  }
+
+  grouping session-ipv4-information {
+    description
+      "This object is included if session-ip-type is of type ipv4.";
+
+      leaf local-address {
+        type otg-types:ipv4-address;
+        description
+          "The local IPv4 address associated with the BGPv4 peer.";
+      }
+      
+      leaf remote-address {
+        type otg-types:ipv4-address;
+        description
+          "The remote IPv4 address associated with the BGPv4 peer.";
+      }
+  }
+
+  grouping session-ipv6-information {
+    description
+      "This object is included if session-ip-type is of type ipv6.";
+
+    leaf local-address {
+      type otg-types:ipv6-address;
+      description
+        "The local IPv6 address associated with the BGPv6 peer.";
+    }
+    
+    leaf remote-address {
+      type otg-types:ipv6-address;
+      description
+        "The remote IPv6 address associated with the BGPv6 peer.";
+    }  
+  }
+
+  grouping stats {
+    description
+      "The last set of BMP stats sent by the BMP client for this peer as per the message format defined in https://www.rfc-editor.org/rfc/rfc7854.html#section-4.8. It might be absent if no BMP Statistics message have been received yet or peer is still in down state. If the BMP client has sent a subset of the various statistic counters, only those should be set when returning the result.";
+
+    leaf rejected-prefixes {
+      type otg-types:counter32;
+      description
+        "Number of prefixes rejected by inbound policy.";
+    }
+
+    leaf duplicate-prefixes {
+      type otg-types:counter32;
+      description
+        "Number of (known) duplicate prefix advertisements.";
+    }
+
+    leaf duplicate-withdraws {
+      type otg-types:counter32;
+      description
+        "Number of (known) duplicate withdraws.";
+    }
+
+    leaf cluster-list-invalidated-updates {
+      type otg-types:counter32;
+      description
+        "Number of updates invalidated due to CLUSTER_LIST loop.";
+    }
+
+    leaf as-path-invalidated-updates {
+      type otg-types:counter32;
+      description
+        "Number of updates invalidated due to AS_PATH loop.";
+    }
+
+    leaf originator-id-invalidated-updates {
+      type otg-types:counter32;
+      description
+        "Number of updates invalidated due to ORIGINATOR_ID.";
+    }
+
+    leaf as-confed-invalidated_updates {
+      type otg-types:counter32;
+      description
+        "Number of updates invalidated due to AS_CONFED loop.";
+    }
+
+    leaf adj-rib-routes {
+      type otg-types:counter64;
+      description
+        "Number of routes in Adj-RIBs-In.";
+    }
+
+    leaf local-rib-routes {
+      type otg-types:counter64;
+      description
+        "Number of routes in Loc-RIB.";
+    }
+
+    leaf withdraw-updates-received {
+      type otg-types:counter32;
+      description
+        "Number of updates subjected to treat-as-withdraw treatment [RFC7606]";
+    }
+
+    leaf withdraw-prefixes-received {
+      type otg-types:counter32;
+      description
+        "Number of prefixes subjected to treat-as-withdraw treatment [RFC7606].";
+    }
+
+    leaf duplicate-updates {
+      type otg-types:counter32;
+      description
+        "Number of duplicate update messages received.";
+    }
+  }
+
+  grouping pre-policy-in-rib {
+    description
+      "The set of routes received from this peer as reported using BMP Route Monitoring messages by the BMP client which are part of the Adj-RIB-In database before inbound policies were applied.";
+      
+      uses bmp-ipv4-prefixes;
+      uses bmp-ipv6-prefixes;
+  }
+
+  grouping post-policy-in-rib {
+    description
+      "The set of routes received from this peer as reported using BMP Route Monitoring messages by the BMP client which are part of the Adj-RIB-In database after inbound policies were applied.";
+      
+      uses bmp-ipv4-prefixes;
+      uses bmp-ipv6-prefixes;
+  }
+
+  grouping bmp-ipv4-prefixes {
+    description
+      "Structural grouping for unicast ipv4 prefix information";
+
+    container unicast-ipv4-prefixes {
+      description
+        "Discovered unicast IPv4 prefixes of a BGP peer";
+
+      list unicast-ipv4-prefix {
+        key "address prefix-length origin path-id";
+
+        description
+          "A list of BGP unicast IPv4 prefixes.";
+
+        leaf address {
+          type leafref {
+            path "../state/address";
+          }
+          description
+            "Reference to a unicast IPv4 address, acting as part
+            of a key to the unicast-ipv4-prefix list.";
+        }
+
+        leaf prefix-length {
+          type leafref {
+            path "../state/prefix-length";
+          }
+          description
+            "Reference to a prefix-length, acting as part of a
+            key to the unicast-ipv4-prefix list.";
+        }
+
+        leaf origin {
+          type leafref {
+            path "../state/origin";
+          }
+          description
+            "Reference to an origin, acting as part of a
+            key to the unicast-ipv4-prefix list.";
+        }
+
+        leaf path-id {
+          type leafref {
+            path "../state/path-id";
+          }
+          description
+            "Reference to an path-id, acting as part of a
+            key to the unicast-ipv4-prefix list.";
+        }
+
+        container state {
+          description
+            "The container for unicast ipv4 prefix state.";
+  
+          leaf path-id {
+            type uint32;
+            default 0;
+            description
+              "If the route is learned from a neighbor, the path-id
+              corresponds to the path-id for the route in the
+              corresponding adj-rib-in-post table.  If the route is
+              injected from another protocol, or the neighbor does not
+              support BGP add-paths, the path-id should be set
+              to zero, also the default value.";
+          }
+
+          
+          leaf route-state {
+            type enumeration {
+              enum ADVERTISED {
+                description
+                  "The route is advertised.";
+              }
+              enum WITHDRAWN {
+                description
+                  "The route is withdrawn.";
+              }
+            }
+            description
+              "The state of the route.";
+          }
+
+          leaf next-hop-type{
+            type enumeration {
+              enum IPv4 {
+                description
+                  "The next hop type is IPv4.";
+              }
+              enum IPv6 {
+                description
+                  "The next hop type is IPv6.";
+              }
+            }
+            description
+              "The next hop type";
+          }
+
+          leaf address {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 prefix.";
+          }
+
+          leaf prefix-length {
+            type uint32;
+            description
+              "The prefix length.";
+          }
+
+          leaf origin {
+            type enumeration {
+              enum IGP {
+                description
+                  "The origin is internal.";
+              }
+              enum EGP {
+                description
+                  "The origin is external.";
+              }
+              enum INCOMPLETE {
+                description
+                  "The origin is neither internal nor external.";
+              }
+            }
+            description
+              "The origin of the prefix.";
+          }
+
+          leaf next-hop-ipv4-address {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address of the egress interface.";
+          }
+
+          leaf next-hop-ipv6-address {
+            type otg-types:ipv6-address;
+            description
+              "The IPv6 address of the egress interface.";
+          }
+
+          list as-path {
+            description
+              "Unkeyed list of AS PATH segments
+              This attribute identifies the autonomous systems through which routing information
+              carried in this UPDATE message has passed.";
+              uses otg-bgp:bgp-as-path-attr-state;
+          }
+
+          list community {
+            description
+              "Unkeyed list of optional community attributes present in the UPDATE message.";
+              uses otg-bgp:bgp-community-state;
+          }
+
+          list extended-community {
+            description
+              "Unkeyed list of optional extended community attributes present in the UPDATE message.";
+              uses otg-bgp:bgp-extended-community-state;
+          }
+
+          leaf local-preference {
+            type uint32;
+            description
+              "The local preference is a well-known attribute and the value is used for route selection. The route with the highest local preference value is preferred.";
+          }
+
+          leaf multi-exit-discriminator {
+            type uint32;
+            description
+              "The multi exit discriminator (MED) is an optional non-transitive attribute and the value is used for route selection. The route with the lowest MED value is preferred.";
+          }
+
+        }
+      }
+    }
+  }
+
+  grouping bmp-ipv6-prefixes {
+    description
+      "Structural grouping for unicast ipv6 prefix information";
+
+    container unicast-ipv6-prefixes {
+      description
+        "Discovered unicast IPv6 prefixes of a BGP peer";
+
+      list unicast-ipv6-prefix {
+        key "address prefix-length origin path-id";
+
+        description
+          "A list of BGP unicast IPv6 prefixes.";
+
+        leaf address {
+          type leafref {
+            path "../state/address";
+          }
+          description
+            "Reference to a unicast IPv6 address, acting as part
+            of a key to the unicast-ipv6-prefix list.";
+        }
+
+        leaf prefix-length {
+          type leafref {
+            path "../state/prefix-length";
+          }
+          description
+            "Reference to a prefix-length, acting as part of a
+            key to the unicast-ipv6-prefix list.";
+        }
+
+        leaf origin {
+          type leafref {
+            path "../state/origin";
+          }
+          description
+            "Reference to an origin, acting as part of a
+            key to the unicast-ipv6-prefix list.";
+        }
+
+        leaf path-id {
+          type leafref {
+            path "../state/path-id";
+          }
+          description
+            "Reference to an path-id, acting as part of a
+            key to the unicast-ipv6-prefix list.";
+        }
+
+        container state {
+          description
+            "The container for unicast IPv6 prefix state.";
+
+          leaf path-id {
+            type uint32;
+            default 0;
+            description
+              "If the route is learned from a neighbor, the path-id
+              corresponds to the path-id for the route in the
+              corresponding adj-rib-in-post table.  If the route is
+              injected from another protocol, or the neighbor does not
+              support BGP add-paths, the path-id should be set
+              to zero, also the default value.";
+          }
+
+
+          leaf route-state {
+            type enumeration {
+              enum ADVERTISED {
+                description
+                  "The route is advertised.";
+              }
+              enum WITHDRAWN {
+                description
+                  "The route is withdrawn.";
+              }
+            }
+            description
+              "The state of the route.";
+          }
+
+          leaf next-hop-type{
+            type enumeration {
+              enum IPv4 {
+                description
+                  "The next hop type is IPv4.";
+              }
+              enum IPv6 {
+                description
+                  "The next hop type is IPv6.";
+              }
+            }
+            description
+              "The next hop type";
+          }
+
+
+
+          leaf address {
+            type otg-types:ipv6-address;
+            description
+              "The IPv6 prefix.";
+          }
+
+          leaf prefix-length {
+            type uint32;
+            description
+              "The prefix length.";
+          }
+
+          leaf origin {
+            type enumeration {
+              enum IGP {
+                description
+                  "The origin is internal.";
+              }
+              enum EGP {
+                description
+                  "The origin is external.";
+              }
+              enum INCOMPLETE {
+                description
+                  "The origin is neither internal nor external.";
+              }
+            }
+            description
+              "The origin of the prefix.";
+          }
+
+          leaf next-hop-ipv4-address {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address of the egress interface.";
+          }
+
+          leaf next-hop-ipv6-address {
+            type otg-types:ipv6-address;
+            description
+              "The IPv6 address of the egress interface.";
+          }
+
+          list as-path {
+            description
+              "Unkeyed list of AS PATH segments
+              This attribute identifies the autonomous systems through which routing information
+              carried in this UPDATE message has passed.";
+              uses otg-bgp:bgp-as-path-attr-state;
+          }
+
+          list community {
+            description
+              "Unkeyed list of optional community attributes present in the UPDATE message.";
+              uses otg-bgp:bgp-community-state;
+          }
+
+          list extended-community {
+            description
+              "Unkeyed list of optional extended community attributes present in the UPDATE message.";
+              uses otg-bgp:bgp-extended-community-state;
+          }
+
+          leaf local-preference {
+            type uint32;
+            description
+              "The local preference is a well-known attribute and the value is used for route selection. The route with the highest local preference value is preferred.";
+          }
+
+          leaf multi-exit-discriminator {
+            type uint32;
+            description
+              "The multi exit discriminator (MED) is an optional non-transitive attribute and the value is used for route selection. The route with the lowest MED value is preferred.";
+          }
+
+        }
+      }
+    }
+  }
+
+  uses bmp-server-top;
+}
+
+
