@@ -425,7 +425,7 @@ module open-traffic-generator-bmp-server {
       description
         "Discovered unicast IPv4 prefixes of a BGP peer";
 
-      list unicast-ipv4-prefix {
+      list bmp-unicast-ipv4-prefix {
         key "address prefix-length origin path-id";
 
         description
@@ -602,7 +602,7 @@ module open-traffic-generator-bmp-server {
       description
         "Discovered unicast IPv6 prefixes of a BGP peer";
 
-      list unicast-ipv6-prefix {
+      list bmp-unicast-ipv6-prefix {
         key "address prefix-length origin path-id";
 
         description
