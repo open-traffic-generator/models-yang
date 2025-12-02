@@ -48,7 +48,7 @@ module: open-traffic-generator-bmp-server
                        |  +--ro duplicate-updates?                   otg-types:counter32
                        +--ro pre-policy-in-rib
                        |  +--ro bmp-unicast-ipv4-prefixes
-                       |  |  +--ro unicast-ipv4-prefix* [address prefix-length origin path-id]
+                       |  |  +--ro bmp-unicast-ipv4-prefix* [address prefix-length origin path-id]
                        |  |     +--ro address          -> ../state/address
                        |  |     +--ro prefix-length    -> ../state/prefix-length
                        |  |     +--ro origin           -> ../state/origin
@@ -113,7 +113,7 @@ module: open-traffic-generator-bmp-server
                        |  |        +--ro local-preference?           uint32
                        |  |        +--ro multi-exit-discriminator?   uint32
                        |  +--ro bmp-unicast-ipv6-prefixes
-                       |     +--ro unicast-ipv6-prefix* [address prefix-length origin path-id]
+                       |     +--ro bmp-unicast-ipv6-prefix* [address prefix-length origin path-id]
                        |        +--ro address          -> ../state/address
                        |        +--ro prefix-length    -> ../state/prefix-length
                        |        +--ro origin           -> ../state/origin
@@ -179,7 +179,7 @@ module: open-traffic-generator-bmp-server
                        |           +--ro multi-exit-discriminator?   uint32
                        +--ro post-policy-in-rib
                           +--ro bmp-unicast-ipv4-prefixes
-                          |  +--ro unicast-ipv4-prefix* [address prefix-length origin path-id]
+                          |  +--ro bmp-unicast-ipv4-prefix* [address prefix-length origin path-id]
                           |     +--ro address          -> ../state/address
                           |     +--ro prefix-length    -> ../state/prefix-length
                           |     +--ro origin           -> ../state/origin
@@ -244,7 +244,7 @@ module: open-traffic-generator-bmp-server
                           |        +--ro local-preference?           uint32
                           |        +--ro multi-exit-discriminator?   uint32
                           +--ro bmp-unicast-ipv6-prefixes
-                             +--ro unicast-ipv6-prefix* [address prefix-length origin path-id]
+                             +--ro bmp-unicast-ipv6-prefix* [address prefix-length origin path-id]
                                 +--ro address          -> ../state/address
                                 +--ro prefix-length    -> ../state/prefix-length
                                 +--ro origin           -> ../state/origin
