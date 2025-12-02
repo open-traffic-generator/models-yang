@@ -421,7 +421,7 @@ module open-traffic-generator-bmp-server {
     description
       "Structural grouping for unicast ipv4 prefix information";
 
-    container unicast-ipv4-prefixes {
+    container bmp-unicast-ipv4-prefixes {
       description
         "Discovered unicast IPv4 prefixes of a BGP peer";
 
@@ -598,7 +598,7 @@ module open-traffic-generator-bmp-server {
     description
       "Structural grouping for unicast ipv6 prefix information";
 
-    container unicast-ipv6-prefixes {
+    container bmp-unicast-ipv6-prefixes {
       description
         "Discovered unicast IPv6 prefixes of a BGP peer";
 
