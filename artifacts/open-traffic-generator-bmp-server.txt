@@ -47,7 +47,7 @@ module: open-traffic-generator-bmp-server
                        |  +--ro withdraw-prefixes-received?          otg-types:counter32
                        |  +--ro duplicate-updates?                   otg-types:counter32
                        +--ro pre-policy-in-rib
-                       |  +--ro unicast-ipv4-prefixes
+                       |  +--ro bmp-unicast-ipv4-prefixes
                        |  |  +--ro unicast-ipv4-prefix* [address prefix-length origin path-id]
                        |  |     +--ro address          -> ../state/address
                        |  |     +--ro prefix-length    -> ../state/prefix-length
@@ -112,7 +112,7 @@ module: open-traffic-generator-bmp-server
                        |  |        |           +--ro bandwidth?         otg-types:ieeefloat32
                        |  |        +--ro local-preference?           uint32
                        |  |        +--ro multi-exit-discriminator?   uint32
-                       |  +--ro unicast-ipv6-prefixes
+                       |  +--ro bmp-unicast-ipv6-prefixes
                        |     +--ro unicast-ipv6-prefix* [address prefix-length origin path-id]
                        |        +--ro address          -> ../state/address
                        |        +--ro prefix-length    -> ../state/prefix-length
@@ -178,7 +178,7 @@ module: open-traffic-generator-bmp-server
                        |           +--ro local-preference?           uint32
                        |           +--ro multi-exit-discriminator?   uint32
                        +--ro post-policy-in-rib
-                          +--ro unicast-ipv4-prefixes
+                          +--ro bmp-unicast-ipv4-prefixes
                           |  +--ro unicast-ipv4-prefix* [address prefix-length origin path-id]
                           |     +--ro address          -> ../state/address
                           |     +--ro prefix-length    -> ../state/prefix-length
@@ -243,7 +243,7 @@ module: open-traffic-generator-bmp-server
                           |        |           +--ro bandwidth?         otg-types:ieeefloat32
                           |        +--ro local-preference?           uint32
                           |        +--ro multi-exit-discriminator?   uint32
-                          +--ro unicast-ipv6-prefixes
+                          +--ro bmp-unicast-ipv6-prefixes
                              +--ro unicast-ipv6-prefix* [address prefix-length origin path-id]
                                 +--ro address          -> ../state/address
                                 +--ro prefix-length    -> ../state/prefix-length
