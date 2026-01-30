@@ -32,7 +32,7 @@ module: open-traffic-generator-flow
                  |  +--ro tag-value
                  |     +--ro value-type?           enumeration
                  |     +--ro value-as-string?      string
-                 |     +--ro value-as-hex?         otg-types:hex-string
+                 |     +--ro value-as-hex?         otg-types:hex-string-prefixed
                  |     +--ro value-as-bool?        boolean
                  |     +--ro value-as-counter64?   otg-types:counter64
                  |     +--ro value-as-float32?     otg-types:ieeefloat32
