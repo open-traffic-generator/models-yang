@@ -71,6 +71,10 @@ module open-traffic-generator-bgp {
         uses bgp-ipv4-prefixes;
 
         uses bgp-ipv6-prefixes;
+
+        uses mpls-ipv4-prefixes;
+
+        uses mpls-ipv6-prefixes;
       }
     }
   }
@@ -944,6 +948,317 @@ module open-traffic-generator-bgp {
             type otg-types:ipv6-address;
             description
               "The IPv6 address of the egress interface.";
+          }
+
+          list as-path {
+            description
+              "Unkeyed list of AS PATH segments
+              This attribute identifies the autonomous systems through which routing information
+              carried in this UPDATE message has passed.";
+              uses bgp-as-path-attr-state;
+          }
+
+          list community {
+            description
+              "Unkeyed list of optional community attributes present in the UPDATE message.";
+              uses bgp-community-state;
+          }
+
+          list extended-community {
+            description
+              "Unkeyed list of optional extended community attributes present in the UPDATE message.";
+              uses bgp-extended-community-state;
+          }
+
+          leaf local-preference {
+            type uint32;
+            description
+              "The local preference is a well-known attribute and the value is used for route selection. The route with the highest local preference value is preferred.";
+          }
+
+          leaf multi-exit-discriminator {
+            type uint32;
+            description
+              "The multi exit discriminator (MED) is an optional non-transitive attribute and the value is used for route selection. The route with the lowest MED value is preferred.";
+          }
+
+        }
+      }
+    }
+  }
+
+  grouping mpls-ipv4-prefixes {
+    description
+      "Structural grouping for ipv4 MPLS unicast prefix information";
+
+    container ipv4-mpls-unicast-prefixes {
+      description
+        "Discovered MPLS unicast IPv4 prefixes of a BGP peer";
+
+      list ipv4-mpls-unicast-prefix {
+        key "address prefix-length origin path-id";
+
+        description
+          "A list of BGP unicast IPv4 prefixes.";
+
+        leaf address {
+          type leafref {
+            path "../state/address";
+          }
+          description
+            "Reference to IPv4 address, acting as part
+            of a key to the MPLS unicast-ipv4-prefix list.";
+        }
+
+        leaf prefix-length {
+          type leafref {
+            path "../state/prefix-length";
+          }
+          description
+            "Reference to a prefix-length, acting as part of a
+            key to the MPLS unicast-ipv4-prefix list.";
+        }
+
+        leaf origin {
+          type leafref {
+            path "../state/origin";
+          }
+          description
+            "Reference to an origin, acting as part of a
+            key to the MPLS unicast-ipv4-prefix list.";
+        }
+
+        leaf path-id {
+          type leafref {
+            path "../state/path-id";
+          }
+          description
+            "Reference to an path-id, acting as part of a
+            key to the MPLS unicast-ipv4-prefix list.";
+        }
+
+        container state {
+          description
+            "The container for MPLS unicast ipv4 prefix state.";
+
+          leaf address {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address.";
+          }
+
+          leaf prefix-length {
+            type uint32;
+            description
+              "The prefix length.";
+          }
+
+          leaf origin {
+            type enumeration {
+              enum IGP {
+                description
+                  "The origin is internal.";
+              }
+              enum EGP {
+                description
+                  "The origin is external.";
+              }
+              enum INCOMPLETE {
+                description
+                  "The origin is neither internal nor external.";
+              }
+            }
+            description
+              "The origin of the prefix.";
+          }
+
+          leaf path-id {
+            type uint32;
+            default 0;
+            description
+              "If the route is learned from a neighbor, the path-id
+              corresponds to the path-id for the route in the
+              corresponding adj-rib-in-post table.  If the route is
+              injected from another protocol, or the neighbor does not
+              support BGP add-paths, the path-id should be set
+              to zero, also the default value.";
+          }
+
+          leaf next-hop-ipv4-address {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address of the egress interface.";
+          }
+
+          leaf next-hop-ipv6-address {
+            type otg-types:ipv6-address;
+            description
+              "The IPv6 address of the egress interface.";
+          }
+
+         list labels {
+            description
+              "Unkeyed list of MPLS labels associated with the prefix.";
+            leaf label {
+              type otg-types:mpls-label;
+              description
+                "The MPLS label value.";
+            }
+          }
+
+          list as-path {
+            description
+              "Unkeyed list of AS PATH segments
+              This attribute identifies the autonomous systems through which routing information
+              carried in this UPDATE message has passed.";
+              uses bgp-as-path-attr-state;
+          }
+
+          list community {
+            description
+              "Unkeyed list of optional community attributes present in the UPDATE message.";
+              uses bgp-community-state;
+          }
+
+          list extended-community {
+            description
+              "Unkeyed list of optional extended community attributes present in the UPDATE message.";
+              uses bgp-extended-community-state;
+          }
+
+          leaf local-preference {
+            type uint32;
+            description
+              "The local preference is a well-known attribute and the value is used for route selection. The route with the highest local preference value is preferred.";
+          }
+
+          leaf multi-exit-discriminator {
+            type uint32;
+            description
+              "The multi exit discriminator (MED) is an optional non-transitive attribute and the value is used for route selection. The route with the lowest MED value is preferred.";
+          }
+
+        }
+      }
+    }
+  }
+
+  grouping mpls-ipv6-prefixes {
+    description
+      "Structural grouping for MPLS unicast ipv6 prefix information";
+
+    container ipv6-mpls-unicast-prefixes {
+      description
+        "Discovered MPLS unicast IPv6 prefixes of a BGP peer";
+
+      list ipv6-mpls-unicast-prefix {
+        key "address prefix-length origin path-id";
+
+        description
+          "A list of BGP unicast IPv6 prefixes.";
+
+        leaf address {
+          type leafref {
+            path "../state/address";
+          }
+          description
+            "Reference to a IPv6 address, acting as part
+            of a key to the MPLS unicast-ipv6-prefix list.";
+        }
+
+        leaf prefix-length {
+          type leafref {
+            path "../state/prefix-length";
+          }
+          description
+            "Reference to a prefix-length, acting as part of a
+            key to the MPLS unicast-ipv6-prefix list.";
+        }
+
+        leaf origin {
+          type leafref {
+            path "../state/origin";
+          }
+          description
+            "Reference to an origin, acting as part of a
+            key to the MPLS unicast-ipv6-prefix list.";
+        }
+
+        leaf path-id {
+          type leafref {
+            path "../state/path-id";
+          }
+          description
+            "Reference to an path-id, acting as part of a
+            key to the MPLS unicast-ipv6-prefix list.";
+        }
+
+        container state {
+          description
+            "The container for MPLS unicast IPv6 prefix state.";
+
+          leaf address {
+            type otg-types:ipv6-address;
+            description
+              "The IPv6 address.";
+          }
+
+          leaf prefix-length {
+            type uint32;
+            description
+              "The prefix length.";
+          }
+
+          leaf origin {
+            type enumeration {
+              enum IGP {
+                description
+                  "The origin is internal.";
+              }
+              enum EGP {
+                description
+                  "The origin is external.";
+              }
+              enum INCOMPLETE {
+                description
+                  "The origin is neither internal nor external.";
+              }
+            }
+            description
+              "The origin of the prefix.";
+          }
+
+          leaf path-id {
+            type uint32;
+            default 0;
+            description
+              "If the route is learned from a neighbor, the path-id
+              corresponds to the path-id for the route in the
+              corresponding adj-rib-in-post table.  If the route is
+              injected from another protocol, or the neighbor does not
+              support BGP add-paths, the path-id should be set
+              to zero, also the default value.";
+          }
+
+          leaf next-hop-ipv4-address {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 address of the egress interface.";
+          }
+
+          leaf next-hop-ipv6-address {
+            type otg-types:ipv6-address;
+            description
+              "The IPv6 address of the egress interface.";
+          }
+          list labels {
+            description
+              "Unkeyed list of MPLS labels associated with the prefix.";
+            leaf label {
+              type otg-types:mpls-label;
+              description
+                "The MPLS label value.";
+            }
           }
 
           list as-path {
