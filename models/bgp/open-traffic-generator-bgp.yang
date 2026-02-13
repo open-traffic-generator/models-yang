@@ -987,7 +987,7 @@ module open-traffic-generator-bgp {
     }
   }
 
-   grouping mpls-ipv4-prefixes {
+  grouping mpls-ipv4-prefixes {
     description
       "Structural grouping for ipv4 MPLS unicast prefix information";
 
@@ -1006,8 +1006,8 @@ module open-traffic-generator-bgp {
             path "../state/address";
           }
           description
-            "Reference to a unicast IPv4 address, acting as part
-            of a key to the unicast-ipv4-prefix list.";
+            "Reference to IPv4 address, acting as part
+            of a key to the MPLS unicast-ipv4-prefix list.";
         }
 
         leaf prefix-length {
@@ -1016,7 +1016,7 @@ module open-traffic-generator-bgp {
           }
           description
             "Reference to a prefix-length, acting as part of a
-            key to the unicast-ipv4-prefix list.";
+            key to the MPLS unicast-ipv4-prefix list.";
         }
 
         leaf origin {
@@ -1025,7 +1025,7 @@ module open-traffic-generator-bgp {
           }
           description
             "Reference to an origin, acting as part of a
-            key to the unicast-ipv4-prefix list.";
+            key to the MPLS unicast-ipv4-prefix list.";
         }
 
         leaf path-id {
@@ -1034,12 +1034,12 @@ module open-traffic-generator-bgp {
           }
           description
             "Reference to an path-id, acting as part of a
-            key to the unicast-ipv4-prefix list.";
+            key to the MPLS unicast-ipv4-prefix list.";
         }
 
         container state {
           description
-            "The container for unicast ipv4 prefix state.";
+            "The container for MPLS unicast ipv4 prefix state.";
 
           leaf address {
             type otg-types:ipv4-address;
@@ -1143,7 +1143,7 @@ module open-traffic-generator-bgp {
     }
   }
 
-   grouping mpls-ipv6-prefixes {
+  grouping mpls-ipv6-prefixes {
     description
       "Structural grouping for MPLS unicast ipv6 prefix information";
 
@@ -1162,8 +1162,8 @@ module open-traffic-generator-bgp {
             path "../state/address";
           }
           description
-            "Reference to a unicast IPv6 address, acting as part
-            of a key to the unicast-ipv6-prefix list.";
+            "Reference to a IPv6 address, acting as part
+            of a key to the MPLS unicast-ipv6-prefix list.";
         }
 
         leaf prefix-length {
@@ -1172,7 +1172,7 @@ module open-traffic-generator-bgp {
           }
           description
             "Reference to a prefix-length, acting as part of a
-            key to the unicast-ipv6-prefix list.";
+            key to the MPLS unicast-ipv6-prefix list.";
         }
 
         leaf origin {
@@ -1181,7 +1181,7 @@ module open-traffic-generator-bgp {
           }
           description
             "Reference to an origin, acting as part of a
-            key to the unicast-ipv6-prefix list.";
+            key to the MPLS unicast-ipv6-prefix list.";
         }
 
         leaf path-id {
@@ -1190,12 +1190,12 @@ module open-traffic-generator-bgp {
           }
           description
             "Reference to an path-id, acting as part of a
-            key to the unicast-ipv6-prefix list.";
+            key to the MPLS unicast-ipv6-prefix list.";
         }
 
         container state {
           description
-            "The container for unicast IPv6 prefix state.";
+            "The container for MPLS unicast IPv6 prefix state.";
 
           leaf address {
             type otg-types:ipv6-address;
