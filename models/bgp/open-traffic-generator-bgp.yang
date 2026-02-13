@@ -465,6 +465,11 @@ module open-traffic-generator-bgp {
           description
             "Transitive Two-Octet AS-Specific Extended Community is route_origin_subtype";
         }
+        enum LINK_BANDWIDTH_SUBTYPE {
+          description
+            "Transitive Two-Octet AS-Specific Extended Community is link_bandwidth_subtype";
+        }
+
       }
       description
         "The type of Transitive Two-Octet AS-Specific Extended Community";
@@ -509,6 +514,25 @@ module open-traffic-generator-bgp {
             "The Local Administrator sub-field contains a number from a numbering space
             that is administered by the organization to which the Autonomous System number
             carried in the Global Administrator sub-field has been assigned by an appropriate authority.";
+      }
+    }
+
+    container link_bandwidth_subtype {
+      config false;
+      description
+        "The Link Bandwidth Extended Community attribute is defined in draft-ietf-idr-link-bandwidth. (https://datatracker.ietf.org/doc/draft-ietf-idr-link-bandwidth) It is sent with sub-type as 0x04.";
+
+      leaf global_2byte_as {
+          type uint16;
+          description
+            "The value of the Global Administrator subfield should represent the Autonomous System
+            of the router that attaches the Link Bandwidth Community.";
+      }
+
+      leaf bandwidth {
+          type otg-types:ieeefloat32;
+          description
+            "Bandwidth of the link in bytes per second. ( 1 Kbps is 1000 bytes per second and 1 Mbps is 1000 Kbps per second )";
       }
     }
   }
@@ -716,7 +740,7 @@ module open-traffic-generator-bgp {
     container link_bandwidth_subtype {
       config false;
       description
-        "TBD: xxx";
+        "The Link Bandwidth Extended Community attribute is defined in draft-ietf-idr-link-bandwidth. (https://datatracker.ietf.org/doc/draft-ietf-idr-link-bandwidth) It is sent with sub-type as 0x04.";
 
       leaf global_2byte_as {
           type uint16;

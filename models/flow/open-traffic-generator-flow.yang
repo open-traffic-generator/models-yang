@@ -322,9 +322,9 @@ module open-traffic-generator-flow {
               }
 
               leaf value-as-hex {
-                type otg-types:hex-string;
+                type otg-types:hex-string-prefixed;
                 description
-                  "Contains Tag Value in Hex String format.";
+                  "Contains Tag Value in Hexadecimal format which is prefixed with 0x or 0X.";
               }
 
               leaf value-as-bool {

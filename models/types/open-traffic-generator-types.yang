@@ -56,6 +56,14 @@ module open-traffic-generator-types {
       "A string consisting of a hexadecimal characters.";
   }
 
+  typedef hex-string-prefixed {
+    type string {
+      pattern '0[xX][0-9a-fA-F]+';
+    }
+    description
+      "A hexadecimal string prefixed with 0x or 0X.";
+  }
+
   typedef counter32 {
     type uint32;
     description
