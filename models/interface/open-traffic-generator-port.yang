@@ -118,6 +118,12 @@ module open-traffic-generator-port {
         "Counters of an OTG port.";
       uses port-counters;
     }
+
+    container data-integrity {
+      description
+        "The container for data integrity metrics. The container will be empty if options.port_options.data_integrity has not been enabled during set_config.";
+      uses port-data-integrity;
+    }
   }
 
   grouping port-counters {
@@ -146,6 +152,23 @@ module open-traffic-generator-port {
         type otg-types:counter64;
         description
           "The total number of packets received on the port.";
+      }
+  }
+
+  grouping port-data-integrity {
+    description
+      "The container for data integrity metrics. The container will be empty if options.port_options.data_integrity has not been enabled during set_config.";
+
+      leaf in-total-frames {
+        type otg-types:counter64;
+        description
+          "The total number of data integrity enabled frames received.";
+      }
+
+      leaf in-error-frames {
+        type otg-types:counter64;
+        description
+          "The total number of data integrity enabled frames received with payload modified.";
       }
   }
 
