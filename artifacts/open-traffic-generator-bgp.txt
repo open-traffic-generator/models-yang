@@ -50,8 +50,11 @@ module: open-traffic-generator-bgp
         |        |     |  |  +--ro global_2byte_as?     uint16
         |        |     |  |  +--ro local_4byte_admin?   uint32
         |        |     |  +--ro route_origin_subtype
-        |        |     |     +--ro global_2byte_as?     uint16
-        |        |     |     +--ro local_4byte_admin?   uint32
+        |        |     |  |  +--ro global_2byte_as?     uint16
+        |        |     |  |  +--ro local_4byte_admin?   uint32
+        |        |     |  +--ro link_bandwidth_subtype
+        |        |     |     +--ro global_2byte_as?   uint16
+        |        |     |     +--ro bandwidth?         otg-types:ieeefloat32
         |        |     +--ro transitive_ipv4_address_type
         |        |     |  +--ro transitive_ipv4_address_type?   enumeration
         |        |     |  +--ro route_target_subtype
@@ -113,8 +116,11 @@ module: open-traffic-generator-bgp
         |        |     |  |  +--ro global_2byte_as?     uint16
         |        |     |  |  +--ro local_4byte_admin?   uint32
         |        |     |  +--ro route_origin_subtype
-        |        |     |     +--ro global_2byte_as?     uint16
-        |        |     |     +--ro local_4byte_admin?   uint32
+        |        |     |  |  +--ro global_2byte_as?     uint16
+        |        |     |  |  +--ro local_4byte_admin?   uint32
+        |        |     |  +--ro link_bandwidth_subtype
+        |        |     |     +--ro global_2byte_as?   uint16
+        |        |     |     +--ro bandwidth?         otg-types:ieeefloat32
         |        |     +--ro transitive_ipv4_address_type
         |        |     |  +--ro transitive_ipv4_address_type?   enumeration
         |        |     |  +--ro route_target_subtype
@@ -178,8 +184,11 @@ module: open-traffic-generator-bgp
         |        |     |  |  +--ro global_2byte_as?     uint16
         |        |     |  |  +--ro local_4byte_admin?   uint32
         |        |     |  +--ro route_origin_subtype
-        |        |     |     +--ro global_2byte_as?     uint16
-        |        |     |     +--ro local_4byte_admin?   uint32
+        |        |     |  |  +--ro global_2byte_as?     uint16
+        |        |     |  |  +--ro local_4byte_admin?   uint32
+        |        |     |  +--ro link_bandwidth_subtype
+        |        |     |     +--ro global_2byte_as?   uint16
+        |        |     |     +--ro bandwidth?         otg-types:ieeefloat32
         |        |     +--ro transitive_ipv4_address_type
         |        |     |  +--ro transitive_ipv4_address_type?   enumeration
         |        |     |  +--ro route_target_subtype
@@ -243,8 +252,11 @@ module: open-traffic-generator-bgp
                  |     |  |  +--ro global_2byte_as?     uint16
                  |     |  |  +--ro local_4byte_admin?   uint32
                  |     |  +--ro route_origin_subtype
-                 |     |     +--ro global_2byte_as?     uint16
-                 |     |     +--ro local_4byte_admin?   uint32
+                 |     |  |  +--ro global_2byte_as?     uint16
+                 |     |  |  +--ro local_4byte_admin?   uint32
+                 |     |  +--ro link_bandwidth_subtype
+                 |     |     +--ro global_2byte_as?   uint16
+                 |     |     +--ro bandwidth?         otg-types:ieeefloat32
                  |     +--ro transitive_ipv4_address_type
                  |     |  +--ro transitive_ipv4_address_type?   enumeration
                  |     |  +--ro route_target_subtype
