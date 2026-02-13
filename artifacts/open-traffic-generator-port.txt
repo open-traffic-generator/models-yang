@@ -14,5 +14,5 @@ module: open-traffic-generator-port
            |  +--ro out-frames?   otg-types:counter64
            |  +--ro in-frames?    otg-types:counter64
            +--ro data-integrity
-              +--ro in-valid-frames?   otg-types:counter64
+              +--ro in-total-frames?   otg-types:counter64
               +--ro in-error-frames?   otg-types:counter64
