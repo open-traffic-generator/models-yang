@@ -179,7 +179,7 @@ module open-traffic-generator-isis {
             "State parameters of Link State PDU.";
 
           leaf lsp-id {
-            type otg-types:hex-string;
+            type otg-types:lsp-id;
             mandatory true;
             description
               "LSP ID of the LSP, e.g. '640000000001-00-00'.";

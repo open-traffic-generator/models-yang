@@ -64,6 +64,15 @@ module open-traffic-generator-types {
       "A hexadecimal string prefixed with 0x or 0X.";
   }
 
+  typedef lsp-id {
+    type string {
+      pattern '[0-9A-Fa-f]{12}-[0-9A-Fa-f]{2}-[0-9A-Fa-f]{2}';
+    }
+    description
+      "This type defines ISIS LSP ID. ISIS LSP ID type should be in
+      the form of <12 hex>-<2 hex>-<2 hex>";
+  }
+
   typedef counter32 {
     type uint32;
     description
