@@ -43,7 +43,7 @@ module: open-traffic-generator-isis
            |        +--ro lsp-id      -> ../state/lsp-id
            |        +--ro pdu-type    -> ../state/pdu-type
            |        +--ro state
-           |        |  +--ro lsp-id                otg-types:hex-string
+           |        |  +--ro lsp-id                otg-types:lsp-id
            |        |  +--ro pdu-type              enumeration
            |        |  +--ro remaining-lifetime    uint16
            |        |  +--ro sequence-number?      uint32
