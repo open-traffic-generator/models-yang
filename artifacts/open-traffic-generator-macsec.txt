@@ -1,0 +1,26 @@
+module: open-traffic-generator-macsec
+  +--rw macsecs
+     +--ro macsec* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?            string
+           +--ro session-state?   enumeration
+           +--ro counters
+              +--ro flaps?                           otg-types:counter64
+              +--ro protected-packets-sent?          otg-types:counter64
+              +--ro encrypted-packets-sent?          otg-types:counter64
+              +--ro ok-packets-received?             otg-types:counter64
+              +--ro bad-packets-received?            otg-types:counter64
+              +--ro bad-tag-packets-received?        otg-types:counter64
+              +--ro late-packets-received?           otg-types:counter64
+              +--ro no-sci-packets-received?         otg-types:counter64
+              +--ro not-using-sa-packets-received?   otg-types:counter64
+              +--ro not-valid-packets-received?      otg-types:counter64
+              +--ro unknown-sci-packets-received?    otg-types:counter64
+              +--ro unused-sa-packets-received?      otg-types:counter64
+              +--ro invalid-packets-received?        otg-types:counter64
+              +--ro untagged-packets-received?       otg-types:counter64
+              +--ro protected-octets-sent?           otg-types:counter64
+              +--ro encrypted-octets-sent?           otg-types:counter64
+              +--ro validated-octets-received?       otg-types:counter64
+              +--ro decrypted-octets-received?       otg-types:counter64

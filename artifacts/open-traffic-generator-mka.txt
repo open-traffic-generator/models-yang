@@ -1,0 +1,17 @@
+module: open-traffic-generator-mka
+  +--rw mkas
+     +--ro mka* [name]
+        +--ro name     -> ../state/name
+        +--ro state
+           +--ro name?            string
+           +--ro session-state?   enumeration
+           +--ro counters
+              +--ro flaps?                      otg-types:counter64
+              +--ro mkpdu-sent?                 otg-types:counter64
+              +--ro mkpdu-received?             otg-types:counter64
+              +--ro live-peers?                 otg-types:counter64
+              +--ro potential-peers?            otg-types:counter64
+              +--ro latest-key-tx-peers?        otg-types:counter64
+              +--ro latest-key-rx-peers?        otg-types:counter64
+              +--ro malformed-mkpdu-received?   otg-types:counter64
+              +--ro icv-mismatch-received?      otg-types:counter64
