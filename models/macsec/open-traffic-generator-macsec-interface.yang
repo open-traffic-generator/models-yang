@@ -1,8 +1,8 @@
-module open-traffic-generator-macsec-interface {
+module open-traffic-generator-macsec {
   yang-version "1";
 
-  namespace "http://github.com/open-traffic-generator/models/yang/models/macsec-interface";
-  prefix "otg-macsec-interface";
+  namespace "http://github.com/open-traffic-generator/models/yang/models/macsec";
+  prefix "otg-macsec";
 
   import open-traffic-generator-types {
     prefix "otg-types";
@@ -25,16 +25,32 @@ module open-traffic-generator-macsec-interface {
     reference "0.1.0";
   }
 
-  grouping macsec-interface-top {
+  grouping macsec-top {
     description
-      "Top-level structural grouping for macsec session telemetry
+      "Top-level structural grouping for MACsec telemetry
       entries.";
 
-    container macsec-interfaces {
-      description
-        "macsec session telemetry collected by the ATE device.";
+    container macsec {
+        config false;
 
-      list macsec-interface {
+        description
+        "The MACsec";
+
+        uses macsec-interfaces-top;
+    }
+
+  }
+
+  grouping macsec-interfaces-top {
+    description
+      "Top-level structural grouping for MACsec interface telemetry
+      entries.";
+
+    container interfaces {
+      description
+        "Enclosing container for the MACsec interfaces list";
+
+      list interface {
         key "name";
 
         config false;
@@ -175,7 +191,7 @@ module open-traffic-generator-macsec-interface {
     }    
   }
 
-  uses macsec-interface-top;
+  uses macsec-top;
 }
 
 

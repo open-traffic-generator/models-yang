@@ -30,11 +30,11 @@ module open-traffic-generator-mka {
       "Top-level structural grouping for mka session telemetry
       entries.";
 
-    container mkas {
+    container peers {
       description
         "mka session telemetry collected by the ATE device.";
 
-      list mka {
+      list peer {
         key "name";
 
         config false;
@@ -108,13 +108,13 @@ module open-traffic-generator-mka {
         "The total number of times the session went from Up to Down state";
     }
 
-    leaf mkpdu-sent {
+    leaf out-mkpdu {
       type otg-types:counter64;
       description
         "The total number of MKA protocol data unit(MKPDU) frames Tx.";
     }
 
-    leaf mkpdu-received {
+    leaf in-mkpdu {
       type otg-types:counter64;
       description
         "The total number of MKA protocol data unit(MKPDU) frames Rx.";
@@ -132,25 +132,13 @@ module open-traffic-generator-mka {
         "The total number of MKA potential peers.";
     }
 
-    leaf latest-key-tx-peers {
-      type otg-types:counter64;
-      description
-        "The total number of MKA latest key Tx peers.";
-    }
-
-    leaf latest-key-rx-peers {
-      type otg-types:counter64;
-      description
-        "The total number of MKA latest key Rx peers.";
-    }
-
-    leaf malformed-mkpdu-received {
+    leaf in-mkpdu-malformed {
       type otg-types:counter64;
       description
         "The total number of malformed MKA Protocol Data Unit(MKPDU) frames Rx.";
     }
 
-    leaf icv-mismatch-received {
+    leaf in-mkpdu-icv-verification-errors {
       type otg-types:counter64;
       description
         "The total number of MKA Protocol Data Unit(MKPDU) frames with ICV mismatch Rx.";
