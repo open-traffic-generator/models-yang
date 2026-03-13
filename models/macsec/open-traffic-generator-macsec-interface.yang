@@ -1,0 +1,181 @@
+module open-traffic-generator-macsec-interface {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/macsec-interface";
+  prefix "otg-macsec-interface";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to macsec sessions that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2025-10-27 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  grouping macsec-interface-top {
+    description
+      "Top-level structural grouping for macsec session telemetry
+      entries.";
+
+    container macsec-interfaces {
+      description
+        "macsec session telemetry collected by the ATE device.";
+
+      list macsec-interface {
+        key "name";
+
+        config false;
+
+        description
+          "Each macsec is identified by an arbitrary string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the macsec's name, acting as a key of the
+            macsec list.";
+        }
+
+        container state {
+          config false;
+
+          description
+            "Operational state of an individual macsec.";
+
+          uses macsec-interface-state;
+
+          container counters {
+            description
+              "Counters of an individual macsec.";
+
+            uses macsec-interface-counters;
+          }
+
+        }
+      }
+    }
+  }
+
+  grouping macsec-interface-state {
+    description
+      "Operational state of the individual macsec.";
+
+    leaf name {
+      type string;
+      description
+        "The name of a configured MACsec secY";
+    }
+
+    leaf session-state {
+      type enumeration {
+          enum UP {
+            description
+              "The session state Up refers to an Established state.";
+          }
+          enum DOWN {
+            description
+              "The session state Down refers to any other state.";
+          }
+        }
+        description
+          "Operational state of the macsec";
+    }
+  }
+
+  grouping macsec-interface-counters {
+    description
+      "Counters of an individual macsec session.";
+
+    leaf flaps {
+      type otg-types:counter64;
+      description
+        "The total number of times the session went from Up to Down state";
+    }
+
+    leaf tx-auth-only-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of protected packets transmitted.";
+    }
+
+    leaf tx-encrypted-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of encrypted packets transmitted.";
+    }
+
+    leaf rx-valid-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of valid packets received.";
+    }
+
+    leaf rx-bad-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of bad packets received.";
+    }
+
+    leaf rx-badtag-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of packets discarded due to bad tag/ICV.";
+    }
+
+    leaf rx-late-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of packets discarded out of window.";
+    }
+
+    leaf rx-nosci-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of packets discarded due to unknown SCI.";
+    }
+
+    leaf rx-unknownsci-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of packets received with unknown SCI.";
+    }
+
+    leaf rx-unusedsa-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of packets received with unused SA.";
+    }
+
+    leaf rx-invalid-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of packets received with invalid ICV.";
+    }
+
+    leaf rx-untagged-pkts {
+      type otg-types:counter64;
+      description
+        "The total number of non-MACsec packets received.";
+    }    
+  }
+
+  uses macsec-top;
+}
+
+
