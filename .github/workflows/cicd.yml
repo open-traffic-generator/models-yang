@@ -61,7 +61,7 @@ jobs:
           git add -f artifacts/open-traffic-generator-ospfv2.txt
           git add -f artifacts/open-traffic-generator-ospfv3.txt
           git add -f artifacts/open-traffic-generator-bmp-server.txt
-          git add -f artifacts/open-traffic-generator-macsec.txt
+          git add -f artifacts/open-traffic-generator-macsec-interface.txt
           git add -f artifacts/open-traffic-generator-mka.txt
           if git status --porcelain | grep .
             then
