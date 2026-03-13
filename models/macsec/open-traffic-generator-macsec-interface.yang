@@ -175,7 +175,7 @@ module open-traffic-generator-macsec-interface {
     }    
   }
 
-  uses macsec-top;
+  uses macsec-interface-top;
 }
 
 
