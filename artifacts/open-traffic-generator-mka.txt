@@ -1,7 +1,7 @@
 module: open-traffic-generator-mka
   +--ro mka
-     +--ro interfaces
-        +--ro interface* [name]
+     +--ro peers
+        +--ro peer* [name]
            +--ro name     -> ../state/name
            +--ro state
               +--ro name?            string
