@@ -36,27 +36,27 @@ module open-traffic-generator-mka {
         description
         "The MKA";
 
-        uses mka-interfaces-top;
+        uses mka-peers-top;
     }
 
   }
 
-  grouping mka-interfaces-top {
+  grouping mka-peers-top {
     description
-      "Top-level structural grouping for MKA interfaces telemetry
+      "Top-level structural grouping for MKA peers telemetry
       entries.";
 
-    container interfaces {
+    container peers {
       description
-        "MKA interfaces telemetry collected by the ATE device.";
+        "MKA peers telemetry collected by the ATE device.";
 
-      list interface {
+      list peer {
         key "name";
 
         config false;
 
         description
-          "Each MKA interface is identified by an arbitrary string
+          "Each MKA peer is identified by an arbitrary string
           identifier.";
 
         leaf name {
