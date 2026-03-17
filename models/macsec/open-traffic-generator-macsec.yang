@@ -145,7 +145,7 @@ module open-traffic-generator-macsec {
     leaf rx-bad-pkts {
       type otg-types:counter64;
       description
-        "The total number of bad packets received.";
+        "The total number of received bad packets that failed atleast one validation check. Either ICV could not be verified or the packet is late.";
     }
 
     leaf rx-badtag-pkts {
@@ -163,25 +163,25 @@ module open-traffic-generator-macsec {
     leaf rx-nosci-pkts {
       type otg-types:counter64;
       description
-        "The total number of packets discarded due to unknown SCI.";
+        "The total number of packets discarded due to unknown SCI. MACsec validate frames mode is strict.";
     }
 
     leaf rx-unknownsci-pkts {
       type otg-types:counter64;
       description
-        "The total number of packets received with unknown SCI.";
+        "The total number of packets received with unknown SCI. MACsec validate frames mode is not strict.";
     }
 
     leaf rx-unusedsa-pkts {
       type otg-types:counter64;
       description
-        "The total number of packets received with unused SA.";
+        "The total number of packets received with unused SA. MACsec validate frames mode is not strict.";
     }
 
     leaf rx-invalid-pkts {
       type otg-types:counter64;
       description
-        "The total number of packets received with invalid ICV.";
+        "The total number of packets received with invalid ICV. MACsec validate frames mode is check.";
     }
 
     leaf rx-untagged-pkts {

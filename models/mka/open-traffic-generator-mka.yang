@@ -139,13 +139,13 @@ module open-traffic-generator-mka {
     leaf live-peers {
       type otg-types:counter64;
       description
-        "The total number of MKA live peers.";
+        "The total number of MKA live peers. A live peer is a network device (peer) that has actively exchanged and confirmed recent key agreement messages (MKPDUs) with another device.";
     }
 
     leaf potential-peers {
       type otg-types:counter64;
       description
-        "The total number of MKA potential peers.";
+        "The total number of MKA potential peers. A potential peer is a candidate neighbor sending MKA messages but not yet fully authenticated.";
     }
 
     leaf in-mkpdu-malformed {
