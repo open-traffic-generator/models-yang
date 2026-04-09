@@ -103,6 +103,16 @@ module open-traffic-generator-port {
         bits per second.";
     }
 
+    leaf speed {
+      type otg-types:counter64;
+      description
+        "The speed in KBps the frames are transmitted. 
+        The calculated speed for a negotiated line speed of 
+        (i) 100 Gbps is 100 * 1024 * 1024 / 8 = 13107200 KBps, 
+        (ii) 1.6 Tbps (high performance devices) is 1.6 * 1024 * 1024 * 1024 / 8 = 214748365 KBps, 
+        (iii) 10 Mbps (legacy devices) is 10 * 1024 / 8 = 1280 KBps";
+    }
+
     leaf last-change {
       type otg-types:timeticks64;
       description
