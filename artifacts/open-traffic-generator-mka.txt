@@ -1,0 +1,16 @@
+module: open-traffic-generator-mka
+  +--ro mka
+     +--ro peers
+        +--ro peer* [name]
+           +--ro name     -> ../state/name
+           +--ro state
+              +--ro name?            string
+              +--ro session-state?   enumeration
+              +--ro counters
+                 +--ro flaps?                              otg-types:counter64
+                 +--ro out-mkpdu?                          otg-types:counter64
+                 +--ro in-mkpdu?                           otg-types:counter64
+                 +--ro live-peers?                         otg-types:counter64
+                 +--ro potential-peers?                    otg-types:counter64
+                 +--ro in-mkpdu-malformed?                 otg-types:counter64
+                 +--ro in-mkpdu-icv-verification-errors?   otg-types:counter64

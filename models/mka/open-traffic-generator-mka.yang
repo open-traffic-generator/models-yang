@@ -1,0 +1,168 @@
+module open-traffic-generator-mka {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/mka";
+  prefix "otg-mka";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to mka sessions that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2025-10-27 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  grouping mka-top {
+    description
+      "Top-level structural grouping for MKA telemetry
+      entries.";
+
+    container mka {
+        config false;
+
+        description
+        "The MKA";
+
+        uses mka-peers-top;
+    }
+
+  }
+
+  grouping mka-peers-top {
+    description
+      "Top-level structural grouping for MKA peers telemetry
+      entries.";
+
+    container peers {
+      description
+        "MKA peers telemetry collected by the ATE device.";
+
+      list peer {
+        key "name";
+
+        config false;
+
+        description
+          "Each MKA peer is identified by an arbitrary string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the mka's name, acting as a key of the
+            mka list.";
+        }
+
+        container state {
+          config false;
+
+          description
+            "Operational state of an individual mka.";
+
+          uses mka-state;
+
+          container counters {
+            description
+              "Counters of an individual mka.";
+
+            uses mka-counters;
+          }
+
+        }
+      }
+    }
+  }
+
+  grouping mka-state {
+    description
+      "Operational state of the individual mka.";
+
+    leaf name {
+      type string;
+      description
+        "The name of a configured MKA KaY.";
+    }
+
+    leaf session-state {
+      type enumeration {
+          enum UP {
+            description
+              "The session state Up refers to an Established state.";
+          }
+          enum DOWN {
+            description
+              "The session state Down refers to any other state.";
+          }
+        }
+        description
+          "Operational state of the mka";
+    }
+  }
+
+  grouping mka-counters {
+    description
+      "Counters of an individual mka session.";
+
+    leaf flaps {
+      type otg-types:counter64;
+      description
+        "The total number of times the session went from Up to Down state";
+    }
+
+    leaf out-mkpdu {
+      type otg-types:counter64;
+      description
+        "The total number of MKA protocol data unit(MKPDU) frames Tx.";
+    }
+
+    leaf in-mkpdu {
+      type otg-types:counter64;
+      description
+        "The total number of MKA protocol data unit(MKPDU) frames Rx.";
+    }
+
+    leaf live-peers {
+      type otg-types:counter64;
+      description
+        "The total number of MKA live peers. A live peer is a network device (peer) that has actively exchanged and confirmed recent key agreement messages (MKPDUs) with another device.";
+    }
+
+    leaf potential-peers {
+      type otg-types:counter64;
+      description
+        "The total number of MKA potential peers. A potential peer is a candidate neighbor sending MKA messages but not yet fully authenticated.";
+    }
+
+    leaf in-mkpdu-malformed {
+      type otg-types:counter64;
+      description
+        "The total number of malformed MKA Protocol Data Unit(MKPDU) frames Rx.";
+    }
+
+    leaf in-mkpdu-icv-verification-errors {
+      type otg-types:counter64;
+      description
+        "The total number of MKA Protocol Data Unit(MKPDU) frames with ICV mismatch Rx.";
+    }
+
+  }
+
+  uses mka-top;
+}
+
+
