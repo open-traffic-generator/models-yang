@@ -303,8 +303,7 @@ module: open-traffic-generator-bgp
         |        +--ro path-id?                    uint32
         |        +--ro next-hop-ipv4-address?      otg-types:ipv4-address
         |        +--ro next-hop-ipv6-address?      otg-types:ipv6-address
-        |        +--ro labels* []
-        |        |  +--ro label?   otg-types:mpls-label
+        |        +--ro label?                      otg-types:mpls-label
         |        +--ro as-path* []
         |        |  +--ro segment-type?   enumeration
         |        |  +--ro as_numbers*     uint32
@@ -373,8 +372,7 @@ module: open-traffic-generator-bgp
                  +--ro path-id?                    uint32
                  +--ro next-hop-ipv4-address?      otg-types:ipv4-address
                  +--ro next-hop-ipv6-address?      otg-types:ipv6-address
-                 +--ro labels* []
-                 |  +--ro label?   otg-types:mpls-label
+                 +--ro label?                      otg-types:mpls-label
                  +--ro as-path* []
                  |  +--ro segment-type?   enumeration
                  |  +--ro as_numbers*     uint32
