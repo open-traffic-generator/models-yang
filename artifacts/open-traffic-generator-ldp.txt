@@ -1,0 +1,40 @@
+module: open-traffic-generator-ldp
+  +--rw ldp-routers
+     +--ro ldp-router* [name]
+        +--ro name             -> ../state/name
+        +--ro state
+        |  +--ro name?       string
+        |  +--ro counters
+        |     +--ro sessions-up?                otg-types:counter64
+        |     +--ro sessions-flap?              otg-types:counter64
+        |     +--ro sessions-non-existent?      otg-types:counter64
+        |     +--ro sessions-initialized?       otg-types:counter64
+        |     +--ro sessions-open-received?     otg-types:counter64
+        |     +--ro sessions-open-sent?         otg-types:counter64
+        |     +--ro sessions-operational?       otg-types:counter64
+        |     +--ro out-notifications?          otg-types:counter64
+        |     +--ro in-notifications?           otg-types:counter64
+        |     +--ro out-label-mappings?         otg-types:counter64
+        |     +--ro in-label-mappings?          otg-types:counter64
+        |     +--ro out-label-requests?         otg-types:counter64
+        |     +--ro in-label-requests?          otg-types:counter64
+        |     +--ro out-label-withdraws?        otg-types:counter64
+        |     +--ro in-label-withdraws?         otg-types:counter64
+        |     +--ro out-label-releases?         otg-types:counter64
+        |     +--ro in-label-releases?          otg-types:counter64
+        |     +--ro out-label-abort-requests?   otg-types:counter64
+        |     +--ro in-label-abort-requests?    otg-types:counter64
+        |     +--ro ingress-lsps-up?            otg-types:counter64
+        |     +--ro egress-lsps-up?             otg-types:counter64
+        +--ro ipv4-bindings
+           +--ro ipv4-binding* [prefix prefix-length peer-lsr-id peer-label-space-id]
+              +--ro prefix                 -> ../state/prefix
+              +--ro prefix-length          -> ../state/prefix-length
+              +--ro peer-lsr-id            -> ../state/peer-lsr-id
+              +--ro peer-label-space-id    -> ../state/peer-label-space-id
+              +--ro state
+                 +--ro prefix?                otg-types:ipv4-address
+                 +--ro prefix-length?         uint32
+                 +--ro label?                 otg-types:mpls-label
+                 +--ro peer-lsr-id?           otg-types:ipv4-address
+                 +--ro peer-label-space-id?   uint16

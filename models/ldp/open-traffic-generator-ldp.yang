@@ -1,0 +1,365 @@
+module open-traffic-generator-ldp {
+  yang-version "1";
+
+  namespace "http://github.com/open-traffic-generator/models/yang/models/ldp";
+  prefix "otg-ldp";
+
+  import open-traffic-generator-types {
+    prefix "otg-types";
+  }
+
+  organization
+    "OpenTrafficGenerator working group";
+
+  contact
+    "OpenTrafficGenerator working group
+     opentrafficgenerator@googlegroups.com";
+
+  description
+    "This module defines telemetry that relates to LDP routers that
+    are controlled by an open traffic generator (OTG) whose definition
+    is outside of the context of this module.";
+
+  revision 2026-10-11 {
+    description "Initial revision.";
+    reference "0.1.0";
+  }
+
+  // grouping statements
+  grouping ldp-top {
+    description
+      "Top-level structural grouping for LDP router telemetry
+      entries.";
+
+    container ldp-routers {
+      description
+        "LDP router telemetry collected by the OTG device.";
+
+      list ldp-router {
+        key "name";
+
+        config false;
+
+        description
+          "Each LDP router is identified by an arbitrary string
+          identifier.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the LDP router's name, acting as a key of
+            the LDP router list.";
+        }
+
+        container state {
+          description
+            "Operational state of an individual LDP router.";
+
+          uses ldp-state;
+        }
+
+        uses ldp-ipv4-bindings;
+      }
+    }
+  }
+
+  grouping ldp-state {
+    description
+      "Operational state of an individual LDP router.";
+
+    leaf name {
+      type string;
+      description
+        "An arbitrary name of the LDP router determined by the OTG
+        configuration.";
+    }
+
+    container counters {
+      description
+        "Counters of an individual LDP router.";
+
+      uses ldp-counters;
+    }
+  }
+
+  grouping ldp-counters {
+    description
+      "Counters of an individual LDP router. A counter that is not
+      reported by the implementation is absent.";
+
+    reference
+      "1. RFC 5036 - LDP Specification
+       2. https://github.com/openconfig/public/blob/master/release/models/mpls/openconfig-mpls-ldp.yang
+       3. RFC 9070 - YANG Data Model for MPLS LDP";
+
+    leaf sessions-up {
+      type otg-types:counter64;
+      description
+        "The number of LDP sessions of this router that are up, that is
+        in the OPERATIONAL state (RFC 5036 Section 2.5.4). Sessions
+        formed through Basic (link) discovery (RFC 5036 Section 2.4.1)
+        and through Extended (targeted) discovery (RFC 5036 Section
+        2.4.2) are both counted.";
+    }
+
+    leaf sessions-flap {
+      type otg-types:counter64;
+      description
+        "The number of times an LDP session of this router left the
+        OPERATIONAL state (RFC 5036 Section 2.5.4).";
+    }
+
+    leaf sessions-non-existent {
+      type otg-types:counter64;
+      description
+        "The number of LDP sessions of this router currently in the NON
+        EXISTENT state of the session initialization state machine (RFC
+        5036 Section 2.5.4).";
+    }
+
+    leaf sessions-initialized {
+      type otg-types:counter64;
+      description
+        "The number of LDP sessions of this router currently in the
+        INITIALIZED state of the session initialization state machine
+        (RFC 5036 Section 2.5.4).";
+    }
+
+    leaf sessions-open-received {
+      type otg-types:counter64;
+      description
+        "The number of LDP sessions of this router currently in the
+        OPENREC state of the session initialization state machine (RFC
+        5036 Section 2.5.4).";
+    }
+
+    leaf sessions-open-sent {
+      type otg-types:counter64;
+      description
+        "The number of LDP sessions of this router currently in the
+        OPENSENT state of the session initialization state machine (RFC
+        5036 Section 2.5.4).";
+    }
+
+    leaf sessions-operational {
+      type otg-types:counter64;
+      description
+        "The number of LDP sessions of this router currently in the
+        OPERATIONAL state of the session initialization state machine
+        (RFC 5036 Section 2.5.4).";
+    }
+
+    leaf out-notifications {
+      type otg-types:counter64;
+      description
+        "The number of Notification messages (type 0x0001, RFC 5036
+        Section 3.5.1) sent.";
+    }
+
+    leaf in-notifications {
+      type otg-types:counter64;
+      description
+        "The number of Notification messages (type 0x0001, RFC 5036
+        Section 3.5.1) received.";
+    }
+
+    leaf out-label-mappings {
+      type otg-types:counter64;
+      description
+        "The number of Label Mapping messages (type 0x0400, RFC 5036
+        Section 3.5.7) sent.";
+    }
+
+    leaf in-label-mappings {
+      type otg-types:counter64;
+      description
+        "The number of Label Mapping messages (type 0x0400, RFC 5036
+        Section 3.5.7) received.";
+    }
+
+    leaf out-label-requests {
+      type otg-types:counter64;
+      description
+        "The number of Label Request messages (type 0x0401, RFC 5036
+        Section 3.5.8) sent.";
+    }
+
+    leaf in-label-requests {
+      type otg-types:counter64;
+      description
+        "The number of Label Request messages (type 0x0401, RFC 5036
+        Section 3.5.8) received.";
+    }
+
+    leaf out-label-withdraws {
+      type otg-types:counter64;
+      description
+        "The number of Label Withdraw messages (type 0x0402, RFC 5036
+        Section 3.5.10) sent.";
+    }
+
+    leaf in-label-withdraws {
+      type otg-types:counter64;
+      description
+        "The number of Label Withdraw messages (type 0x0402, RFC 5036
+        Section 3.5.10) received.";
+    }
+
+    leaf out-label-releases {
+      type otg-types:counter64;
+      description
+        "The number of Label Release messages (type 0x0403, RFC 5036
+        Section 3.5.11) sent.";
+    }
+
+    leaf in-label-releases {
+      type otg-types:counter64;
+      description
+        "The number of Label Release messages (type 0x0403, RFC 5036
+        Section 3.5.11) received.";
+    }
+
+    leaf out-label-abort-requests {
+      type otg-types:counter64;
+      description
+        "The number of Label Abort Request messages (type 0x0404, RFC
+        5036 Section 3.5.9) sent.";
+    }
+
+    leaf in-label-abort-requests {
+      type otg-types:counter64;
+      description
+        "The number of Label Abort Request messages (type 0x0404, RFC
+        5036 Section 3.5.9) received.";
+    }
+
+    leaf ingress-lsps-up {
+      type otg-types:counter64;
+      description
+        "The number of IPv4 Prefix FECs for which this LSR has received
+        a label from a peer, that is LSPs for which this LSR is the
+        ingress.";
+    }
+
+    leaf egress-lsps-up {
+      type otg-types:counter64;
+      description
+        "The number of IPv4 Prefix FECs advertised by this LSR for which
+        a session to a peer is OPERATIONAL, that is LSPs for which this
+        LSR is the egress.";
+    }
+  }
+
+  grouping ldp-ipv4-bindings {
+    description
+      "Structural grouping for the IPv4 Prefix FEC-label bindings
+      received by an LDP router.";
+
+    reference
+      "1. RFC 5036 Section 3.4.1 - FEC TLV
+       2. RFC 9070 - YANG Data Model for MPLS LDP, ipv4/bindings/fec-label";
+
+    container ipv4-bindings {
+      description
+        "The IPv4 Prefix FEC-label bindings received by the LDP router
+        from its peers in Label Mapping messages (RFC 5036 Section
+        3.5.7).";
+
+      list ipv4-binding {
+        key "prefix prefix-length peer-lsr-id peer-label-space-id";
+
+        config false;
+
+        description
+          "One IPv4 Prefix FEC element (RFC 5036 Section 3.4.1) and the
+          label bound to it by a peer (RFC 5036 Section 3.4.2.1). A peer,
+          identified by its LDP Identifier (LSR ID and label space ID),
+          binds at most one label to a given FEC.";
+
+        leaf prefix {
+          type leafref {
+            path "../state/prefix";
+          }
+          description
+            "Reference to the IPv4 prefix of the FEC element, acting as
+            part of the key to the binding list.";
+        }
+
+        leaf prefix-length {
+          type leafref {
+            path "../state/prefix-length";
+          }
+          description
+            "Reference to the prefix length of the FEC element, acting as
+            part of the key to the binding list.";
+        }
+
+        leaf peer-lsr-id {
+          type leafref {
+            path "../state/peer-lsr-id";
+          }
+          description
+            "Reference to the LSR ID of the peer that advertised the
+            binding, acting as part of the key to the binding list.";
+        }
+
+        leaf peer-label-space-id {
+          type leafref {
+            path "../state/peer-label-space-id";
+          }
+          description
+            "Reference to the label space identifier of the peer that
+            advertised the binding, acting as part of the key to the
+            binding list.";
+        }
+
+        container state {
+          description
+            "State of an IPv4 Prefix FEC-label binding received from a
+            peer.";
+
+          leaf prefix {
+            type otg-types:ipv4-address;
+            description
+              "The IPv4 prefix of the FEC element.";
+          }
+
+          leaf prefix-length {
+            type uint32 {
+              range "0..32";
+            }
+            description
+              "The prefix length of the FEC element.";
+          }
+
+          leaf label {
+            type otg-types:mpls-label;
+            description
+              "The label bound to the FEC by the peer. 3 is Implicit NULL
+              and 0 is IPv4 Explicit NULL (RFC 3032 Section 2.1). In this
+              model they are reported as the IMPLICIT_NULL and
+              IPV4_EXPLICIT_NULL enumerations.";
+          }
+
+          leaf peer-lsr-id {
+            type otg-types:ipv4-address;
+            description
+              "The LSR ID of the peer that advertised the binding (RFC 5036
+              Section 2.2.2).";
+          }
+
+          leaf peer-label-space-id {
+            type uint16;
+            description
+              "The label space identifier of the peer that advertised the
+              binding (RFC 5036 Section 2.2.2).";
+          }
+        }
+      }
+    }
+  }
+
+  uses ldp-top;
+}
